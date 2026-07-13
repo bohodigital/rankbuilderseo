@@ -48,6 +48,13 @@ const worker = {
       return withSecurityHeaders(Response.redirect(url, 301));
     }
 
+    // Pages advanced mode sends every request through this worker. Serve the
+    // immutable client build from the ASSETS binding before the app router so
+    // stylesheets and hydration bundles do not fall through to a Vinext 404.
+    if (url.pathname.startsWith("/assets/") || url.pathname === "/og.png") {
+      return withSecurityHeaders(await env.ASSETS.fetch(request));
+    }
+
     if (url.pathname === "/_vinext/image") {
       const allowedWidths = [...DEFAULT_DEVICE_SIZES, ...DEFAULT_IMAGE_SIZES];
       const response = await handleImageOptimization(request, {

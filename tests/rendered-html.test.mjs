@@ -11,6 +11,7 @@ function request(
   path,
   accept = "text/html",
   origin = "https://rankbuilderseo.com",
+  assetFetch = async () => new Response("Not found", { status: 404 }),
 ) {
   return worker.fetch(
     new Request(new URL(path, origin), {
@@ -18,7 +19,7 @@ function request(
     }),
     {
       ASSETS: {
-        fetch: async () => new Response("Not found", { status: 404 }),
+        fetch: assetFetch,
       },
     },
     {
@@ -27,6 +28,29 @@ function request(
     },
   );
 }
+
+test("serves compiled client assets through the Pages binding", async () => {
+  const requested = [];
+  const response = await request(
+    "/assets/index-test.css",
+    "text/css",
+    "https://rankbuilderseo.com",
+    async (assetRequest) => {
+      requested.push(assetRequest.url);
+      return new Response("body { color: rebeccapurple; }", {
+        headers: { "content-type": "text/css; charset=utf-8" },
+      });
+    },
+  );
+
+  assert.equal(response.status, 200);
+  assert.equal(response.headers.get("content-type"), "text/css; charset=utf-8");
+  assert.equal(response.headers.get("x-content-type-options"), "nosniff");
+  assert.deepEqual(requested, [
+    "https://rankbuilderseo.com/assets/index-test.css",
+  ]);
+  assert.match(await response.text(), /rebeccapurple/);
+});
 
 test("renders the production homepage with metadata and analytics", async () => {
   const response = await request("/");
