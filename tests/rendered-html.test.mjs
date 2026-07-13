@@ -7,9 +7,13 @@ const workerUrl = new URL("../dist/server/index.js", import.meta.url);
 workerUrl.searchParams.set("test", `${process.pid}-${Date.now()}`);
 const { default: worker } = await import(workerUrl.href);
 
-function request(path, accept = "text/html") {
+function request(
+  path,
+  accept = "text/html",
+  origin = "https://rankbuilderseo.com",
+) {
   return worker.fetch(
-    new Request(new URL(path, "https://rankbuilderseo.com"), {
+    new Request(new URL(path, origin), {
       headers: { accept },
     }),
     {
@@ -28,6 +32,15 @@ test("renders the production homepage with metadata and analytics", async () => 
   const response = await request("/");
   assert.equal(response.status, 200);
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
+  assert.equal(response.headers.get("x-content-type-options"), "nosniff");
+  assert.equal(
+    response.headers.get("referrer-policy"),
+    "strict-origin-when-cross-origin",
+  );
+  assert.equal(
+    response.headers.get("permissions-policy"),
+    "camera=(), microphone=(), geolocation=()",
+  );
 
   const html = await response.text();
   assert.match(html, /<title>Rank Builder SEO/i);
@@ -44,6 +57,20 @@ test("renders the production homepage with metadata and analytics", async () => 
     1,
   );
   assert.doesNotMatch(html, /codex-preview|Your site is taking shape|noindex/i);
+});
+
+test("redirects www to the apex while preserving the request path", async () => {
+  const response = await request(
+    "/articles?source=www",
+    "text/html",
+    "https://www.rankbuilderseo.com",
+  );
+  assert.equal(response.status, 301);
+  assert.equal(
+    response.headers.get("location"),
+    "https://rankbuilderseo.com/articles?source=www",
+  );
+  assert.equal(response.headers.get("x-content-type-options"), "nosniff");
 });
 
 test("serves the representative route matrix and a real 404", async () => {
