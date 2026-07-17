@@ -4,6 +4,7 @@ import handler from "vinext/server/app-router-entry";
 import { articles } from "../app/data";
 
 const canonicalHost = "rankbuilderseo.com";
+const productionPagesHost = "rankbuilderseo.pages.dev";
 const retiredGuideSlugs = new Set(articles.map((article) => article.slug));
 const reportOnlyCsp = [
   "default-src 'self'",
@@ -33,7 +34,7 @@ interface ExecutionContext {
   passThroughOnException(): void;
 }
 
-function withSecurityHeaders(response: Response): Response {
+function withSecurityHeaders(response: Response, noindexHtml = false): Response {
   const headers = new Headers(response.headers);
   headers.set("X-Content-Type-Options", "nosniff");
   headers.set("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
@@ -45,6 +46,9 @@ function withSecurityHeaders(response: Response): Response {
     "camera=(), microphone=(), geolocation=()",
   );
   headers.set("Content-Security-Policy-Report-Only", reportOnlyCsp);
+  if (noindexHtml && headers.get("Content-Type")?.toLowerCase().startsWith("text/html")) {
+    headers.set("X-Robots-Tag", "noindex");
+  }
   return new Response(response.body, {
     status: response.status,
     statusText: response.statusText,
@@ -61,6 +65,7 @@ function withSecurityHeaders(response: Response): Response {
 const worker = {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const url = new URL(request.url);
+    const isPagesDeploymentHost = url.hostname.endsWith(`.${productionPagesHost}`);
 
     const redirectToCanonical = (pathname: string) => {
       url.protocol = "https:";
@@ -78,7 +83,7 @@ const worker = {
       return redirectToCanonical(`/articles/${guideMatch[1]}`);
     }
 
-    if (url.hostname === "www.rankbuilderseo.com" || url.hostname === "rankbuilderseo.pages.dev") {
+    if (url.hostname === "www.rankbuilderseo.com" || url.hostname === productionPagesHost) {
       return redirectToCanonical(url.pathname);
     }
 
@@ -101,7 +106,10 @@ const worker = {
       return withSecurityHeaders(response);
     }
 
-    return withSecurityHeaders(await handler.fetch(request, env, ctx));
+    return withSecurityHeaders(
+      await handler.fetch(request, env, ctx),
+      isPagesDeploymentHost,
+    );
   },
 };
 

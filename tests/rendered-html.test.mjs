@@ -86,6 +86,7 @@ test("renders the production homepage with metadata and analytics", async () => 
   );
   assert.equal(response.headers.get("strict-transport-security"), "max-age=31536000; includeSubDomains");
   assert.equal(response.headers.get("x-frame-options"), "DENY");
+  assert.equal(response.headers.get("x-robots-tag"), null);
   const reportOnlyCsp = response.headers.get("content-security-policy-report-only") ?? "";
   assert.match(reportOnlyCsp, /default-src 'self'/);
   assert.match(reportOnlyCsp, /script-src[^;]*analytics\.bohodigitalservices\.com/);
@@ -133,6 +134,49 @@ test("redirects the production Pages alias to the apex with path and query intac
   assert.equal(
     response.headers.get("location"),
     "https://rankbuilderseo.com/articles/how-to-read-an-seo-audit?source=pages-alias",
+  );
+});
+
+test("marks immutable Pages deployment HTML as noindex", async () => {
+  const response = await request(
+    "/articles/how-to-read-an-seo-audit",
+    "text/html",
+    "https://c6457348.rankbuilderseo.pages.dev",
+  );
+
+  assert.equal(response.status, 200);
+  assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
+  assert.equal(response.headers.get("x-robots-tag"), "noindex");
+  assert.match(
+    await response.text(),
+    /<link[^>]+rel="canonical"[^>]+href="https:\/\/rankbuilderseo\.com\/articles\/how-to-read-an-seo-audit"/i,
+  );
+
+  const asset = await request(
+    "/assets/index-test.css",
+    "text/css",
+    "https://c6457348.rankbuilderseo.pages.dev",
+    async () => new Response("body {}", {
+      headers: { "content-type": "text/css; charset=utf-8" },
+    }),
+  );
+  assert.equal(asset.status, 200);
+  assert.equal(asset.headers.get("x-robots-tag"), null);
+});
+
+test("marks branch preview Pages HTML as noindex", async () => {
+  const response = await request(
+    "/",
+    "text/html",
+    "https://technical-indexing-repair.rankbuilderseo.pages.dev",
+  );
+
+  assert.equal(response.status, 200);
+  assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
+  assert.equal(response.headers.get("x-robots-tag"), "noindex");
+  assert.match(
+    await response.text(),
+    /<link[^>]+rel="canonical"[^>]+href="https:\/\/rankbuilderseo\.com\/"/i,
   );
 });
 
