@@ -270,6 +270,20 @@ test("publishes only canonical 200 self-canonicalizing URLs in crawler endpoints
     assert.deepEqual(canonicals, [sitemapUrl], sitemapUrl);
     const openGraphUrls = extractAll(html, /<meta[^>]+property="og:url"[^>]+content="([^"]+)"[^>]*>/gi);
     assert.deepEqual(openGraphUrls, [sitemapUrl], sitemapUrl);
+    const openGraphImages = extractAll(html, /<meta[^>]+property="og:image"[^>]+content="([^"]+)"[^>]*>/gi);
+    assert.deepEqual(
+      openGraphImages,
+      ["https://rankbuilderseo.com/og.png"],
+      sitemapUrl,
+    );
+    const openGraphSiteNames = extractAll(html, /<meta[^>]+property="og:site_name"[^>]+content="([^"]+)"[^>]*>/gi);
+    assert.deepEqual(openGraphSiteNames, ["Rank Builder SEO"], sitemapUrl);
+    const openGraphTypes = extractAll(html, /<meta[^>]+property="og:type"[^>]+content="([^"]+)"[^>]*>/gi);
+    assert.deepEqual(
+      openGraphTypes,
+      [url.pathname.startsWith("/articles/") ? "article" : "website"],
+      sitemapUrl,
+    );
     const titles = extractAll(html, /<title>([^<]+)<\/title>/gi);
     assert.equal(titles.length, 1, sitemapUrl);
     assert.ok(!pageTitles.has(titles[0]), `duplicate title: ${titles[0]}`);

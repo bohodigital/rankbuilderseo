@@ -1,12 +1,15 @@
 import type { Metadata } from "next";
 import { GlossaryExplorer } from "./glossary-explorer";
 import { SiteFooter, SiteHeader } from "../site-chrome";
+import { sharedOpenGraph } from "../metadata";
 
 export const metadata: Metadata = {
   title: "SEO glossary",
   description: "Plain-language SEO and web definitions with the decision-changing detail and common misunderstanding.",
   alternates: { canonical: "https://rankbuilderseo.com/glossary" },
   openGraph: {
+    ...sharedOpenGraph,
+    type: "website",
     url: "https://rankbuilderseo.com/glossary",
     title: "SEO glossary",
     description: "Plain-language SEO and web definitions with the decision-changing detail and common misunderstanding.",

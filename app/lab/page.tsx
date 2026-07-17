@@ -1,12 +1,15 @@
 import type { Metadata } from "next";
 import { experiments } from "../data";
 import { SiteFooter, SiteHeader } from "../site-chrome";
+import { sharedOpenGraph } from "../metadata";
 
 export const metadata: Metadata = {
   title: "Public SEO lab",
   description: "Logged SEO experiments with hypotheses, signals, windows, and explicit claim limits.",
   alternates: { canonical: "https://rankbuilderseo.com/lab" },
   openGraph: {
+    ...sharedOpenGraph,
+    type: "website",
     url: "https://rankbuilderseo.com/lab",
     title: "Public SEO lab",
     description: "Logged SEO experiments with hypotheses, signals, windows, and explicit claim limits.",

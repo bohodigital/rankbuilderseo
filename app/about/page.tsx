@@ -1,12 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteFooter, SiteHeader } from "../site-chrome";
+import { sharedOpenGraph } from "../metadata";
 
 export const metadata: Metadata = {
   title: "About the research desk",
   description: "What Rank Builder SEO is building and what it refuses to become.",
   alternates: { canonical: "https://rankbuilderseo.com/about" },
   openGraph: {
+    ...sharedOpenGraph,
+    type: "website",
     url: "https://rankbuilderseo.com/about",
     title: "About the research desk",
     description: "What Rank Builder SEO is building and what it refuses to become.",

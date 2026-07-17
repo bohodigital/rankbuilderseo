@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { SiteFooter, SiteHeader } from "../site-chrome";
+import { sharedOpenGraph } from "../metadata";
 
 export const metadata: Metadata = {
   title: "Privacy",
@@ -7,6 +8,8 @@ export const metadata: Metadata = {
     "How Rank Builder SEO handles routine hosting and aggregate analytics data.",
   alternates: { canonical: "https://rankbuilderseo.com/privacy" },
   openGraph: {
+    ...sharedOpenGraph,
+    type: "website",
     url: "https://rankbuilderseo.com/privacy",
     title: "Privacy",
     description: "How Rank Builder SEO handles routine hosting and aggregate analytics data.",

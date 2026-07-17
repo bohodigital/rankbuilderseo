@@ -2,12 +2,15 @@ import type { Metadata } from "next";
 import { articles } from "../data";
 import { SiteFooter, SiteHeader } from "../site-chrome";
 import { ArticleExplorer } from "./article-explorer";
+import { sharedOpenGraph } from "../metadata";
 
 export const metadata: Metadata = {
   title: "SEO articles",
   description: "Evidence-aware SEO explainers, playbooks, claim checks, checklists, and data notes from the Rank Builder research desk.",
   alternates: { canonical: "https://rankbuilderseo.com/articles" },
   openGraph: {
+    ...sharedOpenGraph,
+    type: "website",
     url: "https://rankbuilderseo.com/articles",
     title: "SEO articles",
     description: "Evidence-aware SEO explainers, playbooks, claim checks, checklists, and data notes from the Rank Builder research desk.",

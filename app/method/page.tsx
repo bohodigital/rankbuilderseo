@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
 import { SiteFooter, SiteHeader } from "../site-chrome";
+import { sharedOpenGraph } from "../metadata";
 
 export const metadata: Metadata = {
   title: "Research method",
   description: "How Rank Builder separates sources, observations, inferences, opinions, and corrections.",
   alternates: { canonical: "https://rankbuilderseo.com/method" },
   openGraph: {
+    ...sharedOpenGraph,
+    type: "website",
     url: "https://rankbuilderseo.com/method",
     title: "Research method",
     description: "How Rank Builder separates sources, observations, inferences, opinions, and corrections.",

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { sharedOpenGraph } from "./metadata";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://rankbuilderseo.com"),
@@ -10,12 +11,11 @@ export const metadata: Metadata = {
   description: "Evidence-aware SEO articles, explainers, playbooks, claim checks, and public experiments—published in a consistent, useful format.",
   alternates: { canonical: "https://rankbuilderseo.com/" },
   openGraph: {
+    ...sharedOpenGraph,
     title: "Rank Builder SEO",
     description: "Clear SEO answers, on repeat. Evidence-aware articles, plain-language definitions, and public experiments.",
     type: "website",
     url: "https://rankbuilderseo.com/",
-    siteName: "Rank Builder SEO",
-    images: [{ url: "/og.png", width: 1536, height: 1024, alt: "Rank Builder SEO — Evidence for the search-obsessed" }],
   },
   twitter: {
     card: "summary_large_image",

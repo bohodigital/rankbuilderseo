@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { articles } from "../../data";
 import { SiteFooter, SiteHeader } from "../../site-chrome";
+import { sharedOpenGraph } from "../../metadata";
 
 export function generateStaticParams() { return articles.map((article) => ({ slug: article.slug })); }
 
@@ -14,7 +15,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     title: article.title,
     description: article.description,
     alternates: { canonical },
-    openGraph: { type: "article", url: canonical, title: article.title, description: article.description, publishedTime: article.published, modifiedTime: article.updated },
+    openGraph: { ...sharedOpenGraph, type: "article", url: canonical, title: article.title, description: article.description, publishedTime: article.published, modifiedTime: article.updated },
   } : {};
 }
 
