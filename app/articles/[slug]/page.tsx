@@ -9,11 +9,12 @@ export function generateStaticParams() { return articles.map((article) => ({ slu
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const article = articles.find((item) => item.slug === slug);
+  const canonical = `https://rankbuilderseo.com/articles/${article?.slug ?? slug}`;
   return article ? {
     title: article.title,
     description: article.description,
-    alternates: { canonical: `/articles/${article.slug}` },
-    openGraph: { type: "article", title: article.title, description: article.description, publishedTime: article.published, modifiedTime: article.updated },
+    alternates: { canonical },
+    openGraph: { type: "article", url: canonical, title: article.title, description: article.description, publishedTime: article.published, modifiedTime: article.updated },
   } : {};
 }
 

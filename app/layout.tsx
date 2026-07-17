@@ -8,10 +8,12 @@ export const metadata: Metadata = {
     template: "%s — Rank Builder SEO",
   },
   description: "Evidence-aware SEO articles, explainers, playbooks, claim checks, and public experiments—published in a consistent, useful format.",
+  alternates: { canonical: "https://rankbuilderseo.com/" },
   openGraph: {
     title: "Rank Builder SEO",
     description: "Clear SEO answers, on repeat. Evidence-aware articles, plain-language definitions, and public experiments.",
     type: "website",
+    url: "https://rankbuilderseo.com/",
     siteName: "Rank Builder SEO",
     images: [{ url: "/og.png", width: 1536, height: 1024, alt: "Rank Builder SEO — Evidence for the search-obsessed" }],
   },

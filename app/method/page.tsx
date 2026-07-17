@@ -1,7 +1,16 @@
 import type { Metadata } from "next";
 import { SiteFooter, SiteHeader } from "../site-chrome";
 
-export const metadata: Metadata = { title: "Research method", description: "How Rank Builder separates sources, observations, inferences, opinions, and corrections." };
+export const metadata: Metadata = {
+  title: "Research method",
+  description: "How Rank Builder separates sources, observations, inferences, opinions, and corrections.",
+  alternates: { canonical: "https://rankbuilderseo.com/method" },
+  openGraph: {
+    url: "https://rankbuilderseo.com/method",
+    title: "Research method",
+    description: "How Rank Builder separates sources, observations, inferences, opinions, and corrections.",
+  },
+};
 
 const standards = [
   ["Source", "A record a reader can inspect: official documentation, a public claim, first-hand test output, or a dated archive."],

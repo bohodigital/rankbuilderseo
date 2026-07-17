@@ -1,6 +1,28 @@
+"use client";
+
 import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 
 export function SiteHeader() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+
+    function closeOnEscape(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        setMenuOpen(false);
+        menuButtonRef.current?.focus();
+      }
+    }
+
+    document.addEventListener("keydown", closeOnEscape);
+    return () => document.removeEventListener("keydown", closeOnEscape);
+  }, [menuOpen]);
+
+  const closeMenu = () => setMenuOpen(false);
+
   return (
     <header className="site-header">
       <a className="skip-link" href="#main-content">Skip to content</a>
@@ -9,11 +31,27 @@ export function SiteHeader() {
           <span className="wordmark-box">RB</span>
           <span>Rank Builder<br />SEO</span>
         </Link>
-        <nav aria-label="Primary navigation">
-          <Link href="/articles">Articles</Link>
-          <Link href="/glossary">Glossary</Link>
-          <Link href="/lab">Lab</Link>
-          <Link href="/method">Method</Link>
+        <button
+          className="menu-toggle"
+          aria-expanded={menuOpen}
+          aria-controls="primary-navigation"
+          aria-label={`${menuOpen ? "Close" : "Open"} primary navigation`}
+          onClick={() => setMenuOpen((open) => !open)}
+          ref={menuButtonRef}
+          type="button"
+        >
+          <span aria-hidden="true">{menuOpen ? "Close" : "Menu"}</span>
+        </button>
+        <nav
+          id="primary-navigation"
+          className={`primary-nav${menuOpen ? " is-open" : ""}`}
+          aria-label="Primary navigation"
+        >
+          <Link href="/articles" onClick={closeMenu}>Articles</Link>
+          <Link href="/glossary" onClick={closeMenu}>Glossary</Link>
+          <Link href="/lab" onClick={closeMenu}>Lab</Link>
+          <Link href="/method" onClick={closeMenu}>Method</Link>
+          <Link className="mobile-nav-link" href="/about" onClick={closeMenu}>About</Link>
         </nav>
         <Link className="header-link" href="/about">About the desk ↗</Link>
       </div>

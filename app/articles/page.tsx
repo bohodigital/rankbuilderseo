@@ -6,6 +6,12 @@ import { ArticleExplorer } from "./article-explorer";
 export const metadata: Metadata = {
   title: "SEO articles",
   description: "Evidence-aware SEO explainers, playbooks, claim checks, checklists, and data notes from the Rank Builder research desk.",
+  alternates: { canonical: "https://rankbuilderseo.com/articles" },
+  openGraph: {
+    url: "https://rankbuilderseo.com/articles",
+    title: "SEO articles",
+    description: "Evidence-aware SEO explainers, playbooks, claim checks, checklists, and data notes from the Rank Builder research desk.",
+  },
 };
 
 export default function ArticlesPage() {

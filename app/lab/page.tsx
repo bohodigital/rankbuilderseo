@@ -2,7 +2,16 @@ import type { Metadata } from "next";
 import { experiments } from "../data";
 import { SiteFooter, SiteHeader } from "../site-chrome";
 
-export const metadata: Metadata = { title: "Public SEO lab", description: "Logged SEO experiments with hypotheses, signals, windows, and explicit claim limits." };
+export const metadata: Metadata = {
+  title: "Public SEO lab",
+  description: "Logged SEO experiments with hypotheses, signals, windows, and explicit claim limits.",
+  alternates: { canonical: "https://rankbuilderseo.com/lab" },
+  openGraph: {
+    url: "https://rankbuilderseo.com/lab",
+    title: "Public SEO lab",
+    description: "Logged SEO experiments with hypotheses, signals, windows, and explicit claim limits.",
+  },
+};
 
 export default function LabPage() {
   return <><SiteHeader /><main id="main-content" className="lab-page"><section className="page-hero shell"><p className="eyebrow">Public experiment register</p><h1>Test small.<br />Write down everything.</h1><p>No secret sauce. Each record names the variable, measurement window, evidence, and what the result cannot prove.</p></section>

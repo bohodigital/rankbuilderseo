@@ -5,6 +5,12 @@ export const metadata: Metadata = {
   title: "Privacy",
   description:
     "How Rank Builder SEO handles routine hosting and aggregate analytics data.",
+  alternates: { canonical: "https://rankbuilderseo.com/privacy" },
+  openGraph: {
+    url: "https://rankbuilderseo.com/privacy",
+    title: "Privacy",
+    description: "How Rank Builder SEO handles routine hosting and aggregate analytics data.",
+  },
 };
 
 export default function PrivacyPage() {

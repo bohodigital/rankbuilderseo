@@ -2,7 +2,16 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteFooter, SiteHeader } from "../site-chrome";
 
-export const metadata: Metadata = { title: "About the research desk", description: "What Rank Builder SEO is building and what it refuses to become." };
+export const metadata: Metadata = {
+  title: "About the research desk",
+  description: "What Rank Builder SEO is building and what it refuses to become.",
+  alternates: { canonical: "https://rankbuilderseo.com/about" },
+  openGraph: {
+    url: "https://rankbuilderseo.com/about",
+    title: "About the research desk",
+    description: "What Rank Builder SEO is building and what it refuses to become.",
+  },
+};
 
 export default function AboutPage() {
   return <><SiteHeader /><main id="main-content"><section className="page-hero shell"><p className="eyebrow">About the desk</p><h1>Built for the moment<br />after “trust me.”</h1><p>Rank Builder SEO is an independent publication for people making technical, editorial, and buying decisions in a field crowded with decorative certainty.</p></section>

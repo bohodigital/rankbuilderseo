@@ -1,6 +1,21 @@
 /** Cloudflare Worker entry point for Rank Builder SEO. */
 import { handleImageOptimization, DEFAULT_DEVICE_SIZES, DEFAULT_IMAGE_SIZES } from "vinext/server/image-optimization";
 import handler from "vinext/server/app-router-entry";
+import { articles } from "../app/data";
+
+const canonicalHost = "rankbuilderseo.com";
+const retiredGuideSlugs = new Set(articles.map((article) => article.slug));
+const reportOnlyCsp = [
+  "default-src 'self'",
+  "base-uri 'self'",
+  "object-src 'none'",
+  "frame-ancestors 'none'",
+  "img-src 'self' data:",
+  "font-src 'self' data:",
+  "style-src 'self' 'unsafe-inline'",
+  "script-src 'self' 'unsafe-inline' https://analytics.bohodigitalservices.com",
+  "connect-src 'self' https://analytics.bohodigitalservices.com",
+].join("; ");
 
 interface Env {
   ASSETS: Fetcher;
@@ -21,11 +36,15 @@ interface ExecutionContext {
 function withSecurityHeaders(response: Response): Response {
   const headers = new Headers(response.headers);
   headers.set("X-Content-Type-Options", "nosniff");
+  headers.set("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
+  headers.set("X-Frame-Options", "DENY");
+  headers.set("X-XSS-Protection", "0");
   headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
   headers.set(
     "Permissions-Policy",
     "camera=(), microphone=(), geolocation=()",
   );
+  headers.set("Content-Security-Policy-Report-Only", reportOnlyCsp);
   return new Response(response.body, {
     status: response.status,
     statusText: response.statusText,
@@ -43,9 +62,24 @@ const worker = {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const url = new URL(request.url);
 
-    if (url.hostname === "www.rankbuilderseo.com") {
-      url.hostname = "rankbuilderseo.com";
+    const redirectToCanonical = (pathname: string) => {
+      url.protocol = "https:";
+      url.hostname = canonicalHost;
+      url.port = "";
+      url.pathname = pathname;
       return withSecurityHeaders(Response.redirect(url, 301));
+    };
+
+    const guideMatch = url.pathname.match(/^\/guides\/([^/]+)\/?$/);
+    if (url.pathname === "/guides" || url.pathname === "/guides/") {
+      return redirectToCanonical("/articles");
+    }
+    if (guideMatch && retiredGuideSlugs.has(guideMatch[1])) {
+      return redirectToCanonical(`/articles/${guideMatch[1]}`);
+    }
+
+    if (url.hostname === "www.rankbuilderseo.com" || url.hostname === "rankbuilderseo.pages.dev") {
+      return redirectToCanonical(url.pathname);
     }
 
     // Pages advanced mode sends every request through this worker. Serve the

@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { articles, guides } from "./data";
+import { articles } from "./data";
 
 const origin = "https://rankbuilderseo.com";
 const staticPaths = [
@@ -7,7 +7,6 @@ const staticPaths = [
   "/about",
   "/articles",
   "/glossary",
-  "/guides",
   "/lab",
   "/method",
   "/privacy",
@@ -24,11 +23,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: "monthly" as const,
     priority: 0.8,
   }));
-  const guideEntries = guides.map((guide) => ({
-    url: `${origin}/guides/${guide.slug}`,
-    changeFrequency: "monthly" as const,
-    priority: 0.8,
-  }));
-
-  return [...staticEntries, ...articleEntries, ...guideEntries];
+  return [...staticEntries, ...articleEntries];
 }
