@@ -72,7 +72,7 @@ export function SiteFooter() {
           <div><span>Trust</span><Link href="/method">Research method</Link><Link href="/about">About</Link><Link href="/about#corrections">Corrections</Link><Link href="/privacy">Privacy</Link></div>
         </div>
       </div>
-      <div className="shell footer-bottom"><span>Independent SEO research desk</span><span>Facts / inference / opinion — kept separate.</span></div>
+      <div className="shell footer-bottom"><span>Independent SEO research desk operated by Republic of Bohemia LLC.</span><span>Facts / inference / opinion — kept separate.</span></div>
     </footer>
   );
 }

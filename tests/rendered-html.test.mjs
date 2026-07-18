@@ -22,6 +22,21 @@ const articleSlugs = [
   "zero-click-search-study-notes",
 ];
 
+const glossarySlugs = [
+  "canonical-url",
+  "conversion",
+  "crawling",
+  "indexing",
+  "google-search-console",
+  "xml-sitemap",
+  "robots-txt",
+  "redirect",
+  "search-intent",
+  "technical-seo",
+  "web-analytics",
+  "domain-name",
+];
+
 function extractAll(source, pattern) {
   return [...source.matchAll(pattern)].map((match) => match[1]);
 }
@@ -222,6 +237,7 @@ test("serves the representative route matrix and a real 404", async () => {
     "/articles",
     "/articles/how-to-read-an-seo-audit",
     "/glossary",
+    "/glossary/canonical-url",
     "/lab",
     "/method",
     "/privacy",
@@ -237,6 +253,9 @@ test("serves the representative route matrix and a real 404", async () => {
 
   const missingArticle = await request("/articles/definitely-missing");
   assert.equal(missingArticle.status, 404);
+
+  const missingTerm = await request("/glossary/definitely-missing");
+  assert.equal(missingTerm.status, 404);
 });
 
 test("publishes only canonical 200 self-canonicalizing URLs in crawler endpoints", async () => {
@@ -252,10 +271,11 @@ test("publishes only canonical 200 self-canonicalizing URLs in crawler endpoints
   const sitemapText = await sitemap.text();
   assert.match(sitemapText, /https:\/\/rankbuilderseo\.com\/articles\/how-to-read-an-seo-audit/i);
   assert.match(sitemapText, /https:\/\/rankbuilderseo\.com\/privacy/i);
+  assert.match(sitemapText, /https:\/\/rankbuilderseo\.com\/glossary\/canonical-url/i);
   assert.doesNotMatch(sitemapText, /https:\/\/rankbuilderseo\.com\/guides(?:\/|<)/i);
 
   const sitemapUrls = extractAll(sitemapText, /<loc>([^<]+)<\/loc>/g);
-  assert.equal(sitemapUrls.length, 19);
+  assert.equal(sitemapUrls.length, 31);
   assert.equal(new Set(sitemapUrls).size, sitemapUrls.length);
 
   const pageTitles = new Set();
@@ -292,17 +312,61 @@ test("publishes only canonical 200 self-canonicalizing URLs in crawler endpoints
   }
 });
 
-test("keeps article structured data aligned with the canonical production URL", async () => {
+test("keeps Organization, Article, and Breadcrumb data aligned with canonical records", async () => {
   for (const slug of articleSlugs) {
     const response = await request(`/articles/${slug}`);
     assert.equal(response.status, 200, slug);
     const html = await response.text();
-    const jsonLd = extractAll(html, /<script[^>]+type="application\/ld\+json"[^>]*>(.*?)<\/script>/gis);
-    assert.equal(jsonLd.length, 1, slug);
-    const schema = JSON.parse(jsonLd[0]);
-    assert.equal(schema["@type"], "Article", slug);
-    assert.equal(schema.mainEntityOfPage, `https://rankbuilderseo.com/articles/${slug}`, slug);
+    const schemas = extractAll(html, /<script[^>]+type="application\/ld\+json"[^>]*>(.*?)<\/script>/gis).map(JSON.parse);
+    const organization = schemas.find((schema) => schema["@type"] === "Organization");
+    const graph = schemas.find((schema) => Array.isArray(schema["@graph"]))?.["@graph"];
+    const article = graph?.find((schema) => schema["@type"] === "Article");
+    const breadcrumbs = graph?.find((schema) => schema["@type"] === "BreadcrumbList");
+    assert.equal(organization?.name, "Republic of Bohemia LLC", slug);
+    assert.equal(article?.mainEntityOfPage, `https://rankbuilderseo.com/articles/${slug}`, slug);
+    assert.equal(article?.publisher?.["@id"], "https://rankbuilderseo.com/#organization", slug);
+    assert.equal(breadcrumbs?.itemListElement.at(-1).item, `https://rankbuilderseo.com/articles/${slug}`, slug);
   }
+});
+
+test("renders canonical glossary pages while preserving index fragment anchors", async () => {
+  const index = await request("/glossary");
+  const indexHtml = await index.text();
+  for (const slug of glossarySlugs) {
+    assert.match(indexHtml, new RegExp(`id="${slug}"`), slug);
+    assert.match(indexHtml, new RegExp(`href="/glossary/${slug}"`), slug);
+    const response = await request(`/glossary/${slug}`);
+    assert.equal(response.status, 200, slug);
+    const html = await response.text();
+    assert.match(html, new RegExp(`rel="canonical"[^>]+href="https://rankbuilderseo\\.com/glossary/${slug}"`), slug);
+    const schemas = extractAll(html, /<script[^>]+type="application\/ld\+json"[^>]*>(.*?)<\/script>/gis).map(JSON.parse);
+    const graph = schemas.find((schema) => Array.isArray(schema["@graph"]))?.["@graph"];
+    assert.ok(graph?.some((schema) => schema["@type"] === "DefinedTerm"), slug);
+    assert.ok(graph?.some((schema) => schema["@type"] === "BreadcrumbList"), slug);
+  }
+});
+
+test("renders canonical references, corrections, experiment records, and public contact", async () => {
+  const article = await request("/articles/ranking-guarantees");
+  const articleHtml = await article.text();
+  assert.match(articleHtml, /Do you need an SEO\? Tips for hiring an SEO/i);
+  assert.match(articleHtml, /No corrections recorded/i);
+  assert.match(articleHtml, /href="\/articles\/seo-pricing-without-fairy-tales"/i);
+
+  const about = await request("/about");
+  const aboutHtml = await about.text();
+  assert.match(aboutHtml, /Republic of Bohemia LLC/i);
+  assert.match(aboutHtml, /legal operator of Boho/i);
+  assert.match(aboutHtml, /mailto:support@rankbuilderseo\.com/i);
+
+  const lab = await request("/lab");
+  const labHtml = await lab.text();
+  for (const label of ["Protocol", "Baseline", "Result", "Limitations", "Measurement", "Window"]) {
+    assert.match(labHtml, new RegExp(label, "i"), label);
+  }
+
+  await assert.rejects(access(new URL("app/guides/page.tsx", root)), { code: "ENOENT" });
+  await assert.rejects(access(new URL("app/guides/[slug]/page.tsx", root)), { code: "ENOENT" });
 });
 
 test("renders a complete semantic mobile navigation contract", async () => {

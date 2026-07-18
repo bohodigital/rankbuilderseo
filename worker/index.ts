@@ -1,11 +1,11 @@
 /** Cloudflare Worker entry point for Rank Builder SEO. */
 import { handleImageOptimization, DEFAULT_DEVICE_SIZES, DEFAULT_IMAGE_SIZES } from "vinext/server/image-optimization";
 import handler from "vinext/server/app-router-entry";
-import { articles } from "../app/data";
+import { publications } from "../app/content/publications";
 
 const canonicalHost = "rankbuilderseo.com";
 const productionPagesHost = "rankbuilderseo.pages.dev";
-const retiredGuideSlugs = new Set(articles.map((article) => article.slug));
+const retiredGuideSlugs = new Set(publications.map((publication) => publication.slug));
 const reportOnlyCsp = [
   "default-src 'self'",
   "base-uri 'self'",

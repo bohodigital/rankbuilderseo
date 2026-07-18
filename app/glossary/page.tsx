@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import { GlossaryExplorer } from "./glossary-explorer";
-import { SiteFooter, SiteHeader } from "../site-chrome";
+import { glossary } from "../content/glossary";
 import { sharedOpenGraph } from "../metadata";
+import { SiteFooter, SiteHeader } from "../site-chrome";
+import { GlossaryExplorer } from "./glossary-explorer";
 
 export const metadata: Metadata = {
   title: "SEO glossary",
@@ -17,5 +18,5 @@ export const metadata: Metadata = {
 };
 
 export default function GlossaryPage() {
-  return <><SiteHeader /><main id="main-content"><section className="page-hero shell"><p className="eyebrow">Plain-language index / 012</p><h1>Words people use<br />when they want leverage.</h1><p>The short answer, the operational meaning, and the common misunderstanding—without glossary sludge.</p></section><GlossaryExplorer /></main><SiteFooter /></>;
+  return <><SiteHeader /><main id="main-content"><section className="page-hero shell"><p className="eyebrow">Plain-language index / {String(glossary.length).padStart(3, "0")}</p><h1>Words people use<br />when they want leverage.</h1><p>The short answer, the operational meaning, and the common misunderstanding—without glossary sludge.</p></section><GlossaryExplorer entries={glossary} /></main><SiteFooter /></>;
 }

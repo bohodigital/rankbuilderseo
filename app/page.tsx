@@ -1,9 +1,11 @@
 import Link from "next/link";
-import { articles, experiments, glossary } from "./data";
+import { experiments } from "./content/experiments";
+import { glossary } from "./content/glossary";
+import { publications } from "./content/publications";
 import { SiteFooter, SiteHeader } from "./site-chrome";
 
 export default function Home() {
-  const featured = articles[0];
+  const featured = publications[0];
 
   return (
     <>
@@ -43,7 +45,7 @@ export default function Home() {
         <section className="section shell">
           <div className="section-heading split-heading">
             <div>
-              <p className="eyebrow">Latest articles / {String(articles.length).padStart(2, "0")} published</p>
+              <p className="eyebrow">Latest articles / {String(publications.length).padStart(2, "0")} published</p>
               <h2>Fresh answers.<br />Same high bar.</h2>
             </div>
             <p>Every story is part of a durable category and series, making the archive easier to grow, browse, update, and trust.</p>
@@ -60,7 +62,7 @@ export default function Home() {
               </div>
             </Link>
             <div className="story-stack">
-              {articles.slice(1, 4).map((article, index) => (
+              {publications.slice(1, 4).map((article, index) => (
                 <Link key={article.slug} href={`/articles/${article.slug}`} className="story-row">
                   <span className="row-index">0{index + 2}</span>
                   <div>
@@ -106,8 +108,8 @@ export default function Home() {
                   <h3>{experiment.title}</h3>
                   <p>{experiment.hypothesis}</p>
                   <dl>
-                    <div><dt>Signal</dt><dd>{experiment.signal}</dd></div>
-                    <div><dt>Window</dt><dd>{experiment.window}</dd></div>
+                    <div><dt>Measurement</dt><dd>{experiment.measurement}</dd></div>
+                    <div><dt>Window</dt><dd>{experiment.measurementWindow}</dd></div>
                   </dl>
                 </article>
               ))}
@@ -126,7 +128,7 @@ export default function Home() {
           </div>
           <div className="definition-grid">
             {glossary.slice(0, 6).map((entry) => (
-              <Link className="definition-card" href={`/glossary#${entry.slug}`} key={entry.slug}>
+              <Link className="definition-card" href={`/glossary/${entry.slug}`} key={entry.slug}>
                 <span className="term-letter">{entry.term.charAt(0)}</span>
                 <h3>{entry.term}</h3>
                 <p>{entry.short}</p>

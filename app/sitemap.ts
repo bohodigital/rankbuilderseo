@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
-import { articles } from "./data";
+import { glossary } from "./content/glossary";
+import { publications } from "./content/publications";
 
 const origin = "https://rankbuilderseo.com";
 const staticPaths = [
@@ -18,10 +19,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: path === "" ? ("weekly" as const) : ("monthly" as const),
     priority: path === "" ? 1 : 0.7,
   }));
-  const articleEntries = articles.map((article) => ({
-    url: `${origin}/articles/${article.slug}`,
+  const publicationEntries = publications.map((publication) => ({
+    url: `${origin}/articles/${publication.slug}`,
+    lastModified: publication.revisedAt,
     changeFrequency: "monthly" as const,
     priority: 0.8,
   }));
-  return [...staticEntries, ...articleEntries];
+  const glossaryEntries = glossary.map((entry) => ({
+    url: `${origin}/glossary/${entry.slug}`,
+    changeFrequency: "monthly" as const,
+    priority: 0.6,
+  }));
+  return [...staticEntries, ...publicationEntries, ...glossaryEntries];
 }

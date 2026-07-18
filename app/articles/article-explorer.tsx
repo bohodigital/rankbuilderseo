@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import type { Article } from "../data";
+import type { Publication } from "../content/registry";
 
-export function ArticleExplorer({ articles }: { articles: Article[] }) {
+export function ArticleExplorer({ articles }: { articles: Publication[] }) {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("All");
   const categories = ["All", ...Array.from(new Set(articles.map((article) => article.category)))];

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { organizationStructuredData, serializeStructuredData } from "./content/structured-data";
 import "./globals.css";
 import { sharedOpenGraph } from "./metadata";
 
@@ -29,6 +30,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en">
       <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: serializeStructuredData(organizationStructuredData()) }}
+        />
         <script
           defer
           src="https://analytics.bohodigitalservices.com/script.js"
