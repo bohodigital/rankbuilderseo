@@ -337,3 +337,16 @@ test("emits the Cloudflare Pages deployment artifacts", async () => {
   assert.match(wrangler, /"name":\s*"rankbuilderseo"/);
   assert.match(wrangler, /"pages_build_output_dir":\s*"\.\/dist\/client"/);
 });
+
+test("emits scoped Pages X-Robots-Tag detach rules for static preview assets", async () => {
+  const headers = await readFile(new URL("dist/client/_headers", root), "utf8");
+
+  assert.deepEqual(
+    headers.trimEnd().split("\n\n"),
+    [
+      `/*\n  X-Content-Type-Options: nosniff\n  Strict-Transport-Security: max-age=31536000; includeSubDomains\n  X-Frame-Options: DENY\n  X-XSS-Protection: 0\n  Referrer-Policy: strict-origin-when-cross-origin\n  Permissions-Policy: camera=(), microphone=(), geolocation=()\n  Content-Security-Policy-Report-Only: default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; img-src 'self' data:; font-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' https://analytics.bohodigitalservices.com; connect-src 'self' https://analytics.bohodigitalservices.com`,
+      "/assets/*\n  ! X-Robots-Tag",
+      "/og.png\n  ! X-Robots-Tag",
+    ],
+  );
+});
