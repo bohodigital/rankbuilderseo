@@ -117,7 +117,24 @@ Production releases follow one commit through the complete chain:
 2. Push the exact commit to `bohodigital/rankbuilderseo` on `main`.
 3. Deploy that commit to the Cloudflare Pages project `rankbuilderseo`.
 4. Verify the immutable deployment, Pages alias, apex domain, representative
-   routes, crawler endpoints, and analytics marker.
+   routes, crawler endpoints, Atom feed, cache/security headers, and analytics marker.
 
 Cloudflare credentials remain in the Pi-managed encrypted secret lane and are
 never stored in this repository.
+
+
+The canonical Pi checkout is /srv/local1/repos/sites/rankbuilderseo-site and is
+resolved by /srv/local1/hub/repo-manifest.yaml. The projects/rankbuilderseo-site
+identifier is compatibility routing, not a literal or legacy checkout.
+
+## Delivery and observability
+
+Run a bounded real-browser request audit against a local or approved public base:
+
+    npm run audit:requests -- --base-url http://127.0.0.1:8788 --route /articles --ceiling 100 --stop-at 85 --reserve-per-route 15 --scroll
+
+The audit counts documents, RSC, scripts, styles, images, fonts, analytics, and
+other responses, and reserves headroom before another route. The canonical cache,
+feed, analytics, CSP report-only, release, rollback, account-owner action,
+dependency-review, future-search trigger, and content-production readiness rules
+are documented in docs/delivery-observability.md.

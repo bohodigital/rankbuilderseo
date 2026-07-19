@@ -10,6 +10,7 @@
     "prebuild": "npm run content:check",
     "build": "vinext build",
     "build:pages": "npm run content:check && vinext build && node scripts/prepare-pages.mjs",
+    "audit:requests": "node scripts/audit-request-budget.mjs",
     "content:check": "node --experimental-strip-types scripts/content-check.mjs",
     "content:new": "node --experimental-strip-types scripts/content-new.mjs",
     "content:links": "node --experimental-strip-types scripts/check-source-links.mjs",

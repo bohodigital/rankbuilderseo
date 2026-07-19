@@ -2,21 +2,11 @@
 import { handleImageOptimization, DEFAULT_DEVICE_SIZES, DEFAULT_IMAGE_SIZES } from "vinext/server/image-optimization";
 import handler from "vinext/server/app-router-entry";
 import { publications } from "../app/content/publications";
+import { applyResponsePolicies } from "./response-policy";
 
 const canonicalHost = "rankbuilderseo.com";
 const productionPagesHost = "rankbuilderseo.pages.dev";
 const retiredGuideSlugs = new Set(publications.map((publication) => publication.slug));
-const reportOnlyCsp = [
-  "default-src 'self'",
-  "base-uri 'self'",
-  "object-src 'none'",
-  "frame-ancestors 'none'",
-  "img-src 'self' data:",
-  "font-src 'self' data:",
-  "style-src 'self' 'unsafe-inline'",
-  "script-src 'self' 'unsafe-inline' https://analytics.bohodigitalservices.com",
-  "connect-src 'self' https://analytics.bohodigitalservices.com",
-].join("; ");
 
 interface Fetcher {
   fetch(input: RequestInfo | URL, init?: RequestInit): Promise<Response>;
@@ -38,28 +28,6 @@ interface ExecutionContext {
   passThroughOnException(): void;
 }
 
-function withSecurityHeaders(response: Response, noindexHtml = false): Response {
-  const headers = new Headers(response.headers);
-  headers.set("X-Content-Type-Options", "nosniff");
-  headers.set("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
-  headers.set("X-Frame-Options", "DENY");
-  headers.set("X-XSS-Protection", "0");
-  headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
-  headers.set(
-    "Permissions-Policy",
-    "camera=(), microphone=(), geolocation=()",
-  );
-  headers.set("Content-Security-Policy-Report-Only", reportOnlyCsp);
-  if (noindexHtml && headers.get("Content-Type")?.toLowerCase().startsWith("text/html")) {
-    headers.set("X-Robots-Tag", "noindex");
-  }
-  return new Response(response.body, {
-    status: response.status,
-    statusText: response.statusText,
-    headers,
-  });
-}
-
 // Image security config. SVG sources with .svg extension auto-skip the
 // optimization endpoint on the client side (served directly, no proxy).
 // To route SVGs through the optimizer (with security headers), set
@@ -76,7 +44,7 @@ const worker = {
       url.hostname = canonicalHost;
       url.port = "";
       url.pathname = pathname;
-      return withSecurityHeaders(Response.redirect(url, 301));
+      return applyResponsePolicies(request, Response.redirect(url, 301));
     };
 
     const guideMatch = url.pathname.match(/^\/guides\/([^/]+)\/?$/);
@@ -95,7 +63,9 @@ const worker = {
     // immutable client build from the ASSETS binding before the app router so
     // stylesheets and hydration bundles do not fall through to a Vinext 404.
     if (url.pathname.startsWith("/assets/") || url.pathname === "/og.png") {
-      return withSecurityHeaders(await env.ASSETS.fetch(request));
+      return applyResponsePolicies(request, await env.ASSETS.fetch(request), {
+        isPreviewDeployment: isPagesDeploymentHost,
+      });
     }
 
     if (url.pathname === "/_vinext/image") {
@@ -107,12 +77,18 @@ const worker = {
           return result.response();
         },
       }, allowedWidths);
-      return withSecurityHeaders(response);
+      return applyResponsePolicies(request, response, {
+        isPreviewDeployment: isPagesDeploymentHost,
+      });
     }
 
-    return withSecurityHeaders(
+    return applyResponsePolicies(
+      request,
       await handler.fetch(request, env, ctx),
-      isPagesDeploymentHost,
+      {
+        noindexHtml: isPagesDeploymentHost,
+        isPreviewDeployment: isPagesDeploymentHost,
+      },
     );
   },
 };

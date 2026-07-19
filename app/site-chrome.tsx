@@ -41,10 +41,10 @@ export function SiteHeader() {
     <header className="site-header">
       <a className="skip-link" href="#main-content">Skip to content</a>
       <div className="shell header-inner">
-        <NavigationLink className="wordmark" href="/">
+        <Link className="wordmark" href="/" prefetch={false}>
           <span className="wordmark-box">RB</span>
           <span>Rank Builder<br />SEO</span>
-        </NavigationLink>
+        </Link>
         <button
           className="menu-toggle"
           aria-expanded={menuOpen}
@@ -67,7 +67,7 @@ export function SiteHeader() {
           <NavigationLink href="/method" onClick={closeMenu}>Method</NavigationLink>
           <NavigationLink className="mobile-nav-link" href="/about" onClick={closeMenu}>About</NavigationLink>
         </nav>
-        <NavigationLink className="header-link" href="/about">About the desk</NavigationLink>
+        <Link className="header-link" href="/about" prefetch={false}>About the desk</Link>
       </div>
     </header>
   );
@@ -82,8 +82,8 @@ export function SiteFooter() {
           <h2>Useful SEO answers, on repeat.</h2>
         </div>
         <div className="footer-nav">
-          <div><span>Read</span><Link href="/articles">Articles</Link><Link href="/glossary">Glossary</Link><Link href="/lab">Experiment lab</Link></div>
-          <div><span>Trust</span><Link href="/method">Research method</Link><Link href="/about">About</Link><Link href="/about#corrections">Corrections</Link><Link href="/privacy">Privacy</Link></div>
+          <div><span>Read</span><Link href="/articles" prefetch={false}>Articles</Link><Link href="/glossary" prefetch={false}>Glossary</Link><Link href="/lab" prefetch={false}>Experiment lab</Link></div>
+          <div><span>Trust</span><Link href="/method" prefetch={false}>Research method</Link><Link href="/about" prefetch={false}>About</Link><Link href="/about#corrections" prefetch={false}>Corrections</Link><Link href="/privacy" prefetch={false}>Privacy</Link></div>
         </div>
       </div>
       <div className="shell footer-bottom"><span>Independent SEO research desk operated by Republic of Bohemia LLC.</span><span>Facts / inference / opinion — kept separate.</span></div>

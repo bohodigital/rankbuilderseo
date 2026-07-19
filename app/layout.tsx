@@ -10,7 +10,12 @@ export const metadata: Metadata = {
     template: "%s — Rank Builder SEO",
   },
   description: "Evidence-aware SEO articles, explainers, playbooks, claim checks, and public experiments—published in a consistent, useful format.",
-  alternates: { canonical: "https://rankbuilderseo.com/" },
+  alternates: {
+    canonical: "https://rankbuilderseo.com/",
+    types: {
+      "application/atom+xml": "https://rankbuilderseo.com/feed.xml",
+    },
+  },
   manifest: "/site.webmanifest",
   themeColor: "#f7f6f2",
   icons: {

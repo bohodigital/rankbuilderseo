@@ -55,7 +55,7 @@ export default async function GlossaryEntryPage({ params }: { params: Promise<{ 
           <p>{entry.full}</p>
           <div className="myth"><span>Common misunderstanding</span><p>{entry.myth}</p></div>
           <h2>References</h2>
-          {entry.citations.length > 0 ? <ol>{entry.citations.map((citation) => <li key={citation.id}><a href={citation.url} rel="noopener noreferrer external">{citation.title}</a> — {citation.publisher}{citation.accessedAt ? ` (accessed ${formatPublicationDate(citation.accessedAt)})` : ""}</li>)}</ol> : <p>No external reference is claimed for this plain-language definition.</p>}
+          {entry.citations.length > 0 ? <ol>{entry.citations.map((citation) => <li key={citation.id}><a href={citation.url} rel="noopener noreferrer external" data-umami-event="citation-click" data-umami-event--citation-id={citation.id}>{citation.title}</a> — {citation.publisher}{citation.accessedAt ? ` (accessed ${formatPublicationDate(citation.accessedAt)})` : ""}</li>)}</ol> : <p>No external reference is claimed for this plain-language definition.</p>}
           <p><Link href={`/glossary#${entry.slug}`}>Return to this term in the glossary index</Link></p>
         </div>
       </article>

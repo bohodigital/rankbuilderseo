@@ -80,6 +80,7 @@ test("serves compiled client assets through the Pages binding", async () => {
   assert.equal(response.status, 200);
   assert.equal(response.headers.get("content-type"), "text/css; charset=utf-8");
   assert.equal(response.headers.get("x-content-type-options"), "nosniff");
+  assert.equal(response.headers.get("cache-control"), "public, max-age=31536000, immutable");
   assert.deepEqual(requested, [
     "https://rankbuilderseo.com/assets/index-test.css",
   ]);
@@ -102,6 +103,8 @@ test("renders the production homepage with metadata and analytics", async () => 
   assert.equal(response.headers.get("strict-transport-security"), "max-age=31536000; includeSubDomains");
   assert.equal(response.headers.get("x-frame-options"), "DENY");
   assert.equal(response.headers.get("x-robots-tag"), null);
+  assert.equal(response.headers.get("cache-control"), "public, max-age=0, must-revalidate");
+  assert.equal(response.headers.get("content-security-policy"), null);
   const reportOnlyCsp = response.headers.get("content-security-policy-report-only") ?? "";
   assert.match(reportOnlyCsp, /default-src 'self'/);
   assert.match(reportOnlyCsp, /script-src[^;]*analytics\.bohodigitalservices\.com/);
@@ -110,6 +113,7 @@ test("renders the production homepage with metadata and analytics", async () => 
 
   const html = await response.text();
   assert.match(html, /<title>Rank Builder SEO/i);
+  assert.match(html, /<link[^>]+rel="alternate"[^>]+type="application\/atom\+xml"[^>]+href="https:\/\/rankbuilderseo\.com\/feed\.xml"/i);
   assert.match(html, /Clear SEO answers/i);
   assert.match(html, /analytics\.bohodigitalservices\.com\/script\.js/i);
   assert.match(html, /data-website-id="297e47a1-fd92-42f1-a34d-5a7698e8a58f"/i);
@@ -162,6 +166,7 @@ test("marks immutable Pages deployment HTML as noindex", async () => {
   assert.equal(response.status, 200);
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
   assert.equal(response.headers.get("x-robots-tag"), "noindex");
+  assert.equal(response.headers.get("cache-control"), "private, no-store");
   assert.match(
     await response.text(),
     /<link[^>]+rel="canonical"[^>]+href="https:\/\/rankbuilderseo\.com\/articles\/how-to-read-an-seo-audit"/i,
@@ -261,18 +266,35 @@ test("serves the representative route matrix and a real 404", async () => {
 test("publishes only canonical 200 self-canonicalizing URLs in crawler endpoints", async () => {
   const robots = await request("/robots.txt", "text/plain");
   assert.equal(robots.status, 200);
+  assert.equal(robots.headers.get("cache-control"), "public, max-age=0, must-revalidate");
   const robotsText = await robots.text();
   assert.match(robotsText, /User-Agent:\s*\*/i);
   assert.match(robotsText, /Sitemap:\s*https:\/\/rankbuilderseo\.com\/sitemap\.xml/i);
 
   const sitemap = await request("/sitemap.xml", "application/xml");
   assert.equal(sitemap.status, 200);
+  assert.equal(sitemap.headers.get("cache-control"), "public, max-age=0, must-revalidate");
   assert.match(sitemap.headers.get("content-type") ?? "", /xml/i);
   const sitemapText = await sitemap.text();
   assert.match(sitemapText, /https:\/\/rankbuilderseo\.com\/articles\/how-to-read-an-seo-audit/i);
   assert.match(sitemapText, /https:\/\/rankbuilderseo\.com\/privacy/i);
   assert.match(sitemapText, /https:\/\/rankbuilderseo\.com\/glossary\/canonical-url/i);
   assert.doesNotMatch(sitemapText, /https:\/\/rankbuilderseo\.com\/guides(?:\/|<)/i);
+
+  const feed = await request("/feed.xml", "application/atom+xml");
+  assert.equal(feed.status, 200);
+  assert.match(feed.headers.get("content-type") ?? "", /^application\/atom\+xml/i);
+  assert.equal(feed.headers.get("cache-control"), "public, max-age=0, must-revalidate");
+  const feedText = await feed.text();
+  assert.match(feedText, /^<\?xml version="1.0" encoding="UTF-8"\?>/);
+  assert.match(feedText, /<feed xmlns="http:\/\/www\.w3\.org\/2005\/Atom"/);
+  assert.equal((feedText.match(/<entry>/g) ?? []).length, articleSlugs.length);
+  for (const slug of articleSlugs) {
+    assert.match(feedText, new RegExp("<id>https:\/\/rankbuilderseo\\.com\/articles\/" + slug + "<\/id>"), slug);
+  }
+  assert.match(feedText, /<published>\d{4}-\d{2}-\d{2}T00:00:00Z<\/published>/);
+  assert.match(feedText, /<updated>\d{4}-\d{2}-\d{2}T00:00:00Z<\/updated>/);
+  assert.match(feedText, /<summary type="text">[^<]+<\/summary>/);
 
   const sitemapUrls = extractAll(sitemapText, /<loc>([^<]+)<\/loc>/g);
   assert.equal(sitemapUrls.length, 31);

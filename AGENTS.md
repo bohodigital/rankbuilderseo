@@ -3,6 +3,12 @@
 This repository owns the public Rank Builder SEO application deployed at
 `rankbuilderseo.com`.
 
+Resolve this checkout through the Local1 repo manifest. The canonical Pi path is
+/srv/local1/repos/sites/rankbuilderseo-site; projects/rankbuilderseo-site is a
+compatibility resource ID, not a second checkout. Delivery, observability,
+rollback, account-action, and content-readiness rules live in
+docs/delivery-observability.md.
+
 Keep source, durable documentation, tests, and sanitized examples here. Do not
 commit secrets, credentials, local environment files, runtime databases,
 browser profiles, caches, generated build output, or logs.

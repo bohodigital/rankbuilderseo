@@ -109,18 +109,18 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
           <section id="references">
             <p className="section-count">References</p>
             <h2>Sources behind this record</h2>
-            {publication.citations.length > 0 ? <ol>{publication.citations.map((citation) => <li id={`reference-${citation.id}`} key={citation.id}><a href={citation.url} rel="noopener noreferrer external">{citation.title}</a> — {citation.publisher}{citation.accessedAt ? ` (accessed ${formatPublicationDate(citation.accessedAt)})` : ""}</li>)}</ol> : <p>No external references are claimed for this desk-analysis or documented-practice record. Its evidence level and claim limits remain explicit.</p>}
+            {publication.citations.length > 0 ? <ol>{publication.citations.map((citation) => <li id={`reference-${citation.id}`} key={citation.id}><a href={citation.url} rel="noopener noreferrer external" data-umami-event="citation-click" data-umami-event--citation-id={citation.id}>{citation.title}</a> — {citation.publisher}{citation.accessedAt ? ` (accessed ${formatPublicationDate(citation.accessedAt)})` : ""}</li>)}</ol> : <p>No external references are claimed for this desk-analysis or documented-practice record. Its evidence level and claim limits remain explicit.</p>}
           </section>
           <section id="corrections">
             <p className="section-count">Corrections</p>
             <h2>Correction history</h2>
             {corrections.length > 0 ? <ul>{corrections.map((entry) => <li key={entry.key}><time dateTime={entry.value.date}>{formatPublicationDate(entry.value.date)}</time>: {entry.value.summary}</li>)}</ul> : <p>No corrections recorded.</p>}
-            <p>To report an error, use the <Link href="/about#corrections">public corrections path</Link>.</p>
+            <p>To report an error, use the <Link href="/about#corrections" data-umami-event="correction-path-click">public corrections path</Link>.</p>
           </section>
           <div className="article-end"><span>Claim limit</span>{claimLimits.map((entry) => <p key={entry.key}>{entry.value}</p>)}</div>
         </div>
       </div>
     </article>
-    {related.length > 0 && <section className="related-section section"><div className="shell"><p className="eyebrow">{relatedHeading}</p><div className="related-grid">{related.map((item) => <Link href={`/articles/${item.slug}`} key={item.slug}><span>{item.format}</span><h2>{item.title}</h2><p>{item.readTime} →</p></Link>)}</div></div></section>}
+    {related.length > 0 && <section className="related-section section"><div className="shell"><p className="eyebrow">{relatedHeading}</p><div className="related-grid">{related.map((item) => <Link href={`/articles/${item.slug}`} key={item.slug} data-umami-event="related-article-click" data-umami-event--destination={item.slug}><span>{item.format}</span><h2>{item.title}</h2><p>{item.readTime} →</p></Link>)}</div></div></section>}
   </main><SiteFooter /></>;
 }
