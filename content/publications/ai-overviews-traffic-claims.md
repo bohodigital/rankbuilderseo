@@ -4,23 +4,17 @@
   "title": "AI Overviews traffic claims: read the denominator",
   "description": "Big percentage claims can hide tiny samples, unstable features, mismatched query sets, or traffic that was never commercially useful.",
   "format": "Claim check",
+  "authoringContract": "legacy-protected-v1",
   "category": "Search landscape",
   "series": "Claim checks",
   "audience": "Publishers and marketing leaders",
   "evidenceLevel": "Desk analysis",
-  "author": {
-    "name": "Rank Builder SEO Research Desk",
-    "type": "Organization",
-    "url": "/about"
-  },
-  "editor": {
-    "name": "Rank Builder SEO Editorial Desk",
-    "type": "Organization",
-    "url": "/method"
-  },
+  "state": "published",
+  "citationMode": "references-only",
+  "author": "rank-builder-research-desk",
+  "editor": "rank-builder-editorial-desk",
   "publishedAt": "2026-07-03",
   "revisedAt": "2026-07-03",
-  "readTime": "7 min read",
   "directAnswer": "Treat broad traffic-impact claims as directional until the query set, period, geography, and counterfactual are visible.",
   "takeaways": [
     "Inspect the query sample",
@@ -30,7 +24,15 @@
   "claimLimits": [
     "This article is a decision aid, not a universal ranking rule. Verify the conditions on your own site and preserve a baseline before changing them."
   ],
-  "citations": [],
+  "citations": [
+    {
+      "id": "google-ai-features",
+      "title": "AI features and your website",
+      "url": "https://developers.google.com/search/docs/appearance/ai-features",
+      "publisher": "Google Search Central",
+      "accessedAt": "2026-07-18"
+    }
+  ],
   "correctionHistory": [],
   "relatedContent": [
     "zero-click-search-study-notes",

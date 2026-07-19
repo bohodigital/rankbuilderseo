@@ -4,23 +4,17 @@
   "title": "The technical SEO baseline before you touch content",
   "description": "Confirm that the site can be crawled, understood, measured, and repaired before chasing keywords.",
   "format": "Checklist",
+  "authoringContract": "legacy-protected-v1",
   "category": "Technical SEO",
   "series": "Technical baseline",
   "audience": "Operators and technical marketers",
   "evidenceLevel": "Documented practice",
-  "author": {
-    "name": "Rank Builder SEO Research Desk",
-    "type": "Organization",
-    "url": "/about"
-  },
-  "editor": {
-    "name": "Rank Builder SEO Editorial Desk",
-    "type": "Organization",
-    "url": "/method"
-  },
+  "state": "published",
+  "citationMode": "references-only",
+  "author": "rank-builder-research-desk",
+  "editor": "rank-builder-editorial-desk",
   "publishedAt": "2026-07-10",
   "revisedAt": "2026-07-10",
-  "readTime": "6 min read",
   "directAnswer": "A clean baseline does not create demand, but it prevents basic technical ambiguity from poisoning every later experiment.",
   "takeaways": [
     "Verify the public URL surface",

@@ -209,9 +209,26 @@ button, input { font: inherit; }
 .takeaway-box ul { margin: 1rem 0 0; padding-left: 1.2rem; }
 .takeaway-box li::marker { color: var(--signal); }
 .article-body section { scroll-margin-top: 110px; padding: 0 0 3.5rem; }
+.article-body h2[id] { scroll-margin-top: 110px; }
 .section-count { margin: 0; font: 700 .7rem var(--mono); color: var(--signal); }
 .article-body h2 { margin: .5rem 0 1.4rem; font: 800 2.4rem/.98 var(--sans); letter-spacing: -.045em; text-transform: uppercase; }
 .article-body li { margin-bottom: .5rem; }
+.article-body a { text-decoration: underline; text-underline-offset: .18em; }
+.article-body code { padding: .12em .32em; border-radius: .2rem; background: #ece9e1; font: .9em/1.4 var(--mono); }
+.article-body pre { overflow-x: auto; padding: 1.25rem; border: 1px solid var(--line); border-radius: .3rem; background: var(--ink); color: var(--paper-light); }
+.article-body pre code { padding: 0; background: transparent; color: inherit; }
+.article-body blockquote { margin: 1.5rem 0; padding: .5rem 1.25rem; border-left: 5px solid var(--signal); background: var(--paper-light); }
+.article-body .callout-label { display: block; color: var(--signal); font: 700 .66rem var(--mono); text-transform: uppercase; }
+.article-table { overflow-x: auto; margin: 1.5rem 0; }
+.article-table:focus-visible { outline: 3px solid var(--signal); outline-offset: 3px; }
+.article-table table { width: 100%; min-width: 520px; border-collapse: collapse; font-size: .95rem; }
+.article-table th, .article-table td { padding: .75rem; border: 1px solid var(--line); text-align: left; vertical-align: top; }
+.article-table th { background: var(--acid); font-family: var(--sans); }
+.article-body figure { margin: 2rem 0; }
+.article-body figure img { display: block; width: 100%; height: auto; border: 1px solid var(--line); }
+.article-body figcaption { margin-top: .65rem; color: var(--muted); font: .82rem/1.5 var(--sans); }
+.article-body figcaption span { display: block; }
+.inline-citation { font: .72em var(--mono); }
 .article-end { padding-top: 1.5rem; border-top: 3px solid var(--line); color: var(--muted); }
 .related-section { background: var(--ink); color: var(--paper-light); }
 .related-section .eyebrow { color: var(--acid); }

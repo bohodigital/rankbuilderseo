@@ -18,6 +18,10 @@ const reportOnlyCsp = [
   "connect-src 'self' https://analytics.bohodigitalservices.com",
 ].join("; ");
 
+interface Fetcher {
+  fetch(input: RequestInfo | URL, init?: RequestInit): Promise<Response>;
+}
+
 interface Env {
   ASSETS: Fetcher;
   IMAGES: {

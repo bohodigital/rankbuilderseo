@@ -5,9 +5,11 @@ import test from "node:test";
 
 import {
   formatPublicationDate,
-  loadPublicationRegistry,
+  loadPublicationRegistry as loadPublicationRegistryRaw,
+  parseControlledRegistries,
+  parseMediaRegistry,
   parseExperimentRegistrySource,
-  parseGlossaryRegistrySource,
+  parseGlossaryRegistrySource as parseGlossaryRegistrySourceRaw,
   publicationRoutePaths,
 } from "../app/content/registry.ts";
 import {
@@ -18,6 +20,21 @@ import {
 } from "../app/content/structured-data.ts";
 
 const root = new URL("../", import.meta.url);
+const controlledRegistries = parseControlledRegistries(await readFile(new URL("content/registries.json", root), "utf8"));
+controlledRegistries.categories.push("Testing");
+controlledRegistries.series.push("Registry tests");
+controlledRegistries.audiences.push("Maintainers");
+const mediaRegistry = parseMediaRegistry(await readFile(new URL("content/media.json", root), "utf8"));
+
+function loadPublicationRegistry(sources) {
+  return loadPublicationRegistryRaw(sources, {
+    registries: controlledRegistries,
+    media: mediaRegistry,
+    now: new Date("2026-07-19T00:00:00Z"),
+  });
+}
+
+const parseGlossaryRegistrySource = (source) => parseGlossaryRegistrySourceRaw(source, controlledRegistries);
 
 const protectedParity = [
   {"slug":"how-to-read-an-seo-audit","title":"How to read an SEO audit without getting snowed","h1":"How to read an SEO audit without getting snowed","description":"A long PDF is not a strategy. Here is how to separate reproducible findings from expensive formatting and recycled warnings.","published":"July 11, 2026","primaryCopySha256":"4ab4a0839fc886d10f1a3be3020f8cca376c0a4b5830b9d55c44d517df5ffa66"},
@@ -46,15 +63,17 @@ function source(overrides = {}) {
     title: "Example record",
     description: "A complete record used to exercise validation.",
     format: "Explainer",
+    authoringContract: "canonical-v1",
     category: "Testing",
     series: "Registry tests",
     audience: "Maintainers",
     evidenceLevel: "Documented practice",
-    author: { name: "Rank Builder SEO Research Desk", type: "Organization" },
-    editor: { name: "Rank Builder SEO Editorial Desk", type: "Organization" },
+    state: "draft",
+    citationMode: "references-only",
+    author: "rank-builder-research-desk",
+    editor: "rank-builder-editorial-desk",
     publishedAt: "2026-07-01",
     revisedAt: "2026-07-01",
-    readTime: "1 min read",
     directAnswer: "Validated records fail closed.",
     takeaways: ["Validate before rendering"],
     claimLimits: ["This fixture proves validation behavior only."],
@@ -106,14 +125,14 @@ test("rejects duplicate slugs, broken related references, and missing required c
   );
 });
 
-test("rejects unsafe identities, invalid dates, invalid citation URLs, and inconsistent correction history", () => {
+test("rejects unknown identities, invalid dates, invalid citation URLs, and inconsistent correction history", () => {
   assert.throws(
     () => loadPublicationRegistry({ "example-record.md": source({ publishedAt: "2026-02-31", revisedAt: "2026-03-01" }) }),
     /must be an ISO date/i,
   );
   assert.throws(
-    () => loadPublicationRegistry({ "example-record.md": source({ author: { name: "Unsafe", type: "Organization", url: "javascript:alert(1)" } }) }),
-    /root-relative path or HTTPS URL/i,
+    () => loadPublicationRegistry({ "example-record.md": source({ author: "unknown-author" }) }),
+    /unknown controlled identity/i,
   );
   assert.throws(
     () => loadPublicationRegistry({ "example-record.md": source({
@@ -187,6 +206,8 @@ test("generates valid Organization, Article, DefinedTerm, and Breadcrumb records
   assert.deepEqual(article["@graph"].map((item) => item["@type"]), ["Article", "BreadcrumbList"]);
   assert.deepEqual(term["@graph"].map((item) => item["@type"]), ["DefinedTerm", "BreadcrumbList"]);
   assert.equal(article["@graph"][0].mainEntityOfPage, `https://rankbuilderseo.com/articles/${publications[0].slug}`);
+  assert.equal(article["@graph"][0].wordCount, publications[0].wordCount);
+  assert.ok(publications[0].wordCount > 0);
   assert.doesNotThrow(() => JSON.parse(serializeStructuredData(article)));
   assert.doesNotMatch(serializeStructuredData({ value: "</script>" }), /<\/script>/i);
 });

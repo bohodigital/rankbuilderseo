@@ -1,16 +1,52 @@
+import {
+  citationModes,
+  isoDate,
+  object,
+  oneOf,
+  optionalString,
+  parseControlledRegistries,
+  parseMediaRegistry,
+  publicationExposure,
+  publicationRelationshipDiagnostics,
+  readingMetrics,
+  requiredString,
+  slugValue,
+  stringList,
+  unique,
+  validateCitationConflicts,
+  validateCitationUsage,
+  validateDocumentMedia,
+  validateLifecycleMetadata,
+  type CitationMode,
+  type ControlledRegistries,
+  type EditorialIdentity,
+  type LifecycleRecord,
+  type MediaRecord,
+} from "./contract.ts";
+import { parseSafeMarkdown, type MarkdownSection, type SafeMarkdownDocument } from "./markdown.ts";
+
+export { parseControlledRegistries, parseMediaRegistry, publicationExposure, publicationRelationshipDiagnostics } from "./contract.ts";
+export { headingSlug, isSafeLinkTarget, isSafeMediaSource, parseSafeMarkdown } from "./markdown.ts";
+
 export const publicationFormats = ["Explainer", "Playbook", "Claim check", "Data note", "Checklist"] as const;
+export const authoringContracts = ["canonical-v1", "legacy-protected-v1"] as const;
+const legacyProtectedPublicationSlugs = new Set([
+  "ai-overviews-traffic-claims", "canonical-tags-when-they-work", "how-to-read-an-seo-audit",
+  "internal-links-audit-by-template", "local-seo-provider-scorecard", "ranking-guarantees",
+  "search-console-is-not-analytics", "seo-migration-launch-checklist", "seo-pricing-without-fairy-tales",
+  "technical-seo-baseline", "what-an-seo-report-should-answer", "zero-click-search-study-notes",
+]);
 export const evidenceLevels = ["Primary sources", "Documented practice", "Desk analysis"] as const;
 export const experimentStatuses = ["Queued", "Measuring", "Complete", "Inconclusive"] as const;
+const establishedGlossarySlugs = new Set([
+  "canonical-url", "conversion", "crawling", "indexing", "google-search-console", "xml-sitemap",
+  "robots-txt", "redirect", "search-intent", "technical-seo", "web-analytics", "domain-name",
+]);
 
 export type PublicationFormat = (typeof publicationFormats)[number];
+export type AuthoringContract = (typeof authoringContracts)[number];
 export type EvidenceLevel = (typeof evidenceLevels)[number];
 export type ExperimentStatus = (typeof experimentStatuses)[number];
-
-export type EditorialIdentity = {
-  name: string;
-  type: "Organization" | "Person";
-  url?: string;
-};
 
 export type Citation = {
   id: string;
@@ -20,38 +56,39 @@ export type Citation = {
   accessedAt?: string;
 };
 
-export type CorrectionRecord = {
-  date: string;
-  summary: string;
-};
+export type CorrectionRecord = { date: string; summary: string };
+export type PublicationSection = MarkdownSection;
 
-export type PublicationSection = {
-  heading: string;
-  paragraphs: string[];
-  bullets?: string[];
-};
-
-export type Publication = {
+export type Publication = LifecycleRecord & {
   slug: string;
   title: string;
   description: string;
   format: PublicationFormat;
+  authoringContract: AuthoringContract;
   category: string;
   series: string;
   audience: string;
   evidenceLevel: EvidenceLevel;
+  authorId: string;
+  editorId: string;
   author: EditorialIdentity;
   editor: EditorialIdentity;
   publishedAt: string;
   revisedAt: string;
-  readTime: string;
+  revisionNote?: string;
+  citationMode: CitationMode;
   directAnswer: string;
   takeaways: string[];
   claimLimits: string[];
   citations: Citation[];
   correctionHistory: CorrectionRecord[];
   relatedContent: string[];
+  document: SafeMarkdownDocument;
   sections: PublicationSection[];
+  wordCount: number;
+  readingMinutes: number;
+  readTime: string;
+  readTimeOverrideMinutes?: number;
   sourceFile: string;
 };
 
@@ -59,6 +96,7 @@ export type GlossaryEntry = {
   term: string;
   slug: string;
   category: string;
+  status: "established" | "new";
   short: string;
   full: string;
   myth: string;
@@ -74,8 +112,16 @@ export type Experiment = {
   measurementWindow: string;
   status: ExperimentStatus;
   measurement: string;
+  cohort: string;
+  intervention: string;
+  startedAt?: string;
+  baselineCapturedAt?: string;
+  endedAt?: string;
+  resultPublishedAt?: string;
   result: string;
+  inconclusiveReason?: string;
   limitations: string[];
+  provenance: string[];
   relatedPublications: string[];
 };
 
@@ -85,51 +131,7 @@ function fail(label: string, message: string): never {
   throw new Error(`${label}: ${message}`);
 }
 
-function record(value: unknown, label: string): UnknownRecord {
-  if (!value || typeof value !== "object" || Array.isArray(value)) fail(label, "must be an object");
-  return value as UnknownRecord;
-}
-
-function string(value: unknown, label: string): string {
-  if (typeof value !== "string" || value.trim() === "") fail(label, "must be a non-empty string");
-  return value;
-}
-
-function slug(value: unknown, label: string): string {
-  const result = string(value, label);
-  if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(result)) {
-    fail(label, "must be a lowercase URL-safe slug");
-  }
-  return result;
-}
-
-function stringArray(value: unknown, label: string, allowEmpty = false): string[] {
-  if (!Array.isArray(value) || (!allowEmpty && value.length === 0)) {
-    fail(label, allowEmpty ? "must be an array" : "must be a non-empty array");
-  }
-  return value.map((item, index) => string(item, `${label}[${index}]`));
-}
-
-function isoDate(value: unknown, label: string): string {
-  const result = string(value, label);
-  const parsed = new Date(`${result}T00:00:00Z`);
-  if (
-    !/^\d{4}-\d{2}-\d{2}$/.test(result)
-    || Number.isNaN(parsed.valueOf())
-    || parsed.toISOString().slice(0, 10) !== result
-  ) {
-    fail(label, "must be an ISO date (YYYY-MM-DD)");
-  }
-  return result;
-}
-
-function oneOf<T extends readonly string[]>(value: unknown, choices: T, label: string): T[number] {
-  const result = string(value, label);
-  if (!choices.includes(result)) fail(label, `must be one of: ${choices.join(", ")}`);
-  return result as T[number];
-}
-
-function parseFrontMatter(source: string, label: string): { metadata: UnknownRecord; body: string } {
+export function parseFrontMatter(source: string, label: string): { metadata: UnknownRecord; body: string } {
   const normalized = source.replace(/\r\n?/g, "\n");
   const match = normalized.match(/^---\n([\s\S]*?)\n---(?:\n|$)([\s\S]*)$/);
   if (!match) fail(label, "must begin with JSON front matter between --- delimiters");
@@ -139,42 +141,29 @@ function parseFrontMatter(source: string, label: string): { metadata: UnknownRec
   } catch (error) {
     fail(label, `front matter is not valid JSON (${error instanceof Error ? error.message : "unknown error"})`);
   }
-  return { metadata: record(metadata, `${label} front matter`), body: match[2] };
+  return { metadata: object(metadata, `${label} front matter`), body: match[2] };
 }
 
-function identity(value: unknown, label: string): EditorialIdentity {
-  const item = record(value, label);
-  const type = oneOf(item.type, ["Organization", "Person"] as const, `${label}.type`);
-  const url = item.url === undefined ? undefined : string(item.url, `${label}.url`);
-  if (url) {
-    const isCanonicalPath = /^\/[a-z0-9/-]*$/.test(url) && !url.includes("//");
-    let isHttpsUrl = false;
-    try {
-      isHttpsUrl = new URL(url).protocol === "https:";
-    } catch {
-      // A root-relative canonical path is handled above.
-    }
-    if (!isCanonicalPath && !isHttpsUrl) fail(`${label}.url`, "must be a root-relative path or HTTPS URL");
+function httpsUrl(value: unknown, label: string): string {
+  const result = requiredString(value, label);
+  let parsed: URL;
+  try {
+    parsed = new URL(result);
+  } catch {
+    fail(label, "must be an absolute HTTPS URL");
   }
-  return { name: string(item.name, `${label}.name`), type, ...(url ? { url } : {}) };
+  if (parsed!.protocol !== "https:" || parsed!.username || parsed!.password) fail(label, "must use HTTPS without URL credentials");
+  return result;
 }
 
 function citation(value: unknown, label: string): Citation {
-  const item = record(value, label);
-  const url = string(item.url, `${label}.url`);
-  let parsed: URL;
-  try {
-    parsed = new URL(url);
-  } catch {
-    fail(`${label}.url`, "must be an absolute URL");
-  }
-  if (parsed!.protocol !== "https:") fail(`${label}.url`, "must use HTTPS");
+  const item = object(value, label);
   const accessedAt = item.accessedAt === undefined ? undefined : isoDate(item.accessedAt, `${label}.accessedAt`);
   return {
-    id: string(item.id, `${label}.id`),
-    title: string(item.title, `${label}.title`),
-    url,
-    publisher: string(item.publisher, `${label}.publisher`),
+    id: slugValue(item.id, `${label}.id`),
+    title: requiredString(item.title, `${label}.title`),
+    url: httpsUrl(item.url, `${label}.url`),
+    publisher: requiredString(item.publisher, `${label}.publisher`),
     ...(accessedAt ? { accessedAt } : {}),
   };
 }
@@ -182,85 +171,85 @@ function citation(value: unknown, label: string): Citation {
 function citations(value: unknown, label: string): Citation[] {
   if (!Array.isArray(value)) fail(label, "must be an array");
   const items = value.map((item, index) => citation(item, `${label}[${index}]`));
-  const ids = new Set<string>();
-  for (const item of items) {
-    if (ids.has(item.id)) fail(label, `duplicate citation id: ${item.id}`);
-    ids.add(item.id);
-  }
+  unique(items.map(({ id }) => id), label);
   return items;
 }
 
 function corrections(value: unknown, label: string): CorrectionRecord[] {
   if (!Array.isArray(value)) fail(label, "must be an array");
-  const records = value.map((value, index) => {
-    const item = record(value, `${label}[${index}]`);
-    return {
-      date: isoDate(item.date, `${label}[${index}].date`),
-      summary: string(item.summary, `${label}[${index}].summary`),
-    };
+  const result = value.map((raw, index) => {
+    const item = object(raw, `${label}[${index}]`);
+    return { date: isoDate(item.date, `${label}[${index}].date`), summary: requiredString(item.summary, `${label}[${index}].summary`) };
   });
-  const identities = new Set<string>();
-  for (const item of records) {
-    const identity = `${item.date}\n${item.summary}`;
-    if (identities.has(identity)) fail(label, `duplicate correction record: ${item.date} ${item.summary}`);
-    identities.add(identity);
-  }
-  return records;
+  unique(result.map(({ date, summary }) => `${date}\n${summary}`), label);
+  return result;
 }
 
-function uniqueStrings(values: string[], label: string): string[] {
-  const seen = new Set<string>();
-  for (const value of values) {
-    if (seen.has(value)) fail(label, `duplicate value: ${value}`);
-    seen.add(value);
-  }
-  return values;
+function controlledValue(value: unknown, allowed: readonly string[], label: string): string {
+  const result = requiredString(value, label);
+  if (!allowed.includes(result)) fail(label, `must reference an approved registry value: ${allowed.join(", ")}`);
+  return result;
 }
 
-function markdownSections(body: string, label: string): PublicationSection[] {
-  const lines = body.trim().split("\n");
-  const sections: PublicationSection[] = [];
-  let current: PublicationSection | undefined;
-
-  for (let index = 0; index < lines.length;) {
-    const line = lines[index].trim();
-    if (!line) {
-      index += 1;
-      continue;
-    }
-    if (line.startsWith("## ")) {
-      current = { heading: string(line.slice(3), `${label} section heading`), paragraphs: [] };
-      sections.push(current);
-      index += 1;
-      continue;
-    }
-    if (!current) fail(label, "body content must begin with an H2 section");
-    if (line.startsWith("- ")) {
-      current.bullets ??= [];
-      current.bullets.push(string(line.slice(2), `${label} bullet`));
-      index += 1;
-      continue;
-    }
-
-    const paragraph: string[] = [];
-    while (index < lines.length) {
-      const next = lines[index].trim();
-      if (!next || next.startsWith("## ") || next.startsWith("- ")) break;
-      paragraph.push(next);
-      index += 1;
-    }
-    current.paragraphs.push(string(paragraph.join(" "), `${label} paragraph`));
-  }
-
-  if (sections.length === 0) fail(label, "must contain at least one H2 section");
-  for (const section of sections) {
-    if (section.paragraphs.length === 0) fail(label, `section has no paragraph: ${section.heading}`);
-  }
-  return sections;
+function identityReference(value: unknown, identities: Map<string, EditorialIdentity>, label: string): { id: string; identity: EditorialIdentity } {
+  const id = slugValue(value, label);
+  const identity = identities.get(id);
+  if (!identity) fail(label, `unknown controlled identity: ${id}`);
+  return { id, identity };
 }
 
-function parsePublicationSource(source: string, sourceFile: string): Publication {
+function formatRequirements(publication: Publication): void {
+  if (publication.state === "draft") return;
+  if (publication.authoringContract === "legacy-protected-v1") return;
+
+  const byRole = new Map(publication.document.sections.map((section) => [section.heading.toLocaleLowerCase("en-US"), section]));
+  const requireRole = (role: string) => {
+    const section = byRole.get(role.toLocaleLowerCase("en-US"));
+    if (!section) fail(publication.sourceFile, `${publication.format} requires a "${role}" section under canonical-v1`);
+    return section;
+  };
+  const listItems = (role: string, ordered: boolean) => requireRole(role).blocks
+    .reduce((count, block) => block.type === "list" && block.ordered === ordered ? count + block.items.length : count, 0);
+
+  if (publication.format === "Claim check") {
+    requireRole("Identified claim");
+    requireRole("Sources and evidence");
+    requireRole("Conclusion");
+    requireRole("Limitations");
+    if (publication.citations.length === 0) fail(publication.sourceFile, "Claim check requires at least one identified source");
+    if (publication.claimLimits.length === 0) fail(publication.sourceFile, "Claim check requires limitations");
+  } else if (publication.format === "Data note") {
+    requireRole("Dataset and period");
+    requireRole("Methodology");
+    requireRole("Result");
+    requireRole("Limitations");
+    if (publication.citations.length === 0) fail(publication.sourceFile, "Data note requires a dataset/source citation");
+  } else if (publication.format === "Playbook") {
+    requireRole("Preconditions");
+    requireRole("Failure cases");
+    if (listItems("Ordered process", true) < 2) fail(publication.sourceFile, "Playbook requires at least two ordered process items");
+  } else if (publication.format === "Checklist") {
+    requireRole("Completion criteria");
+    if (listItems("Checklist", false) < 3) fail(publication.sourceFile, "Checklist requires at least three actual checklist items");
+  } else {
+    requireRole("Definition");
+    requireRole("Mechanism");
+    requireRole("Examples");
+    requireRole("Boundaries");
+  }
+}
+
+export type PublicationRegistryOptions = {
+  registries: ControlledRegistries;
+  media: readonly MediaRecord[];
+  now?: Date;
+  relationshipWarnings?: string[];
+};
+
+function parsePublicationSource(source: string, sourceFile: string, options: PublicationRegistryOptions): Publication {
   const { metadata, body } = parseFrontMatter(source, sourceFile);
+  const publicationSlug = slugValue(metadata.slug, `${sourceFile}.slug`);
+  const authoringContract = oneOf(metadata.authoringContract, authoringContracts, `${sourceFile}.authoringContract`);
   const evidenceLevel = oneOf(metadata.evidenceLevel, evidenceLevels, `${sourceFile}.evidenceLevel`);
   const publicationCitations = citations(metadata.citations, `${sourceFile}.citations`);
   if (evidenceLevel === "Primary sources" && publicationCitations.length === 0) {
@@ -275,38 +264,59 @@ function parsePublicationSource(source: string, sourceFile: string): Publication
       fail(sourceFile, "correction dates must fall between publishedAt and revisedAt");
     }
   }
-  const relatedContent = uniqueStrings(
-    stringArray(metadata.relatedContent, `${sourceFile}.relatedContent`, true),
-    `${sourceFile}.relatedContent`,
-  );
+  const lifecycle = validateLifecycleMetadata(metadata, sourceFile, publishedAt, revisedAt, options.now ?? new Date());
+  if (authoringContract === "legacy-protected-v1") {
+    if (!legacyProtectedPublicationSlugs.has(publicationSlug)) {
+      fail(sourceFile, "legacy-protected-v1 is reserved for the exact twelve protected migration slugs");
+    }
+    if (lifecycle.state !== "published") fail(sourceFile, "legacy-protected-v1 is limited to retained published records");
+  }
+  const author = identityReference(metadata.author, options.registries.authors, `${sourceFile}.author`);
+  const editor = identityReference(metadata.editor, options.registries.editors, `${sourceFile}.editor`);
+  const document = parseSafeMarkdown(body, sourceFile);
+  const citationMode = oneOf(metadata.citationMode, citationModes, `${sourceFile}.citationMode`);
+  validateCitationUsage(publicationCitations, document, citationMode, sourceFile);
+  validateDocumentMedia(document, options.media, sourceFile);
+  const directAnswer = requiredString(metadata.directAnswer, `${sourceFile}.directAnswer`);
+  const takeaways = stringList(metadata.takeaways, `${sourceFile}.takeaways`);
+  const claimLimits = stringList(metadata.claimLimits, `${sourceFile}.claimLimits`);
+  const metrics = readingMetrics(document, [directAnswer, ...takeaways, ...claimLimits], metadata.readTimeOverrideMinutes, sourceFile);
 
-  return {
-    slug: slug(metadata.slug, `${sourceFile}.slug`),
-    title: string(metadata.title, `${sourceFile}.title`),
-    description: string(metadata.description, `${sourceFile}.description`),
+  const publication: Publication = {
+    slug: publicationSlug,
+    title: requiredString(metadata.title, `${sourceFile}.title`),
+    description: requiredString(metadata.description, `${sourceFile}.description`),
     format: oneOf(metadata.format, publicationFormats, `${sourceFile}.format`),
-    category: string(metadata.category, `${sourceFile}.category`),
-    series: string(metadata.series, `${sourceFile}.series`),
-    audience: string(metadata.audience, `${sourceFile}.audience`),
+    authoringContract,
+    category: controlledValue(metadata.category, options.registries.categories, `${sourceFile}.category`),
+    series: controlledValue(metadata.series, options.registries.series, `${sourceFile}.series`),
+    audience: controlledValue(metadata.audience, options.registries.audiences, `${sourceFile}.audience`),
     evidenceLevel,
-    author: identity(metadata.author, `${sourceFile}.author`),
-    editor: identity(metadata.editor, `${sourceFile}.editor`),
+    authorId: author.id,
+    editorId: editor.id,
+    author: author.identity,
+    editor: editor.identity,
     publishedAt,
     revisedAt,
-    readTime: string(metadata.readTime, `${sourceFile}.readTime`),
-    directAnswer: string(metadata.directAnswer, `${sourceFile}.directAnswer`),
-    takeaways: stringArray(metadata.takeaways, `${sourceFile}.takeaways`),
-    claimLimits: stringArray(metadata.claimLimits, `${sourceFile}.claimLimits`),
+    citationMode,
+    directAnswer,
+    takeaways,
+    claimLimits,
     citations: publicationCitations,
     correctionHistory,
-    relatedContent,
-    sections: markdownSections(body, sourceFile),
+    relatedContent: stringList(metadata.relatedContent, `${sourceFile}.relatedContent`, true),
+    document,
+    sections: document.sections,
+    ...metrics,
+    ...lifecycle,
     sourceFile,
   };
+  formatRequirements(publication);
+  return publication;
 }
 
-export function loadPublicationRegistry(sources: Record<string, string>): Publication[] {
-  const publications = Object.entries(sources).map(([sourceFile, source]) => parsePublicationSource(source, sourceFile));
+export function loadPublicationRegistry(sources: Record<string, string>, options: PublicationRegistryOptions): Publication[] {
+  const publications = Object.entries(sources).map(([sourceFile, source]) => parsePublicationSource(source, sourceFile, options));
   const slugs = new Set<string>();
   for (const publication of publications) {
     if (slugs.has(publication.slug)) fail("publication registry", `duplicate publication slug: ${publication.slug}`);
@@ -314,53 +324,73 @@ export function loadPublicationRegistry(sources: Record<string, string>): Public
   }
   for (const publication of publications) {
     const fileSlug = publication.sourceFile.split("/").at(-1)?.replace(/\.md$/, "");
-    if (fileSlug && fileSlug !== publication.slug) {
-      fail(publication.sourceFile, `filename must match publication slug: ${publication.slug}`);
-    }
+    if (fileSlug && fileSlug !== publication.slug) fail(publication.sourceFile, `filename must match publication slug: ${publication.slug}`);
     for (const relatedSlug of publication.relatedContent) {
       if (relatedSlug === publication.slug) fail(publication.sourceFile, "a publication cannot relate to itself");
       if (!slugs.has(relatedSlug)) fail(publication.sourceFile, `unknown related publication: ${relatedSlug}`);
     }
   }
+  validateCitationConflicts(publications.map((publication) => ({ label: publication.sourceFile, citations: publication.citations })));
+  const diagnostics = publicationRelationshipDiagnostics(publications, [], options.now ?? new Date());
+  if (diagnostics.errors.length > 0) fail("publication relationships", diagnostics.errors.join("; "));
+  options.relationshipWarnings?.push(...diagnostics.warnings);
   return publications.sort((left, right) => right.publishedAt.localeCompare(left.publishedAt) || left.slug.localeCompare(right.slug));
 }
 
-export function publicationRoutePaths(publications: Publication[]): string[] {
-  return publications.map(({ slug }) => `/articles/${slug}`);
-}
-
-export function formatPublicationDate(date: string): string {
-  return new Intl.DateTimeFormat("en-US", {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-    timeZone: "UTC",
-  }).format(new Date(`${date}T00:00:00Z`));
-}
-
-export function parseGlossaryRegistrySource(source: string): GlossaryEntry[] {
-  const { metadata } = parseFrontMatter(source, "content/glossary.md");
-  if (!Array.isArray(metadata.entries)) fail("content/glossary.md.entries", "must be an array");
-  const slugs = new Set<string>();
-  return metadata.entries.map((value, index) => {
-    const label = `content/glossary.md.entries[${index}]`;
-    const item = record(value, label);
-    const entrySlug = slug(item.slug, `${label}.slug`);
-    if (slugs.has(entrySlug)) fail("glossary registry", `duplicate glossary slug: ${entrySlug}`);
-    slugs.add(entrySlug);
-    return {
-      term: string(item.term, `${label}.term`),
-      slug: entrySlug,
-      category: string(item.category, `${label}.category`),
-      short: string(item.short, `${label}.short`),
-      full: string(item.full, `${label}.full`),
-      myth: string(item.myth, `${label}.myth`),
-      citations: item.citations === undefined ? [] : citations(item.citations, `${label}.citations`),
-    };
+export function publicationsForSurface(
+  publications: readonly Publication[],
+  surface: "route" | "feed" | "sitemap" | "related" | "index",
+  at = new Date(),
+): Publication[] {
+  return publications.filter((publication) => {
+    const exposure = publicationExposure(publication, at);
+    if (surface === "route") return exposure.route !== "hidden";
+    if (surface === "index") return exposure.indexable;
+    return exposure[surface];
   });
 }
 
-export function parseExperimentRegistrySource(source: string, publications: Publication[]): Experiment[] {
+export function publicationRoutePaths(publications: readonly Publication[], at = new Date()): string[] {
+  return publicationsForSurface(publications, "route", at).map(({ slug }) => `/articles/${slug}`);
+}
+
+export function formatPublicationDate(date: string): string {
+  return new Intl.DateTimeFormat("en-US", { month: "long", day: "numeric", year: "numeric", timeZone: "UTC" })
+    .format(new Date(`${date}T00:00:00Z`));
+}
+
+export function parseGlossaryRegistrySource(source: string, registries: ControlledRegistries): GlossaryEntry[] {
+  const { metadata } = parseFrontMatter(source, "content/glossary.md");
+  if (!Array.isArray(metadata.entries)) fail("content/glossary.md.entries", "must be an array");
+  const slugs = new Set<string>();
+  const entries = metadata.entries.map((value, index) => {
+    const label = `content/glossary.md.entries[${index}]`;
+    const item = object(value, label);
+    const entrySlug = slugValue(item.slug, `${label}.slug`);
+    if (slugs.has(entrySlug)) fail("glossary registry", `duplicate glossary slug: ${entrySlug}`);
+    slugs.add(entrySlug);
+    return {
+      term: requiredString(item.term, `${label}.term`),
+      slug: entrySlug,
+      category: controlledValue(item.category, registries.glossaryCategories, `${label}.category`),
+      status: item.status === undefined && establishedGlossarySlugs.has(entrySlug)
+        ? "established" as const
+        : oneOf(item.status, ["established", "new"] as const, `${label}.status`),
+      short: requiredString(item.short, `${label}.short`),
+      full: requiredString(item.full, `${label}.full`),
+      myth: requiredString(item.myth, `${label}.myth`),
+      citations: item.citations === undefined ? [] : citations(item.citations, `${label}.citations`),
+    };
+  });
+  validateCitationConflicts(entries.map((entry) => ({ label: `glossary/${entry.slug}`, citations: entry.citations })));
+  return entries;
+}
+
+function optionalDate(value: unknown, label: string): string | undefined {
+  return value === undefined ? undefined : isoDate(value, label);
+}
+
+export function parseExperimentRegistrySource(source: string, publications: readonly Publication[]): Experiment[] {
   const { metadata } = parseFrontMatter(source, "content/experiments.md");
   if (!Array.isArray(metadata.experiments)) fail("content/experiments.md.experiments", "must be an array");
   const publicationSlugs = new Set(publications.map(({ slug }) => slug));
@@ -368,29 +398,91 @@ export function parseExperimentRegistrySource(source: string, publications: Publ
 
   return metadata.experiments.map((value, index) => {
     const label = `content/experiments.md.experiments[${index}]`;
-    const item = record(value, label);
-    const id = string(item.id, `${label}.id`);
+    const item = object(value, label);
+    const id = requiredString(item.id, `${label}.id`);
+    if (!/^RB-EXP-\d{3}$/.test(id)) fail(`${label}.id`, "must use RB-EXP-NNN format");
     if (ids.has(id)) fail("experiment registry", `duplicate experiment id: ${id}`);
     ids.add(id);
-    const relatedPublications = uniqueStrings(
-      stringArray(item.relatedPublications, `${label}.relatedPublications`, true),
-      `${label}.relatedPublications`,
-    );
-    for (const slug of relatedPublications) {
-      if (!publicationSlugs.has(slug)) fail(label, `unknown related publication: ${slug}`);
+    const relatedPublications = stringList(item.relatedPublications, `${label}.relatedPublications`, true);
+    for (const relatedSlug of relatedPublications) if (!publicationSlugs.has(relatedSlug)) fail(label, `unknown related publication: ${relatedSlug}`);
+    const status = oneOf(item.status, experimentStatuses, `${label}.status`);
+    const startedAt = optionalDate(item.startedAt, `${label}.startedAt`);
+    const baselineCapturedAt = optionalDate(item.baselineCapturedAt, `${label}.baselineCapturedAt`);
+    const endedAt = optionalDate(item.endedAt, `${label}.endedAt`);
+    const resultPublishedAt = optionalDate(item.resultPublishedAt, `${label}.resultPublishedAt`);
+    const result = requiredString(item.result, `${label}.result`);
+    const pendingResult = /^(?:pending|not started)/i.test(result);
+    const inconclusiveReason = optionalString(item.inconclusiveReason, `${label}.inconclusiveReason`);
+    const provenance = item.provenance === undefined ? [] : stringList(item.provenance, `${label}.provenance`);
+
+    if (status === "Queued") {
+      if (startedAt || baselineCapturedAt || endedAt || resultPublishedAt || !pendingResult) fail(label, "Queued experiments cannot claim dates or a result");
+    } else {
+      if (!startedAt || !baselineCapturedAt) fail(label, `${status} experiments require startedAt and baselineCapturedAt`);
+      if (provenance.length === 0) fail(label, `${status} experiments require explicit evidence provenance`);
+      if (baselineCapturedAt > startedAt) fail(label, "baselineCapturedAt cannot follow startedAt");
+      if (status === "Measuring" && (endedAt || resultPublishedAt || !pendingResult)) fail(label, "Measuring experiments cannot claim an end or published result");
+      if (status === "Complete" || status === "Inconclusive") {
+        if (!endedAt || !resultPublishedAt || pendingResult) fail(label, `${status} experiments require an end date and published result`);
+        if (endedAt < startedAt || resultPublishedAt < endedAt) fail(label, "experiment lifecycle dates are out of order");
+      }
+      if (status === "Inconclusive" && !inconclusiveReason) fail(label, "Inconclusive experiments require inconclusiveReason");
     }
+
     return {
       id,
-      title: string(item.title, `${label}.title`),
-      hypothesis: string(item.hypothesis, `${label}.hypothesis`),
-      protocol: stringArray(item.protocol, `${label}.protocol`),
-      baseline: string(item.baseline, `${label}.baseline`),
-      measurementWindow: string(item.measurementWindow, `${label}.measurementWindow`),
-      status: oneOf(item.status, experimentStatuses, `${label}.status`),
-      measurement: string(item.measurement, `${label}.measurement`),
-      result: string(item.result, `${label}.result`),
-      limitations: stringArray(item.limitations, `${label}.limitations`),
+      title: requiredString(item.title, `${label}.title`),
+      hypothesis: requiredString(item.hypothesis, `${label}.hypothesis`),
+      protocol: stringList(item.protocol, `${label}.protocol`),
+      baseline: requiredString(item.baseline, `${label}.baseline`),
+      measurementWindow: requiredString(item.measurementWindow, `${label}.measurementWindow`),
+      status,
+      measurement: requiredString(item.measurement, `${label}.measurement`),
+      cohort: requiredString(item.cohort, `${label}.cohort`),
+      intervention: requiredString(item.intervention, `${label}.intervention`),
+      ...(startedAt ? { startedAt } : {}),
+      ...(baselineCapturedAt ? { baselineCapturedAt } : {}),
+      ...(endedAt ? { endedAt } : {}),
+      ...(resultPublishedAt ? { resultPublishedAt } : {}),
+      result,
+      ...(inconclusiveReason ? { inconclusiveReason } : {}),
+      limitations: stringList(item.limitations, `${label}.limitations`),
+      provenance,
       relatedPublications,
     };
   });
+}
+
+export function validateCompleteContentRegistry(
+  publications: readonly Publication[],
+  glossary: readonly GlossaryEntry[],
+  warnings: string[] = [],
+  at = new Date(),
+): void {
+  validateCitationConflicts([
+    ...publications.map((publication) => ({ label: publication.sourceFile, citations: publication.citations })),
+    ...glossary.map((entry) => ({ label: `glossary/${entry.slug}`, citations: entry.citations })),
+  ]);
+  const diagnostics = publicationRelationshipDiagnostics(publications, glossary, at);
+  if (diagnostics.errors.length > 0) fail("content relationships", diagnostics.errors.join("; "));
+  warnings.push(...diagnostics.warnings);
+}
+
+export type RegistryBundleSources = {
+  publications: Record<string, string>;
+  registries: string;
+  media: string;
+  glossary: string;
+  experiments: string;
+};
+
+export function loadCompleteContentRegistry(sources: RegistryBundleSources, now = new Date()) {
+  const registries = parseControlledRegistries(sources.registries);
+  const media = parseMediaRegistry(sources.media);
+  const warnings: string[] = [];
+  const publications = loadPublicationRegistry(sources.publications, { registries, media, now, relationshipWarnings: warnings });
+  const glossary = parseGlossaryRegistrySource(sources.glossary, registries);
+  const experiments = parseExperimentRegistrySource(sources.experiments, publications);
+  validateCompleteContentRegistry(publications, glossary, warnings, now);
+  return { registries, media, publications, glossary, experiments, warnings: [...new Set(warnings)] };
 }

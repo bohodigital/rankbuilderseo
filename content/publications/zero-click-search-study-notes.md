@@ -4,23 +4,17 @@
   "title": "Zero-click studies: four numbers that change the story",
   "description": "A data note on devices, query samples, result features, and the difference between fewer clicks and less opportunity.",
   "format": "Data note",
+  "authoringContract": "legacy-protected-v1",
   "category": "Search landscape",
   "series": "Reading the research",
   "audience": "Publishers and strategists",
   "evidenceLevel": "Desk analysis",
-  "author": {
-    "name": "Rank Builder SEO Research Desk",
-    "type": "Organization",
-    "url": "/about"
-  },
-  "editor": {
-    "name": "Rank Builder SEO Editorial Desk",
-    "type": "Organization",
-    "url": "/method"
-  },
+  "state": "published",
+  "citationMode": "references-only",
+  "author": "rank-builder-research-desk",
+  "editor": "rank-builder-editorial-desk",
   "publishedAt": "2026-07-01",
   "revisedAt": "2026-07-01",
-  "readTime": "6 min read",
   "directAnswer": "Zero-click rates describe measured behavior in a sample; they do not, by themselves, price the value of search to your business.",
   "takeaways": [
     "Separate mobile and desktop",
@@ -30,7 +24,15 @@
   "claimLimits": [
     "This article is a decision aid, not a universal ranking rule. Verify the conditions on your own site and preserve a baseline before changing them."
   ],
-  "citations": [],
+  "citations": [
+    {
+      "id": "sparktoro-zero-click-2024",
+      "title": "2024 Zero-Click Search Study",
+      "url": "https://sparktoro.com/blog/2024-zero-click-search-study-for-every-1000-us-google-searches-only-374-clicks-go-to-the-open-web-in-the-eu-its-360/",
+      "publisher": "SparkToro and Datos",
+      "accessedAt": "2026-07-18"
+    }
+  ],
   "correctionHistory": [],
   "relatedContent": [
     "ai-overviews-traffic-claims",

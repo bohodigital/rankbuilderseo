@@ -4,23 +4,17 @@
   "title": "Canonical tags: what they solve, what they merely suggest",
   "description": "A canonical is a consolidation signal, not a cleanup crew. Use it for duplicates, not as a substitute for URL discipline.",
   "format": "Explainer",
+  "authoringContract": "legacy-protected-v1",
   "category": "Technical SEO",
   "series": "Technical baseline",
   "audience": "Developers and technical marketers",
   "evidenceLevel": "Primary sources",
-  "author": {
-    "name": "Rank Builder SEO Research Desk",
-    "type": "Organization",
-    "url": "/about"
-  },
-  "editor": {
-    "name": "Rank Builder SEO Editorial Desk",
-    "type": "Organization",
-    "url": "/method"
-  },
+  "state": "published",
+  "citationMode": "references-only",
+  "author": "rank-builder-research-desk",
+  "editor": "rank-builder-editorial-desk",
   "publishedAt": "2026-07-06",
   "revisedAt": "2026-07-06",
-  "readTime": "5 min read",
   "directAnswer": "Canonical tags work best when every other site signal agrees with them.",
   "takeaways": [
     "Canonicals are hints, not directives",

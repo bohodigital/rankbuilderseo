@@ -4,23 +4,17 @@
   "title": "A local SEO provider scorecard you can actually use",
   "description": "Evaluate access, operating discipline, local evidence, reporting, and ownership before charisma gets a vote.",
   "format": "Playbook",
+  "authoringContract": "legacy-protected-v1",
   "category": "Buyer defense",
   "series": "Buying SEO",
   "audience": "Local business owners",
   "evidenceLevel": "Documented practice",
-  "author": {
-    "name": "Rank Builder SEO Research Desk",
-    "type": "Organization",
-    "url": "/about"
-  },
-  "editor": {
-    "name": "Rank Builder SEO Editorial Desk",
-    "type": "Organization",
-    "url": "/method"
-  },
+  "state": "published",
+  "citationMode": "references-only",
+  "author": "rank-builder-research-desk",
+  "editor": "rank-builder-editorial-desk",
   "publishedAt": "2026-07-02",
   "revisedAt": "2026-07-02",
-  "readTime": "8 min read",
   "directAnswer": "Choose the provider whose operating model remains legible after the sales call ends.",
   "takeaways": [
     "Score ownership and access first",

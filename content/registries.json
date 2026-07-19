@@ -1,0 +1,52 @@
+{
+  "categories": [
+    "Bad SEO patterns",
+    "Buyer defense",
+    "Measurement",
+    "Pricing clarity",
+    "Search landscape",
+    "Technical SEO"
+  ],
+  "series": [
+    "Buying SEO",
+    "Claim checks",
+    "Measurement without theater",
+    "Reading the research",
+    "Technical baseline"
+  ],
+  "audiences": [
+    "Analysts and marketing leads",
+    "Developers and migration leads",
+    "Developers and technical marketers",
+    "Local business owners",
+    "Marketing leads and clients",
+    "Operators and technical marketers",
+    "Owners and marketing leads",
+    "Owners and procurement teams",
+    "Publishers and marketing leaders",
+    "Publishers and strategists",
+    "SEO buyers",
+    "Technical SEOs and developers"
+  ],
+  "glossaryCategories": [
+    "Content",
+    "Discovery",
+    "Measurement",
+    "Ownership",
+    "Technical"
+  ],
+  "authors": {
+    "rank-builder-research-desk": {
+      "name": "Rank Builder SEO Research Desk",
+      "type": "Organization",
+      "url": "/about"
+    }
+  },
+  "editors": {
+    "rank-builder-editorial-desk": {
+      "name": "Rank Builder SEO Editorial Desk",
+      "type": "Organization",
+      "url": "/method"
+    }
+  }
+}

@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { glossary } from "./content/glossary";
-import { publications } from "./content/publications";
+import { sitemapPublications } from "./content/publications";
 
 const origin = "https://rankbuilderseo.com";
 const staticPaths = [
@@ -19,7 +19,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: path === "" ? ("weekly" as const) : ("monthly" as const),
     priority: path === "" ? 1 : 0.7,
   }));
-  const publicationEntries = publications.map((publication) => ({
+  const publicationEntries = sitemapPublications.map((publication) => ({
     url: `${origin}/articles/${publication.slug}`,
     lastModified: publication.revisedAt,
     changeFrequency: "monthly" as const,

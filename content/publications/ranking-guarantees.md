@@ -4,23 +4,17 @@
   "title": "Ranking guarantees are a contract-reading exercise",
   "description": "The promise is only as useful as its query set, geography, device context, exclusions, and remedy.",
   "format": "Claim check",
+  "authoringContract": "legacy-protected-v1",
   "category": "Bad SEO patterns",
   "series": "Claim checks",
   "audience": "SEO buyers",
   "evidenceLevel": "Primary sources",
-  "author": {
-    "name": "Rank Builder SEO Research Desk",
-    "type": "Organization",
-    "url": "/about"
-  },
-  "editor": {
-    "name": "Rank Builder SEO Editorial Desk",
-    "type": "Organization",
-    "url": "/method"
-  },
+  "state": "published",
+  "citationMode": "references-only",
+  "author": "rank-builder-research-desk",
+  "editor": "rank-builder-editorial-desk",
   "publishedAt": "2026-07-08",
   "revisedAt": "2026-07-08",
-  "readTime": "5 min read",
   "directAnswer": "Treat guarantees as prompts for better questions, never as evidence of competence.",
   "takeaways": [
     "Define the exact promised outcome",

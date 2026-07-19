@@ -36,6 +36,79 @@ npm run lint
 the 404 behavior, crawler endpoints, analytics marker, and required Cloudflare
 Pages artifacts.
 
+## Content authoring
+
+Run the fast authoring checks while editing, and run the complete local gate before
+hand-off:
+
+```bash
+npm run content:check
+npm run typecheck
+npm run verify
+```
+
+Create one of the five canonical draft formats with:
+
+```bash
+npm run content:new -- --format explainer --slug example-slug --title "Example title"
+```
+
+Accepted format names are `explainer`, `playbook`, `claim-check`, `data-note`,
+and `checklist`. Add `--dry-run` to validate and print a scaffold without writing
+it. Templates live in `content/templates/`.
+New templates declare `authoringContract: "canonical-v1"`. Before a record can
+enter review, scheduled, published, or archived state, its exact format roles are
+required: Definition/Mechanism/Examples/Boundaries for explainers; Preconditions/
+Ordered process/Failure cases for playbooks; Identified claim/Sources and evidence/
+Conclusion/Limitations for claim checks; Dataset and period/Methodology/Result/
+Limitations for data notes; and Checklist/Completion criteria for checklists.
+Ordered process and checklist sections must contain their required list shapes,
+and source-dependent formats must contain citations.
+
+The twelve protected publications use the explicit `legacy-protected-v1`
+migration marker so their established bodies remain byte-for-byte editorially
+stable. That marker is accepted only for the exact protected slugs in published
+state and must never be copied into new work.
+
+Publication metadata is fail-closed. Category, series, audience, author, and editor
+must reference `content/registries.json`. Media must be registered in
+`content/media.json`, local beneath `public/`, approved, dimensionally accurate,
+and include non-empty alt text, caption, credit, rights, and source information when
+the rights are not owned. Do not hotlink article images.
+
+The supported body subset is deliberately small:
+
+- H2 sections with generated stable anchors or explicit `{#stable-id}` anchors
+- links to HTTPS, root-relative routes, or valid local fragments
+- `**bold**`, `*italics*`, inline code, and `[@source-id]` citations
+- flat ordered and unordered lists, fenced code, callouts/blockquotes, simple tables
+- registered local figures using `![alt](/media/file.ext "caption")`
+
+Raw HTML, scripts, iframes, component syntax, unsafe schemes, nested/task lists,
+unsupported heading levels, malformed tables, unknown citations, unknown fragments,
+and unregistered media fail validation. Use `citationMode: "inline-required"` for
+new work; every listed source must then be cited and every citation must resolve.
+
+Lifecycle states are `draft`, `review`, `scheduled`, `published`, and
+`archived`. Draft/review records and future scheduled records are excluded from
+routes, feeds, sitemaps, indexing, and related reading. Published records are public
+and indexable. Archived records must declare redirect, replacement, or
+retained-public behavior; retained archives are public but noindex and absent from
+discovery surfaces. Material revision dates require a revision note.
+
+Word count and reading time come from rendered content. An optional numeric
+`readTimeOverrideMinutes` is accepted only within the validator's narrow tolerance.
+Do not restore free-form read-time labels.
+
+Run `npm run content:links` periodically or during release review to inspect source
+redirects, failures, and changed page titles. It is intentionally advisory and is
+not part of `verify`; `--strict` is available for an explicit review gate.
+The checker validates the initial URL and every redirect as credential-free HTTPS,
+resolves every hostname, rejects localhost-like names and any private, loopback,
+link-local, reserved, documentation, multicast, or otherwise non-public address,
+and pins an approved DNS answer into the TLS request. Network failures remain
+review output rather than production-build failures.
+
 ## Publication
 
 Production releases follow one commit through the complete chain:

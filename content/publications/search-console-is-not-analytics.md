@@ -4,23 +4,17 @@
   "title": "Search Console is not Analytics—and that is useful",
   "description": "One shows how Google Search saw and surfaced your pages. The other records configured behavior after visits.",
   "format": "Explainer",
+  "authoringContract": "legacy-protected-v1",
   "category": "Measurement",
   "series": "Measurement without theater",
   "audience": "Analysts and marketing leads",
   "evidenceLevel": "Primary sources",
-  "author": {
-    "name": "Rank Builder SEO Research Desk",
-    "type": "Organization",
-    "url": "/about"
-  },
-  "editor": {
-    "name": "Rank Builder SEO Editorial Desk",
-    "type": "Organization",
-    "url": "/method"
-  },
+  "state": "published",
+  "citationMode": "references-only",
+  "author": "rank-builder-research-desk",
+  "editor": "rank-builder-editorial-desk",
   "publishedAt": "2026-07-07",
   "revisedAt": "2026-07-07",
-  "readTime": "6 min read",
   "directAnswer": "Use Search Console for Google Search visibility and technical evidence; use analytics for configured on-site behavior; use business systems for actual customers.",
   "takeaways": [
     "Search, behavior, and revenue are different records",

@@ -61,6 +61,7 @@ export function articleStructuredData(publication: Publication): JsonRecord {
         image: `${origin}/og.png`,
         inLanguage: "en",
         isAccessibleForFree: true,
+        wordCount: publication.wordCount,
         author: {
           "@type": publication.author.type,
           name: publication.author.name,

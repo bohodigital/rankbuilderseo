@@ -4,23 +4,17 @@
   "title": "Audit internal links by template, not one URL at a time",
   "description": "The scalable unit of technical SEO is often the template. Find repeated link behavior before editing isolated pages.",
   "format": "Playbook",
+  "authoringContract": "legacy-protected-v1",
   "category": "Technical SEO",
   "series": "Technical baseline",
   "audience": "Technical SEOs and developers",
   "evidenceLevel": "Documented practice",
-  "author": {
-    "name": "Rank Builder SEO Research Desk",
-    "type": "Organization",
-    "url": "/about"
-  },
-  "editor": {
-    "name": "Rank Builder SEO Editorial Desk",
-    "type": "Organization",
-    "url": "/method"
-  },
+  "state": "published",
+  "citationMode": "references-only",
+  "author": "rank-builder-research-desk",
+  "editor": "rank-builder-editorial-desk",
   "publishedAt": "2026-07-01",
   "revisedAt": "2026-07-01",
-  "readTime": "7 min read",
   "directAnswer": "Template-level analysis turns internal linking from endless page editing into a maintainable system.",
   "takeaways": [
     "Group URLs by page template",

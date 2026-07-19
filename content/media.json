@@ -1,0 +1,16 @@
+{
+  "media": [
+    {
+      "id": "authoring-example-diagram",
+      "src": "/media/authoring-example.svg",
+      "alt": "Three connected boxes labeled question, evidence, and bounded answer",
+      "caption": "Example of a controlled editorial figure; replace or remove it before review.",
+      "credit": "Rank Builder SEO Research Desk",
+      "width": 960,
+      "height": 540,
+      "mimeType": "image/svg+xml",
+      "rights": "owned",
+      "status": "approved"
+    }
+  ]
+}

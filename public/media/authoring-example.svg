@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" role="img" aria-labelledby="title description">
+  <title id="title">Question, evidence, bounded answer workflow</title>
+  <desc id="description">Three connected boxes illustrate the controlled editorial workflow used in article templates.</desc>
+  <rect width="960" height="540" fill="#f7f6f2"/>
+  <g fill="#fffefa" stroke="#17211f" stroke-width="4">
+    <rect x="55" y="180" width="240" height="180" rx="8"/>
+    <rect x="360" y="180" width="240" height="180" rx="8"/>
+    <rect x="665" y="180" width="240" height="180" rx="8"/>
+  </g>
+  <g fill="none" stroke="#8d3c32" stroke-width="8">
+    <path d="M295 270h65"/>
+    <path d="M600 270h65"/>
+  </g>
+  <g fill="#17211f" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700" text-anchor="middle">
+    <text x="175" y="280">QUESTION</text>
+    <text x="480" y="280">EVIDENCE</text>
+    <text x="785" y="255">BOUNDED</text>
+    <text x="785" y="300">ANSWER</text>
+  </g>
+</svg>

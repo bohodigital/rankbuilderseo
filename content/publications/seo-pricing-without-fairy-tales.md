@@ -4,23 +4,17 @@
   "title": "SEO pricing without the decorative averages",
   "description": "Most pricing questions are scope questions wearing a dollar sign. Ask what actually happens after the invoice.",
   "format": "Explainer",
+  "authoringContract": "legacy-protected-v1",
   "category": "Pricing clarity",
   "series": "Buying SEO",
   "audience": "Owners and procurement teams",
   "evidenceLevel": "Desk analysis",
-  "author": {
-    "name": "Rank Builder SEO Research Desk",
-    "type": "Organization",
-    "url": "/about"
-  },
-  "editor": {
-    "name": "Rank Builder SEO Editorial Desk",
-    "type": "Organization",
-    "url": "/method"
-  },
+  "state": "published",
+  "citationMode": "references-only",
+  "author": "rank-builder-research-desk",
+  "editor": "rank-builder-editorial-desk",
   "publishedAt": "2026-07-09",
   "revisedAt": "2026-07-09",
-  "readTime": "7 min read",
   "directAnswer": "Compare the work, access, assumptions, and accountability—not just the monthly number.",
   "takeaways": [
     "Compare delivery models, not retainers",

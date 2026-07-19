@@ -425,9 +425,10 @@ test("keeps the editorial interface calm, accessible, and motion-safe", async ()
   assert.doesNotMatch(editorial, /animation: drift|position: sticky/);
 });
 test("defines the packet-one metadata, semantic, accessibility, and asset contract", async () => {
-  const [layout, article, glossary, chrome, css, metadata, structured, headers, manifest, socialCard] = await Promise.all([
+  const [layout, article, renderer, glossary, chrome, css, metadata, structured, headers, manifest, socialCard] = await Promise.all([
     readFile(new URL("app/layout.tsx", root), "utf8"),
     readFile(new URL("app/articles/[slug]/page.tsx", root), "utf8"),
+    readFile(new URL("app/articles/article-content.tsx", root), "utf8"),
     readFile(new URL("app/glossary/[slug]/page.tsx", root), "utf8"),
     readFile(new URL("app/site-chrome.tsx", root), "utf8"),
     readFile(new URL("app/globals.css", root), "utf8"),
@@ -455,9 +456,10 @@ test("defines the packet-one metadata, semantic, accessibility, and asset contra
     sourceFiles.map((file) => readFile(new URL(`app/${file}`, root), "utf8")),
   );
   assert.ok(applicationSource.every((source) => !source.includes("↗")), "internal links never use fake external arrows");
-  assert.match(article, /function stableEntries/);
-  assert.match(article, /const renderedSections = stableEntries/);
-  assert.match(article, /key=\{entry\.key\}/);
+  assert.match(article, /<ArticleContent publication=\{publication\}/);
+  assert.match(renderer, /<h2 id=\{section\.id\}>/);
+  assert.match(renderer, /key=\{\`\$\{publication\.slug\}-\$\{section\.id\}\`\}/);
+  assert.doesNotMatch(article, /section-\$\{index/);
   assert.doesNotMatch(article, /key=\{`(?:toc|section|takeaway|correction|claim-limit)-\$\{index\}/);
   assert.match(glossary, /aria-label="Breadcrumb"/);
   assert.match(chrome, /usePathname/);
@@ -465,7 +467,7 @@ test("defines the packet-one metadata, semantic, accessibility, and asset contra
   assert.match(css, /\.menu-toggle, \.primary-nav a, \.footer-nav a \{[^}]*min-width: 44px[^}]*min-height: 44px/s);
   assert.match(structured, /inLanguage: "en"/);
   assert.match(structured, /isAccessibleForFree: true/);
-  assert.doesNotMatch(structured, /publicationWordCount|wordCount:/);
+  assert.match(structured, /wordCount: publication\.wordCount/);
   assert.match(headers, /\/site\.webmanifest/);
   assert.equal(JSON.parse(manifest).display, "browser");
   assert.ok(socialCard.byteLength < 2_000_000);

@@ -4,23 +4,17 @@
   "title": "The no-drama SEO migration launch checklist",
   "description": "A compact launch sequence for protecting valuable URLs, signals, measurement, and rollback options during a site move.",
   "format": "Checklist",
+  "authoringContract": "legacy-protected-v1",
   "category": "Technical SEO",
   "series": "Technical baseline",
   "audience": "Developers and migration leads",
   "evidenceLevel": "Documented practice",
-  "author": {
-    "name": "Rank Builder SEO Research Desk",
-    "type": "Organization",
-    "url": "/about"
-  },
-  "editor": {
-    "name": "Rank Builder SEO Editorial Desk",
-    "type": "Organization",
-    "url": "/method"
-  },
+  "state": "published",
+  "citationMode": "references-only",
+  "author": "rank-builder-research-desk",
+  "editor": "rank-builder-editorial-desk",
   "publishedAt": "2026-07-05",
   "revisedAt": "2026-07-05",
-  "readTime": "9 min read",
   "directAnswer": "A migration succeeds when important old URLs resolve cleanly, measurement survives, and surprises are detected quickly.",
   "takeaways": [
     "Map valuable URLs before launch",

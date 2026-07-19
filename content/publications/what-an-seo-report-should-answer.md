@@ -4,23 +4,17 @@
   "title": "Seven questions every SEO report should answer",
   "description": "Reporting should reduce uncertainty and change decisions. If it only inventories activity, it is a receipt for busyness.",
   "format": "Checklist",
+  "authoringContract": "legacy-protected-v1",
   "category": "Measurement",
   "series": "Measurement without theater",
   "audience": "Marketing leads and clients",
   "evidenceLevel": "Desk analysis",
-  "author": {
-    "name": "Rank Builder SEO Research Desk",
-    "type": "Organization",
-    "url": "/about"
-  },
-  "editor": {
-    "name": "Rank Builder SEO Editorial Desk",
-    "type": "Organization",
-    "url": "/method"
-  },
+  "state": "published",
+  "citationMode": "references-only",
+  "author": "rank-builder-research-desk",
+  "editor": "rank-builder-editorial-desk",
   "publishedAt": "2026-07-04",
   "revisedAt": "2026-07-04",
-  "readTime": "6 min read",
   "directAnswer": "The best report makes the next operating decision easier, even when the result is disappointing.",
   "takeaways": [
     "Connect work to observable change",

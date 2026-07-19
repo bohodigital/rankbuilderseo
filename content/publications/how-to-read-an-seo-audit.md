@@ -4,23 +4,17 @@
   "title": "How to read an SEO audit without getting snowed",
   "description": "A long PDF is not a strategy. Here is how to separate reproducible findings from expensive formatting and recycled warnings.",
   "format": "Playbook",
+  "authoringContract": "legacy-protected-v1",
   "category": "Buyer defense",
   "series": "Buying SEO",
   "audience": "Owners and marketing leads",
   "evidenceLevel": "Documented practice",
-  "author": {
-    "name": "Rank Builder SEO Research Desk",
-    "type": "Organization",
-    "url": "/about"
-  },
-  "editor": {
-    "name": "Rank Builder SEO Editorial Desk",
-    "type": "Organization",
-    "url": "/method"
-  },
+  "state": "published",
+  "citationMode": "references-only",
+  "author": "rank-builder-research-desk",
+  "editor": "rank-builder-editorial-desk",
   "publishedAt": "2026-07-11",
   "revisedAt": "2026-07-11",
-  "readTime": "8 min read",
   "directAnswer": "A useful audit connects every finding to evidence, consequence, priority, and a practical next action.",
   "takeaways": [
     "Require a reproducible evidence trail",

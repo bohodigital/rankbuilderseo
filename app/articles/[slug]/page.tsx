@@ -1,43 +1,33 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
-import { publicationBySlug, publications } from "../../content/publications";
+import { notFound, redirect } from "next/navigation";
+import { publicationBySlug, publicationRouteBySlug, routePublications } from "../../content/publications";
 import type { Publication } from "../../content/registry";
 import { formatPublicationDate } from "../../content/registry";
 import { articleStructuredData, serializeStructuredData } from "../../content/structured-data";
+import { stableEntries } from "../../content/stable-keys";
 import { sharedOpenGraph } from "../../metadata";
 import { SiteFooter, SiteHeader } from "../../site-chrome";
+import { ArticleContent } from "../article-content";
 
 function sectionNumber(index: number): string {
   return String(index + 1).padStart(2, "0");
 }
 
-function stableEntries<T>(items: readonly T[], scope: string, signature: (value: T) => string) {
-  const occurrenceBySignature = new Map<string, number>();
-  return items.map((value) => {
-    const keyData = encodeURIComponent(signature(value));
-    const occurrence = occurrenceBySignature.get(keyData) ?? 0;
-    occurrenceBySignature.set(keyData, occurrence + 1);
-    return { key: `${scope}-${keyData}-${occurrence}`, value };
-  });
-}
-
-function sectionSignature(section: Publication["sections"][number]): string {
-  return [section.heading, ...section.paragraphs, ...(section.bullets ?? [])].join("\u0000");
-}
-
 export function generateStaticParams() {
-  return publications.map((publication) => ({ slug: publication.slug }));
+  return routePublications.map((publication) => ({ slug: publication.slug }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const publication = publicationBySlug.get(slug);
+  const route = publicationRouteBySlug.get(slug);
+  const publication = route?.exposure.route === "public" ? route.publication : undefined;
   const canonical = `https://rankbuilderseo.com/articles/${publication?.slug ?? slug}`;
   return publication ? {
     title: publication.title,
     description: publication.description,
     alternates: { canonical },
+    robots: { index: route?.exposure.indexable ?? false, follow: true },
     openGraph: {
       ...sharedOpenGraph,
       type: "article",
@@ -58,8 +48,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function ArticlePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const publication = publicationBySlug.get(slug);
-  if (!publication) notFound();
+  const route = publicationRouteBySlug.get(slug);
+  if (!route) notFound();
+  if (route.exposure.route === "redirect") redirect(route.exposure.redirectTo!);
+  const publication = route.publication;
   const related = publication.relatedContent
     .map((relatedSlug) => publicationBySlug.get(relatedSlug))
     .filter((item): item is Publication => Boolean(item));
@@ -68,12 +60,6 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
     : "Related reading";
   const isRevised = publication.revisedAt !== publication.publishedAt;
   const takeaways = stableEntries(publication.takeaways, `${publication.slug}-takeaway`, (takeaway) => takeaway);
-  const renderedSections = stableEntries(publication.sections, `${publication.slug}-section`, sectionSignature)
-    .map((entry) => ({
-      ...entry,
-      paragraphs: stableEntries(entry.value.paragraphs, `${entry.key}-paragraph`, (paragraph) => paragraph),
-      bullets: stableEntries(entry.value.bullets ?? [], `${entry.key}-bullet`, (bullet) => bullet),
-    }));
   const corrections = stableEntries(
     publication.correctionHistory,
     `${publication.slug}-correction`,
@@ -110,7 +96,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
           <div className="rail-record"><span>For</span><b>{publication.audience}</b></div>
           <nav aria-label="On this page">
             <p className="rail-heading">On this page</p>
-            {renderedSections.map((entry, index) => <a href={`#section-${index + 1}`} key={entry.key}><span>{sectionNumber(index)}</span>{entry.value.heading}</a>)}
+            {publication.sections.map((section, index) => <a href={`#${section.id}`} key={section.id}><span>{sectionNumber(index)}</span>{section.heading}</a>)}
             <a href="#references">References</a>
             <a href="#corrections">Corrections</a>
           </nav>
@@ -119,11 +105,11 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
         <div className="article-body">
           <div className="verdict"><span>Direct answer</span><p>{publication.directAnswer}</p></div>
           <div className="takeaway-box"><span>What to remember</span><ul>{takeaways.map((entry) => <li key={entry.key}>{entry.value}</li>)}</ul></div>
-          {renderedSections.map((entry, index) => <section id={`section-${index + 1}`} key={entry.key}><p className="section-count">{sectionNumber(index)}</p><h2>{entry.value.heading}</h2>{entry.paragraphs.map((paragraph) => <p key={paragraph.key}>{paragraph.value}</p>)}{entry.bullets.length > 0 && <ul>{entry.bullets.map((bullet) => <li key={bullet.key}>{bullet.value}</li>)}</ul>}</section>)}
+          <ArticleContent publication={publication} />
           <section id="references">
             <p className="section-count">References</p>
             <h2>Sources behind this record</h2>
-            {publication.citations.length > 0 ? <ol>{publication.citations.map((citation) => <li key={citation.id}><a href={citation.url} rel="noopener noreferrer external">{citation.title}</a> — {citation.publisher}{citation.accessedAt ? ` (accessed ${formatPublicationDate(citation.accessedAt)})` : ""}</li>)}</ol> : <p>No external references are claimed for this desk-analysis or documented-practice record. Its evidence level and claim limits remain explicit.</p>}
+            {publication.citations.length > 0 ? <ol>{publication.citations.map((citation) => <li id={`reference-${citation.id}`} key={citation.id}><a href={citation.url} rel="noopener noreferrer external">{citation.title}</a> — {citation.publisher}{citation.accessedAt ? ` (accessed ${formatPublicationDate(citation.accessedAt)})` : ""}</li>)}</ol> : <p>No external references are claimed for this desk-analysis or documented-practice record. Its evidence level and claim limits remain explicit.</p>}
           </section>
           <section id="corrections">
             <p className="section-count">Corrections</p>

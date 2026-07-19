@@ -7,11 +7,17 @@
   },
   "scripts": {
     "dev": "vinext dev",
+    "prebuild": "npm run content:check",
     "build": "vinext build",
-    "build:pages": "vinext build && node scripts/prepare-pages.mjs",
+    "build:pages": "npm run content:check && vinext build && node scripts/prepare-pages.mjs",
+    "content:check": "node --experimental-strip-types scripts/content-check.mjs",
+    "content:new": "node --experimental-strip-types scripts/content-new.mjs",
+    "content:links": "node --experimental-strip-types scripts/check-source-links.mjs",
     "start": "vinext start",
     "test": "npm run build:pages && node --test tests/*.test.mjs",
-    "lint": "eslint . --ignore-pattern dist --ignore-pattern .next"
+    "lint": "eslint . --ignore-pattern dist --ignore-pattern .next",
+    "typecheck": "tsc --noEmit --incremental false",
+    "verify": "npm run content:check && npm run typecheck && npm run lint && npm test && npm run build"
   },
   "dependencies": {
     "next": "16.2.6",
