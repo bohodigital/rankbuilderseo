@@ -20,7 +20,7 @@ export default function Home() {
             </p>
             <div className="button-row">
               <Link className="button button-dark" href="/articles">Browse all articles <span>→</span></Link>
-              <Link className="button button-ghost" href="/lab">Enter the lab <span>↗</span></Link>
+              <Link className="button button-ghost" href="/lab">Enter the lab</Link>
             </div>
           </div>
           <aside className="hero-board" aria-label="Rank Builder principles">
@@ -69,7 +69,7 @@ export default function Home() {
                     <div className="meta-row"><span>{article.format}</span><span>{article.readTime}</span></div>
                     <h3>{article.title}</h3>
                   </div>
-                  <span className="row-arrow">↗</span>
+                  <span className="row-arrow">→</span>
                 </Link>
               ))}
             </div>
@@ -132,7 +132,7 @@ export default function Home() {
                 <span className="term-letter">{entry.term.charAt(0)}</span>
                 <h3>{entry.term}</h3>
                 <p>{entry.short}</p>
-                <span className="definition-link">Full definition ↗</span>
+                <span className="definition-link">Full definition →</span>
               </Link>
             ))}
           </div>

@@ -39,7 +39,7 @@ export function ArticleExplorer({ articles }: { articles: Publication[] }) {
             <p className="article-series">{article.series}</p>
             <h2>{article.title}</h2>
             <p>{article.description}</p>
-            <div className="article-card-bottom"><span>{article.category}</span><span>{article.readTime} ↗</span></div>
+            <div className="article-card-bottom"><span>{article.category}</span><span>{article.readTime} →</span></div>
           </Link>
         ))}
       </div>

@@ -1,7 +1,21 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+
+type NavigationLinkProps = {
+  href: string;
+  children: React.ReactNode;
+  className?: string;
+  onClick?: () => void;
+};
+
+function NavigationLink({ href, children, className, onClick }: NavigationLinkProps) {
+  const pathname = usePathname();
+  const active = href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
+  return <Link className={className} href={href} aria-current={active ? "page" : undefined} onClick={onClick}>{children}</Link>;
+}
 
 export function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -27,10 +41,10 @@ export function SiteHeader() {
     <header className="site-header">
       <a className="skip-link" href="#main-content">Skip to content</a>
       <div className="shell header-inner">
-        <Link className="wordmark" href="/" aria-label="Rank Builder SEO home">
+        <NavigationLink className="wordmark" href="/">
           <span className="wordmark-box">RB</span>
           <span>Rank Builder<br />SEO</span>
-        </Link>
+        </NavigationLink>
         <button
           className="menu-toggle"
           aria-expanded={menuOpen}
@@ -47,13 +61,13 @@ export function SiteHeader() {
           className={`primary-nav${menuOpen ? " is-open" : ""}`}
           aria-label="Primary navigation"
         >
-          <Link href="/articles" onClick={closeMenu}>Articles</Link>
-          <Link href="/glossary" onClick={closeMenu}>Glossary</Link>
-          <Link href="/lab" onClick={closeMenu}>Lab</Link>
-          <Link href="/method" onClick={closeMenu}>Method</Link>
-          <Link className="mobile-nav-link" href="/about" onClick={closeMenu}>About</Link>
+          <NavigationLink href="/articles" onClick={closeMenu}>Articles</NavigationLink>
+          <NavigationLink href="/glossary" onClick={closeMenu}>Glossary</NavigationLink>
+          <NavigationLink href="/lab" onClick={closeMenu}>Lab</NavigationLink>
+          <NavigationLink href="/method" onClick={closeMenu}>Method</NavigationLink>
+          <NavigationLink className="mobile-nav-link" href="/about" onClick={closeMenu}>About</NavigationLink>
         </nav>
-        <Link className="header-link" href="/about">About the desk ↗</Link>
+        <NavigationLink className="header-link" href="/about">About the desk</NavigationLink>
       </div>
     </header>
   );

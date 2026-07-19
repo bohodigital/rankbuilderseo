@@ -12,3 +12,24 @@
 
 /og.png
   ! X-Robots-Tag
+
+/favicon.ico
+  ! X-Robots-Tag
+
+/favicon.svg
+  ! X-Robots-Tag
+
+/favicon-32x32.png
+  ! X-Robots-Tag
+
+/apple-touch-icon.png
+  ! X-Robots-Tag
+
+/icon-192.png
+  ! X-Robots-Tag
+
+/icon-512.png
+  ! X-Robots-Tag
+
+/site.webmanifest
+  ! X-Robots-Tag

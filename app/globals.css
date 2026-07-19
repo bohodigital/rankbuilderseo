@@ -418,3 +418,14 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; } }
 @media (max-width: 900px) { .site-header .primary-nav { padding: .75rem 24px 1rem; border: 1px solid var(--line); box-shadow: 0 8px 20px rgba(23, 33, 31, .12); } .hero, .split-heading, .system-grid, .article-layout { grid-template-columns: 1fr; gap: 2rem; } .hero { padding-block: 4rem; } .hero-board { min-height: auto; } .feature-story { border-right: 0; border-bottom: 1px solid var(--line); } }
 @media (max-width: 620px) { .shell { width: min(100% - 32px, 1120px); } .header-inner { height: 66px; } .hero { padding-block: 3.5rem; } .hero h1, .page-hero h1 { font-size: clamp(2.75rem, 14vw, 4rem); } .hero-board { margin: 0; padding: 1.5rem; } .section, .article-system, .lab-rules { padding-block: 4rem; } .feature-story { min-height: 360px; } .article-shell { padding-block: 4rem; } .article-header h1 { font-size: clamp(2.5rem, 12vw, 3.5rem); } .system-steps li { grid-template-columns: 1fr; } .system-steps span { grid-row: auto; } }
+
+/* Packet 1 shell semantics and touch-target refinements. */
+.breadcrumbs { display: flex; flex-wrap: wrap; gap: .45rem; margin-bottom: 1.5rem; color: var(--muted); font: 700 .68rem/1.4 var(--mono); text-transform: uppercase; }
+.breadcrumbs a { color: inherit; text-decoration: underline; text-underline-offset: .18em; }
+.site-header nav a[aria-current="page"], .header-link[aria-current="page"] { border-color: var(--signal); color: var(--signal); }
+.menu-toggle, .primary-nav a, .footer-nav a { min-width: 44px; min-height: 44px; display: inline-flex; align-items: center; }
+.primary-nav a { justify-content: center; }
+.footer-nav a { align-items: center; }
+.article-rail nav { display: flex; flex-direction: column; gap: .9rem; }
+.article-rail nav .rail-heading { margin-top: 1rem; }
+@media (max-width: 900px) { .site-header .primary-nav a { min-height: 44px; padding: .85rem .25rem; justify-content: flex-start; } }

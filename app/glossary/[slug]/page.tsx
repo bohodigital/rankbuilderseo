@@ -40,6 +40,9 @@ export default async function GlossaryEntryPage({ params }: { params: Promise<{ 
       dangerouslySetInnerHTML={{ __html: serializeStructuredData(glossaryStructuredData(entry)) }}
     />
     <section className="page-hero shell">
+      <nav className="breadcrumbs" aria-label="Breadcrumb">
+        <Link href="/">Home</Link><span aria-hidden="true">/</span><Link href="/glossary">Glossary</Link><span aria-hidden="true">/</span><span aria-current="page">{entry.term}</span>
+      </nav>
       <p className="eyebrow">{entry.category} / Glossary definition</p>
       <h1>{entry.term}</h1>
       <p>{entry.short}</p>
@@ -52,8 +55,8 @@ export default async function GlossaryEntryPage({ params }: { params: Promise<{ 
           <p>{entry.full}</p>
           <div className="myth"><span>Common misunderstanding</span><p>{entry.myth}</p></div>
           <h2>References</h2>
-          {entry.citations.length > 0 ? <ol>{entry.citations.map((citation) => <li key={citation.id}><a href={citation.url}>{citation.title}</a> — {citation.publisher}{citation.accessedAt ? ` (accessed ${formatPublicationDate(citation.accessedAt)})` : ""}</li>)}</ol> : <p>No external reference is claimed for this plain-language definition.</p>}
-          <p><Link href={`/glossary#${entry.slug}`}>Return to this term in the glossary index →</Link></p>
+          {entry.citations.length > 0 ? <ol>{entry.citations.map((citation) => <li key={citation.id}><a href={citation.url} rel="noopener noreferrer external">{citation.title}</a> — {citation.publisher}{citation.accessedAt ? ` (accessed ${formatPublicationDate(citation.accessedAt)})` : ""}</li>)}</ol> : <p>No external reference is claimed for this plain-language definition.</p>}
+          <p><Link href={`/glossary#${entry.slug}`}>Return to this term in the glossary index</Link></p>
         </div>
       </article>
     </section>

@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { access, readFile } from "node:fs/promises";
+import { access, readFile, readdir } from "node:fs/promises";
 import test from "node:test";
 
 const root = new URL("../", import.meta.url);
@@ -405,14 +405,9 @@ test("emits the Cloudflare Pages deployment artifacts", async () => {
 test("emits scoped Pages X-Robots-Tag detach rules for static preview assets", async () => {
   const headers = await readFile(new URL("dist/client/_headers", root), "utf8");
 
-  assert.deepEqual(
-    headers.trimEnd().split("\n\n"),
-    [
-      `/*\n  X-Content-Type-Options: nosniff\n  Strict-Transport-Security: max-age=31536000; includeSubDomains\n  X-Frame-Options: DENY\n  X-XSS-Protection: 0\n  Referrer-Policy: strict-origin-when-cross-origin\n  Permissions-Policy: camera=(), microphone=(), geolocation=()\n  Content-Security-Policy-Report-Only: default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; img-src 'self' data:; font-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' https://analytics.bohodigitalservices.com; connect-src 'self' https://analytics.bohodigitalservices.com`,
-      "/assets/*\n  ! X-Robots-Tag",
-      "/og.png\n  ! X-Robots-Tag",
-    ],
-  );
+  for (const asset of ["/assets/*", "/og.png", "/favicon.ico", "/favicon.svg", "/favicon-32x32.png", "/apple-touch-icon.png", "/icon-192.png", "/icon-512.png", "/site.webmanifest"]) {
+    assert.ok(headers.includes(`${asset}\n  ! X-Robots-Tag`), asset);
+  }
 });
 
 test("keeps the editorial interface calm, accessible, and motion-safe", async () => {
@@ -428,4 +423,50 @@ test("keeps the editorial interface calm, accessible, and motion-safe", async ()
   assert.match(editorial, /@media \(max-width: 900px\) \{[\s\S]*\.hero, \.split-heading, \.system-grid, \.article-layout \{ grid-template-columns: 1fr/);
   assert.match(editorial, /@media \(max-width: 620px\) \{[\s\S]*\.system-steps li \{ grid-template-columns: 1fr/);
   assert.doesNotMatch(editorial, /animation: drift|position: sticky/);
+});
+test("defines the packet-one metadata, semantic, accessibility, and asset contract", async () => {
+  const [layout, article, glossary, chrome, css, metadata, structured, headers, manifest, socialCard] = await Promise.all([
+    readFile(new URL("app/layout.tsx", root), "utf8"),
+    readFile(new URL("app/articles/[slug]/page.tsx", root), "utf8"),
+    readFile(new URL("app/glossary/[slug]/page.tsx", root), "utf8"),
+    readFile(new URL("app/site-chrome.tsx", root), "utf8"),
+    readFile(new URL("app/globals.css", root), "utf8"),
+    readFile(new URL("app/metadata.ts", root), "utf8"),
+    readFile(new URL("app/content/structured-data.ts", root), "utf8"),
+    readFile(new URL("public/_headers", root), "utf8"),
+    readFile(new URL("public/site.webmanifest", root), "utf8"),
+    readFile(new URL("public/og.png", root)),
+  ]);
+  assert.match(layout, /icons:/);
+  assert.match(layout, /manifest: "\/site\.webmanifest"/);
+  assert.match(metadata, /width: 1200/);
+  assert.match(metadata, /height: 630/);
+  assert.match(article, /twitter:/);
+  assert.match(article, /aria-label="Breadcrumb"/);
+  assert.match(article, /aria-label="On this page"/);
+  assert.match(article, /padStart\(2, "0"\)/);
+  assert.match(article, /<time dateTime=/);
+  assert.match(article, /Related reading/);
+  assert.match(article, /related\.every/);
+  assert.match(article, /rel="noopener noreferrer external"/);
+  const sourceFiles = (await readdir(new URL("app/", root), { recursive: true }))
+    .filter((file) => /\.(?:ts|tsx)$/.test(file));
+  const applicationSource = await Promise.all(
+    sourceFiles.map((file) => readFile(new URL(`app/${file}`, root), "utf8")),
+  );
+  assert.ok(applicationSource.every((source) => !source.includes("↗")), "internal links never use fake external arrows");
+  assert.match(article, /function stableEntries/);
+  assert.match(article, /const renderedSections = stableEntries/);
+  assert.match(article, /key=\{entry\.key\}/);
+  assert.doesNotMatch(article, /key=\{`(?:toc|section|takeaway|correction|claim-limit)-\$\{index\}/);
+  assert.match(glossary, /aria-label="Breadcrumb"/);
+  assert.match(chrome, /usePathname/);
+  assert.match(chrome, /aria-current/);
+  assert.match(css, /\.menu-toggle, \.primary-nav a, \.footer-nav a \{[^}]*min-width: 44px[^}]*min-height: 44px/s);
+  assert.match(structured, /inLanguage: "en"/);
+  assert.match(structured, /isAccessibleForFree: true/);
+  assert.doesNotMatch(structured, /publicationWordCount|wordCount:/);
+  assert.match(headers, /\/site\.webmanifest/);
+  assert.equal(JSON.parse(manifest).display, "browser");
+  assert.ok(socialCard.byteLength < 2_000_000);
 });

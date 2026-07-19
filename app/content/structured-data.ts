@@ -13,10 +13,23 @@ export function organizationStructuredData(): JsonRecord {
     name: "Republic of Bohemia LLC",
     url: origin,
     email: "support@rankbuilderseo.com",
+    logo: `${origin}/icon-512.png`,
     brand: {
       "@type": "Brand",
       name: "Rank Builder SEO",
     },
+  };
+}
+
+export function websiteStructuredData(): JsonRecord {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": `${origin}/#website`,
+    name: "Rank Builder SEO",
+    url: origin,
+    inLanguage: "en",
+    publisher: { "@id": organizationId },
   };
 }
 
@@ -46,6 +59,8 @@ export function articleStructuredData(publication: Publication): JsonRecord {
         dateModified: publication.revisedAt,
         url,
         image: `${origin}/og.png`,
+        inLanguage: "en",
+        isAccessibleForFree: true,
         author: {
           "@type": publication.author.type,
           name: publication.author.name,
@@ -59,7 +74,7 @@ export function articleStructuredData(publication: Publication): JsonRecord {
         publisher: { "@id": organizationId },
         mainEntityOfPage: url,
         articleSection: publication.category,
-        citation: publication.citations.map(({ url: citationUrl }) => citationUrl),
+        ...(publication.citations.length > 0 ? { citation: publication.citations.map(({ url: citationUrl }) => citationUrl) } : {}),
       },
       breadcrumbs([
         { name: "Home", url: `${origin}/` },
@@ -82,6 +97,8 @@ export function glossaryStructuredData(entry: GlossaryEntry): JsonRecord {
         description: entry.short,
         url,
         inDefinedTermSet: `${origin}/glossary`,
+        inLanguage: "en",
+        ...(entry.citations.length > 0 ? { citation: entry.citations.map(({ url: citationUrl }) => citationUrl) } : {}),
       },
       breadcrumbs([
         { name: "Home", url: `${origin}/` },

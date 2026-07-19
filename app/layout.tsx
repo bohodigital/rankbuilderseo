@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { organizationStructuredData, serializeStructuredData } from "./content/structured-data";
+import { organizationStructuredData, serializeStructuredData, websiteStructuredData } from "./content/structured-data";
 import "./globals.css";
 import { sharedOpenGraph } from "./metadata";
 
@@ -11,6 +11,16 @@ export const metadata: Metadata = {
   },
   description: "Evidence-aware SEO articles, explainers, playbooks, claim checks, and public experiments—published in a consistent, useful format.",
   alternates: { canonical: "https://rankbuilderseo.com/" },
+  manifest: "/site.webmanifest",
+  themeColor: "#f7f6f2",
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+    ],
+    shortcut: "/favicon.ico",
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+  },
   openGraph: {
     ...sharedOpenGraph,
     title: "Rank Builder SEO",
@@ -33,6 +43,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: serializeStructuredData(organizationStructuredData()) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: serializeStructuredData(websiteStructuredData()) }}
         />
         <script
           defer
