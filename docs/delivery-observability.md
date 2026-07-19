@@ -61,6 +61,10 @@ The same post-tuning audit produced 10 responses and zero automatic RSC response
 
 For a public audit, count one browser run from its first navigation. Stop broad checks around 80 to 85 and never reach 100. Provider API calls and explicit command-line HTTP requests must also be added to the release report's public/provider request total when they are outside that browser run.
 
+Publication eligibility is evaluated against a timestamp injected by Vite at build time. Do not replace it with a top-level Worker new Date() call: Cloudflare Worker clocks advance after I/O, while upload validation executes module startup before request I/O. The build clock keeps local validation and remote startup aligned; scheduled publication still requires a new reviewed build and deployment.
+
+Provider reference: https://developers.cloudflare.com/workers/reference/security-model/
+
 ## Atom feed
 
 /feed.xml is an Atom 1.0 feed generated from feedPublications, the canonical feed-eligible view of the publication registry. Each entry contains its canonical article URL, title, summary, author, published date, and revised date. Draft, review, future scheduled, and non-feed archived records never enter the feed. Root metadata declares the feed.

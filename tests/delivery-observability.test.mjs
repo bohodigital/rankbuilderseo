@@ -98,3 +98,16 @@ test("measured prefetch policy preserves primary defaults and disables low-prior
   assert.match(source, /href="\/privacy" prefetch=\{false\}/);
   assert.match(source, /<NavigationLink href="\/articles" onClick=\{closeMenu\}>/);
 });
+
+test("publication eligibility uses the injected build clock instead of Worker startup time", async () => {
+  const [viteConfig, publications] = await Promise.all([
+    readFile(new URL("vite.config.ts", root), "utf8"),
+    readFile(new URL("app/content/publications.ts", root), "utf8"),
+  ]);
+  assert.match(viteConfig, /RANK_BUILDER_CONTENT_BUILD_TIME/);
+  assert.match(viteConfig, /new Date\(\)\.toISOString\(\)/);
+  assert.match(publications, /new Date\(contentBuildTime\)/);
+  assert.match(publications, /now: contentBuildNow/);
+  assert.match(publications, /publicationsForSurface\(publicationRegistry, "feed", contentBuildNow\)/);
+  assert.match(publications, /publicationExposure\(publication, contentBuildNow\)/);
+});

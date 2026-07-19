@@ -64,6 +64,9 @@ export default defineConfig(async ({ command }) => {
   }
 
   return {
+    define: {
+      "import.meta.env.RANK_BUILDER_CONTENT_BUILD_TIME": JSON.stringify(new Date().toISOString()),
+    },
     server: isCodexSeatbeltSandbox
       ? { watch: { useFsEvents: false, usePolling: true } }
       : undefined,
