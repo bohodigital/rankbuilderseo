@@ -23,7 +23,13 @@ import {
   type LifecycleRecord,
   type MediaRecord,
 } from "./contract.ts";
-import { parseSafeMarkdown, type MarkdownSection, type SafeMarkdownDocument } from "./markdown.ts";
+import {
+  markdownPlainText,
+  parseSafeMarkdown,
+  renderedWordCount,
+  type MarkdownSection,
+  type SafeMarkdownDocument,
+} from "./markdown.ts";
 
 export { parseControlledRegistries, parseMediaRegistry, publicationExposure, publicationRelationshipDiagnostics } from "./contract.ts";
 export { headingSlug, isSafeLinkTarget, isSafeMediaSource, parseSafeMarkdown } from "./markdown.ts";
@@ -198,7 +204,74 @@ function identityReference(value: unknown, identities: Map<string, EditorialIden
   return { id, identity };
 }
 
-function formatRequirements(publication: Publication): void {
+const minimumArticleWords: Record<PublicationFormat, number> = {
+  Explainer: 700,
+  Playbook: 900,
+  "Claim check": 900,
+  "Data note": 700,
+  Checklist: 600,
+};
+
+const templateMarkerPatterns: Array<{ label: string; pattern: RegExp }> = [
+  { label: "Replace this", pattern: /\breplace this\b/i },
+  { label: "draft format label", pattern: /\bdraft (?:explainer|playbook|claim check|data note|checklist)\b/i },
+  { label: "placeholder", pattern: /\bplaceholder\b/i },
+  { label: "authoring-example", pattern: /authoring-example/i },
+  { label: "template takeaway", pattern: /\b(?:validate inputs|keep output bounded|review evidence|first durable takeaway|second durable takeaway|third durable takeaway)\b/i },
+  { label: "template claim limit", pattern: /state what this article cannot establish/i },
+  { label: "template caption", pattern: /example of a controlled editorial figure/i },
+  { label: "template revision note", pattern: /authoring and revision notes|before moving this draft/i },
+];
+
+function templateMarker(value: string): string | undefined {
+  return templateMarkerPatterns.find(({ pattern }) => pattern.test(value))?.label;
+}
+
+function validateNoTemplateMarkers(publication: Publication, media: readonly MediaRecord[]): void {
+  if (publication.state === "draft" || publication.authoringContract !== "canonical-v1") return;
+  const values: Array<[string, string]> = [
+    ["title", publication.title],
+    ["description", publication.description],
+    ["directAnswer", publication.directAnswer],
+    ...publication.takeaways.map((value, index) => [`takeaways[${index}]`, value] as [string, string]),
+    ...publication.claimLimits.map((value, index) => [`claimLimits[${index}]`, value] as [string, string]),
+    ["body", markdownPlainText(publication.document)],
+    ...(publication.revisionNote ? [["revisionNote", publication.revisionNote] as [string, string]] : []),
+  ];
+  for (const figure of publication.document.figures) {
+    values.push([`figure ${figure.src} caption`, figure.caption], [`figure ${figure.src} source`, figure.src]);
+    const record = media.find(({ src }) => src === figure.src);
+    if (record) {
+      values.push(
+        [`media ${record.id} id`, record.id],
+        [`media ${record.id} alt`, record.alt],
+        [`media ${record.id} caption`, record.caption],
+        [`media ${record.id} credit`, record.credit],
+      );
+    }
+  }
+  for (const [field, value] of values) {
+    const marker = templateMarker(value);
+    if (marker) fail(publication.sourceFile, `${field} contains prohibited template marker: ${marker}`);
+  }
+}
+
+function structuredSection(section: MarkdownSection, role: string): boolean {
+  if (["ordered process", "checklist"].includes(role.toLocaleLowerCase("en-US"))) return true;
+  const structuredBlocks = section.blocks.filter((block) => ["list", "table", "code", "figure"].includes(block.type)).length;
+  return structuredBlocks > 0 && structuredBlocks >= Math.ceil(section.blocks.length / 2);
+}
+
+function sectionProseWords(section: MarkdownSection): number {
+  const quotes = section.blocks
+    .filter((block) => block.type === "blockquote")
+    .map((block) => block.type === "blockquote"
+      ? block.children.map((node) => node.type === "text" || node.type === "code" ? node.value : "").join(" ")
+      : "");
+  return renderedWordCount(section.paragraphs, quotes);
+}
+
+function formatRequirements(publication: Publication, warnings: string[]): void {
   if (publication.state === "draft") return;
   if (publication.authoringContract === "legacy-protected-v1") return;
 
@@ -206,6 +279,9 @@ function formatRequirements(publication: Publication): void {
   const requireRole = (role: string) => {
     const section = byRole.get(role.toLocaleLowerCase("en-US"));
     if (!section) fail(publication.sourceFile, `${publication.format} requires a "${role}" section under canonical-v1`);
+    if (!structuredSection(section, role) && sectionProseWords(section) < 75) {
+      fail(publication.sourceFile, `${publication.format} requires at least 75 words of meaningful prose in "${role}"`);
+    }
     return section;
   };
   const listItems = (role: string, ordered: boolean) => requireRole(role).blocks
@@ -217,26 +293,91 @@ function formatRequirements(publication: Publication): void {
     requireRole("Conclusion");
     requireRole("Limitations");
     if (publication.citations.length === 0) fail(publication.sourceFile, "Claim check requires at least one identified source");
-    if (publication.claimLimits.length === 0) fail(publication.sourceFile, "Claim check requires limitations");
+    if (renderedWordCount(publication.claimLimits) < 20) fail(publication.sourceFile, "Claim check requires meaningful limitations of at least 20 words");
   } else if (publication.format === "Data note") {
     requireRole("Dataset and period");
     requireRole("Methodology");
     requireRole("Result");
     requireRole("Limitations");
     if (publication.citations.length === 0) fail(publication.sourceFile, "Data note requires a dataset/source citation");
+    if (renderedWordCount(publication.claimLimits) < 20) fail(publication.sourceFile, "Data note requires meaningful limitations of at least 20 words");
   } else if (publication.format === "Playbook") {
     requireRole("Preconditions");
     requireRole("Failure cases");
-    if (listItems("Ordered process", true) < 2) fail(publication.sourceFile, "Playbook requires at least two ordered process items");
+    const steps = listItems("Ordered process", true);
+    if (steps < 2) fail(publication.sourceFile, "Playbook requires at least two ordered process items");
+    if (steps < 4) warnings.push(`${publication.slug}: playbook has ${steps} ordered steps; review whether at least four substantive steps are needed`);
   } else if (publication.format === "Checklist") {
     requireRole("Completion criteria");
-    if (listItems("Checklist", false) < 3) fail(publication.sourceFile, "Checklist requires at least three actual checklist items");
+    const items = listItems("Checklist", false);
+    if (items < 3) fail(publication.sourceFile, "Checklist requires at least three actual checklist items");
+    if (items < 5) warnings.push(`${publication.slug}: checklist has ${items} items; review whether at least five substantive items are needed`);
   } else {
     requireRole("Definition");
     requireRole("Mechanism");
     requireRole("Examples");
     requireRole("Boundaries");
   }
+  const minimum = minimumArticleWords[publication.format];
+  if (publication.wordCount < minimum) {
+    fail(publication.sourceFile, `${publication.format} requires at least ${minimum} rendered words before ${publication.state}; found ${publication.wordCount}`);
+  }
+}
+
+function normalizedMetadata(value: string): string {
+  return value.normalize("NFKC").toLocaleLowerCase("en-US").replace(/[^\p{L}\p{N}]+/gu, " ").trim();
+}
+
+function tokenSimilarity(left: string, right: string): number {
+  const a = new Set(normalizedMetadata(left).split(" ").filter(Boolean));
+  const b = new Set(normalizedMetadata(right).split(" ").filter(Boolean));
+  if (a.size === 0 || b.size === 0) return 0;
+  const overlap = [...a].filter((value) => b.has(value)).length;
+  return overlap / new Set([...a, ...b]).size;
+}
+
+function publicationMetadataDiagnostics(publications: readonly Publication[]): { errors: string[]; warnings: string[] } {
+  const errors: string[] = [];
+  const warnings: string[] = [];
+  for (const field of ["title", "description"] as const) {
+    const exact = new Map<string, string>();
+    for (const publication of publications) {
+      const normalized = normalizedMetadata(publication[field]);
+      const previous = exact.get(normalized);
+      if (previous) errors.push(`duplicate publication ${field}: ${previous} and ${publication.slug}`);
+      else exact.set(normalized, publication.slug);
+    }
+  }
+  for (let left = 0; left < publications.length; left += 1) {
+    for (let right = left + 1; right < publications.length; right += 1) {
+      for (const field of ["title", "description"] as const) {
+        const similarity = tokenSimilarity(publications[left][field], publications[right][field]);
+        if (similarity >= 0.82 && normalizedMetadata(publications[left][field]) !== normalizedMetadata(publications[right][field])) {
+          warnings.push(`${publications[left].slug} and ${publications[right].slug}: near-duplicate ${field} (${similarity.toFixed(2)})`);
+        }
+      }
+    }
+  }
+  const boilerplate = new Map<string, string[]>();
+  for (const publication of publications.filter((item) => item.authoringContract === "canonical-v1" && item.state !== "draft")) {
+    for (const value of [publication.directAnswer, ...publication.takeaways, ...publication.claimLimits]) {
+      const normalized = normalizedMetadata(value);
+      if (normalized.split(" ").length < 6) continue;
+      boilerplate.set(normalized, [...(boilerplate.get(normalized) ?? []), publication.slug]);
+    }
+  }
+  for (const slugs of boilerplate.values()) {
+    if (slugs.length >= 3) warnings.push(`repeated generic boilerplate across ${slugs.length} records: ${slugs.join(", ")}`);
+  }
+  for (const publication of publications.filter((item) => item.authoringContract === "canonical-v1" && item.state !== "draft")) {
+    if (publication.title.length < 25 || publication.title.length > 75) {
+      warnings.push(`${publication.slug}: title length ${publication.title.length} is outside the 25-75 character editorial range`);
+    }
+    if (publication.description.length < 100 || publication.description.length > 180) {
+      warnings.push(`${publication.slug}: description length ${publication.description.length} is outside the 100-180 character editorial range`);
+    }
+  }
+  return { errors, warnings };
 }
 
 export type PublicationRegistryOptions = {
@@ -276,7 +417,7 @@ function parsePublicationSource(source: string, sourceFile: string, options: Pub
   const document = parseSafeMarkdown(body, sourceFile);
   const citationMode = oneOf(metadata.citationMode, citationModes, `${sourceFile}.citationMode`);
   validateCitationUsage(publicationCitations, document, citationMode, sourceFile);
-  validateDocumentMedia(document, options.media, sourceFile);
+  validateDocumentMedia(document, options.media, sourceFile, lifecycle.state);
   const directAnswer = requiredString(metadata.directAnswer, `${sourceFile}.directAnswer`);
   const takeaways = stringList(metadata.takeaways, `${sourceFile}.takeaways`);
   const claimLimits = stringList(metadata.claimLimits, `${sourceFile}.claimLimits`);
@@ -311,7 +452,8 @@ function parsePublicationSource(source: string, sourceFile: string, options: Pub
     ...lifecycle,
     sourceFile,
   };
-  formatRequirements(publication);
+  validateNoTemplateMarkers(publication, options.media);
+  formatRequirements(publication, options.relationshipWarnings ?? []);
   return publication;
 }
 
@@ -322,6 +464,9 @@ export function loadPublicationRegistry(sources: Record<string, string>, options
     if (slugs.has(publication.slug)) fail("publication registry", `duplicate publication slug: ${publication.slug}`);
     slugs.add(publication.slug);
   }
+  const metadataDiagnostics = publicationMetadataDiagnostics(publications);
+  if (metadataDiagnostics.errors.length > 0) fail("publication registry", metadataDiagnostics.errors.join("; "));
+  options.relationshipWarnings?.push(...metadataDiagnostics.warnings);
   for (const publication of publications) {
     const fileSlug = publication.sourceFile.split("/").at(-1)?.replace(/\.md$/, "");
     if (fileSlug && fileSlug !== publication.slug) fail(publication.sourceFile, `filename must match publication slug: ${publication.slug}`);

@@ -43,6 +43,7 @@ export type MediaRecord = {
   mimeType: MediaMimeType;
   rights: MediaRights;
   status: MediaStatus;
+  templateOnly: boolean;
 };
 
 export type PublicationExposure = {
@@ -221,6 +222,9 @@ export function parseMediaRegistry(source: string): MediaRecord[] {
     if (mimeForSource(src) !== mimeType) fail(`${label}.mimeType`, `does not match ${src}`);
     const rights = oneOf(item.rights, mediaRights, `${label}.rights`);
     const sourceUrl = item.sourceUrl === undefined ? undefined : httpsUrl(item.sourceUrl, `${label}.sourceUrl`);
+    if (item.templateOnly !== undefined && typeof item.templateOnly !== "boolean") {
+      fail(`${label}.templateOnly`, "must be a boolean when declared");
+    }
     if (rights !== "owned" && !sourceUrl) fail(`${label}.sourceUrl`, `is required for ${rights} media`);
     return {
       id,
@@ -229,21 +233,28 @@ export function parseMediaRegistry(source: string): MediaRecord[] {
       caption: requiredString(item.caption, `${label}.caption`),
       credit: requiredString(item.credit, `${label}.credit`),
       ...(sourceUrl ? { sourceUrl } : {}),
-      width: integer(item.width, `${label}.width`, 1, 10000),
-      height: integer(item.height, `${label}.height`, 1, 10000),
+      width: integer(item.width, `${label}.width`, 1, 4000),
+      height: integer(item.height, `${label}.height`, 1, 4000),
       mimeType,
       rights,
       status: oneOf(item.status, mediaStatuses, `${label}.status`),
+      templateOnly: item.templateOnly === true,
     };
   });
 }
 
-export function validateDocumentMedia(document: SafeMarkdownDocument, media: readonly MediaRecord[], label: string): void {
+export function validateDocumentMedia(
+  document: SafeMarkdownDocument,
+  media: readonly MediaRecord[],
+  label: string,
+  state: PublicationState = "published",
+): void {
   const bySource = new Map(media.map((item) => [item.src, item]));
   for (const figure of document.figures) {
     const record = bySource.get(figure.src);
     if (!record) fail(label, `figure is absent from content/media.json: ${figure.src}`);
-    if (record.status !== "approved") fail(label, `figure is not approved for publication: ${figure.src}`);
+    if (state !== "draft" && record.templateOnly) fail(label, `figure is template-only media: ${figure.src}`);
+    if (state !== "draft" && record.status !== "approved") fail(label, `figure is not approved for publication: ${figure.src}`);
     if (figure.alt !== record.alt) fail(label, `figure alt text conflicts with media registry: ${figure.src}`);
     if (figure.caption !== record.caption) fail(label, `figure caption conflicts with media registry: ${figure.src}`);
   }

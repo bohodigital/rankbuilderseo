@@ -28,6 +28,18 @@ const media = parseMediaRegistry(await readFile(new URL("content/media.json", ro
 const registriesSource = await readFile(new URL("content/registries.json", root), "utf8");
 const NOW = new Date("2026-07-19T00:00:00Z");
 
+function words(count, prefix = "substantive") {
+  return Array.from({ length: count }, (_, index) => `${prefix}${index + 1}`).join(" ");
+}
+
+function reviewReadyBody(format) {
+  if (format === "Playbook") return `## Preconditions\n\n${words(350, "precondition")}\n\n## Ordered process\n\n1. ${words(60, "stepone")}\n2. ${words(60, "steptwo")}\n3. ${words(60, "stepthree")}\n4. ${words(60, "stepfour")}\n\n## Failure cases\n\n${words(350, "failure")}`;
+  if (format === "Claim check") return `## Identified claim\n\n${words(225, "claim")}\n\n## Sources and evidence\n\n${words(225, "evidence")}\n\n## Conclusion\n\n${words(225, "conclusion")}\n\n## Limitations\n\n${words(225, "limitation")}`;
+  if (format === "Data note") return `## Dataset and period\n\n${words(170, "dataset")}\n\n## Methodology\n\n${words(170, "method")}\n\n## Result\n\n${words(170, "result")}\n\n## Limitations\n\n${words(170, "limitation")}`;
+  if (format === "Checklist") return `## Checklist\n\n- ${words(80, "checkone")}\n- ${words(80, "checktwo")}\n- ${words(80, "checkthree")}\n- ${words(80, "checkfour")}\n- ${words(80, "checkfive")}\n\n## Completion criteria\n\n${words(200, "completion")}`;
+  return `## Definition\n\n${words(180, "definition")}\n\n## Mechanism\n\n${words(180, "mechanism")}\n\n## Examples\n\n${words(180, "example")}\n\n## Boundaries\n\n${words(180, "boundary")}`;
+}
+
 function publicationSource({ metadata = {}, body } = {}) {
   const record = {
     slug: "fixture-record",
@@ -46,7 +58,7 @@ function publicationSource({ metadata = {}, body } = {}) {
     publishedAt: "2026-07-18",
     revisedAt: "2026-07-18",
     directAnswer: "The contract fails closed.",
-    takeaways: ["Validate inputs", "Keep output bounded", "Review evidence"],
+    takeaways: ["Confirm the documented preconditions", "Apply the bounded procedure", "Record evidence for editorial review"],
     claimLimits: ["Fixtures prove software behavior, not an SEO result."],
     citations: [],
     correctionHistory: [],
@@ -57,10 +69,10 @@ function publicationSource({ metadata = {}, body } = {}) {
   return `---\n${JSON.stringify(record, null, 2)}\n---\n\n${content}`;
 }
 
-function loadOne(options = {}) {
+function loadOne(options = {}, mediaRecords = media) {
   const source = publicationSource(options);
   const slug = options.metadata?.slug ?? "fixture-record";
-  return loadPublicationRegistry({ [`content/publications/${slug}.md`]: source }, { registries, media, now: NOW })[0];
+  return loadPublicationRegistry({ [`content/publications/${slug}.md`]: source }, { registries, media: mediaRecords, now: NOW })[0];
 }
 
 test("renders the contracted Markdown subset into a typed safe document", () => {
@@ -104,7 +116,7 @@ Return to [the stable section](#stable-anchor).
     "inline-required",
     "supported fixture",
   );
-  validateDocumentMedia(document, media, "supported fixture");
+  validateDocumentMedia(document, media, "supported fixture", "draft");
 });
 
 test("rejects raw execution surfaces, unsafe schemes, and unsupported Markdown", () => {
@@ -225,19 +237,16 @@ test("all five format templates scaffold valid drafts and non-draft validation i
     assert.match(result.source, /## Authoring and revision notes/);
   }
 
-  const formats = [
-    ["Explainer", "## Definition\n\nOne.\n\n## Mechanism\n\nTwo.\n\n## Examples\n\nThree.\n\n## Boundaries\n\nFour.", []],
-    ["Playbook", "## Preconditions\n\nReady.\n\n## Ordered process\n\n1. One\n2. Two\n\n## Failure cases\n\nStop.", []],
-    ["Claim check", "## Identified claim\n\nClaim.\n\n## Sources and evidence\n\nEvidence.\n\n## Conclusion\n\nBounded.\n\n## Limitations\n\nLimited.", [{ id: "source", title: "Source", url: "https://example.com/source", publisher: "Fixture" }]],
-    ["Data note", "## Dataset and period\n\nDataset.\n\n## Methodology\n\nMethod.\n\n## Result\n\nResult.\n\n## Limitations\n\nLimited.", [{ id: "source", title: "Source", url: "https://example.com/source", publisher: "Fixture" }]],
-    ["Checklist", "## Checklist\n\n- One\n- Two\n- Three\n\n## Completion criteria\n\nComplete.", []],
-  ];
-  for (const [format, body, citations] of formats) {
-    assert.doesNotThrow(() => loadOne({ metadata: { format, state: "review", citations }, body }), format);
+  const formats = ["Explainer", "Playbook", "Claim check", "Data note", "Checklist"];
+  for (const format of formats) {
+    const needsCitation = format === "Claim check" || format === "Data note";
+    const citations = needsCitation ? [{ id: "source", title: "Source", url: "https://example.com/source", publisher: "Fixture" }] : [];
+    const claimLimits = needsCitation ? [words(25, "boundedlimit")] : undefined;
+    assert.doesNotThrow(() => loadOne({ metadata: { format, state: "review", citations, ...(claimLimits ? { claimLimits } : {}) }, body: reviewReadyBody(format) }), format);
   }
 
   const arbitraryRoles = "## Arbitrary one\n\nOne.\n\n## Arbitrary two\n\nTwo.\n\n## Arbitrary three\n\nThree.\n\n## Arbitrary four\n\nFour.";
-  const unorderedPlaybook = "## Preconditions\n\nReady.\n\n## Ordered process\n\nProcess prose only.\n\n## Failure cases\n\nStop.";
+  const unorderedPlaybook = `## Preconditions\n\n${words(80, "ready")}\n\n## Ordered process\n\nProcess prose only.\n\n## Failure cases\n\n${words(80, "stop")}`;
   for (const state of ["review", "scheduled", "published"]) {
     const lifecycle = state === "scheduled" ? { state, scheduledAt: "2026-07-18T00:00:00Z" } : { state };
     assert.throws(() => loadOne({ metadata: { ...lifecycle, format: "Explainer" }, body: arbitraryRoles }), /requires a "Definition" section/i, state);
@@ -248,10 +257,102 @@ test("all five format templates scaffold valid drafts and non-draft validation i
     () => loadOne({ metadata: { authoringContract: "legacy-protected-v1", state: "published" } }),
     /reserved for the exact twelve protected migration slugs/i,
   );
-  assert.throws(() => loadOne({ metadata: { format: "Explainer", state: "review" }, body: "## Definition\n\nOnly." }), /requires a "Mechanism" section/i);
-  assert.throws(() => loadOne({ metadata: { format: "Claim check", state: "review" }, body: "## Identified claim\n\nOne.\n\n## Sources and evidence\n\nTwo.\n\n## Conclusion\n\nThree.\n\n## Limitations\n\nFour." }), /at least one identified source/i);
-  assert.throws(() => loadOne({ metadata: { format: "Data note", state: "review" }, body: "## Dataset and period\n\nOne.\n\n## Methodology\n\nTwo.\n\n## Result\n\nThree.\n\n## Limitations\n\nFour." }), /dataset\/source citation/i);
-  assert.throws(() => loadOne({ metadata: { format: "Checklist", state: "review" }, body: "## Checklist\n\nOne.\n\n## Completion criteria\n\nTwo." }), /actual checklist items/i);
+  assert.throws(() => loadOne({ metadata: { format: "Explainer", state: "review" }, body: `## Definition\n\n${words(80)}` }), /requires a "Mechanism" section/i);
+  assert.throws(() => loadOne({ metadata: { format: "Claim check", state: "review" }, body: reviewReadyBody("Claim check") }), /at least one identified source/i);
+  assert.throws(() => loadOne({ metadata: { format: "Data note", state: "review" }, body: reviewReadyBody("Data note") }), /dataset\/source citation/i);
+  assert.throws(() => loadOne({ metadata: { format: "Checklist", state: "review" }, body: `## Checklist\n\nOne.\n\n## Completion criteria\n\n${words(80)}` }), /actual checklist items/i);
+});
+
+test("non-draft canonical records reject placeholders in every publication surface", () => {
+  const base = { state: "review", title: "A sufficiently deliberate fixture article title", description: words(20, "description"), directAnswer: words(20, "answer"), claimLimits: [words(25, "claimlimit")] };
+  const cases = [
+    ["title", { title: "Replace this title" }],
+    ["description", { description: "Draft explainer placeholder" }],
+    ["directAnswer", { directAnswer: "Replace this direct answer" }],
+    ["takeaways", { takeaways: ["Validate inputs", words(12, "takeaway")] }],
+    ["claimLimits", { claimLimits: ["State what this article cannot establish"] }],
+    ["revisionNote", { revisedAt: "2026-07-19", revisionNote: "Replace this revision note" }],
+  ];
+  for (const [field, metadata] of cases) {
+    assert.throws(
+      () => loadOne({ metadata: { ...base, ...metadata }, body: reviewReadyBody("Explainer") }),
+      new RegExp(`${field}.*template marker`, "i"),
+      field,
+    );
+  }
+  assert.throws(
+    () => loadOne({ metadata: base, body: reviewReadyBody("Explainer").replace("definition1", "placeholder") }),
+    /body.*template marker/i,
+  );
+
+  const approvedPlaceholderMedia = [{
+    id: "review-figure", src: "/media/review-figure.svg", alt: "A deliberate diagram", caption: "Placeholder figure caption",
+    credit: "Fixture desk", width: 10, height: 10, mimeType: "image/svg+xml", rights: "owned", status: "approved", templateOnly: false,
+  }];
+  assert.throws(
+    () => loadOne({ metadata: base, body: `${reviewReadyBody("Explainer")}\n\n![A deliberate diagram](/media/review-figure.svg "Placeholder figure caption")` }, approvedPlaceholderMedia),
+    /body.*template marker|media review-figure caption.*template marker|figure .* caption.*template marker/i,
+  );
+  assert.throws(
+    () => loadOne({ metadata: base, body: `${reviewReadyBody("Explainer")}\n\n![Three connected boxes labeled question, evidence, and bounded answer](/media/authoring-example.svg "Example of a controlled editorial figure; replace or remove it before review.")` }),
+    /template-only media/i,
+  );
+});
+
+test("canonical review and public records enforce substantive thresholds while legacy records stay exempt", () => {
+  for (const [format, minimum] of [["Explainer", 700], ["Playbook", 900], ["Claim check", 900], ["Data note", 700], ["Checklist", 600]]) {
+    const citations = ["Claim check", "Data note"].includes(format)
+      ? [{ id: "source", title: "Source", url: "https://example.com/source", publisher: "Fixture" }]
+      : [];
+    assert.throws(
+      () => loadOne({ metadata: { format, state: "review", citations, claimLimits: [words(25, "limit")] }, body: {
+        Explainer: `## Definition\n\n${words(80, "definition")}\n\n## Mechanism\n\n${words(80, "mechanism")}\n\n## Examples\n\n${words(80, "example")}\n\n## Boundaries\n\n${words(80, "boundary")}`,
+        Playbook: `## Preconditions\n\n${words(80, "precondition")}\n\n## Ordered process\n\n1. First bounded step\n2. Second bounded step\n3. Third bounded step\n4. Fourth bounded step\n\n## Failure cases\n\n${words(80, "failure")}`,
+        "Claim check": `## Identified claim\n\n${words(80, "claim")}\n\n## Sources and evidence\n\n${words(80, "evidence")}\n\n## Conclusion\n\n${words(80, "conclusion")}\n\n## Limitations\n\n${words(80, "limitation")}`,
+        "Data note": `## Dataset and period\n\n${words(80, "dataset")}\n\n## Methodology\n\n${words(80, "method")}\n\n## Result\n\n${words(80, "result")}\n\n## Limitations\n\n${words(80, "limitation")}`,
+        Checklist: `## Checklist\n\n- First bounded check\n- Second bounded check\n- Third bounded check\n- Fourth bounded check\n- Fifth bounded check\n\n## Completion criteria\n\n${words(80, "completion")}`,
+      }[format] }),
+      new RegExp(`at least (?:75|${minimum})`, "i"),
+      format,
+    );
+  }
+  assert.throws(
+    () => loadOne({ metadata: { format: "Explainer", state: "review" }, body: reviewReadyBody("Explainer").replace(words(180, "definition"), "Too short for review.") }),
+    /at least 75 words.*Definition/i,
+  );
+});
+
+test("duplicate metadata fails and deterministic editorial warnings remain visible", () => {
+  const source = (slug, metadata = {}) => publicationSource({
+    metadata: {
+      slug,
+      state: "review",
+      title: `Deliberate fixture article ${slug}`,
+      description: `A deliberate description for ${slug} that gives editors enough context to assess the bounded search result summary before publication.`,
+      directAnswer: "This repeated editorial sentence is intentionally long enough to demonstrate generic boilerplate detection across multiple canonical records.",
+      claimLimits: [words(25, `limit${slug}`)],
+      ...metadata,
+    },
+    body: reviewReadyBody("Explainer"),
+  });
+  assert.throws(() => loadPublicationRegistry({
+    "content/publications/alpha.md": source("alpha", { title: "Duplicate fixture title" }),
+    "content/publications/beta.md": source("beta", { title: "Duplicate fixture title" }),
+  }, { registries, media, now: NOW }), /duplicate publication title/i);
+  assert.throws(() => loadPublicationRegistry({
+    "content/publications/alpha.md": source("alpha", { description: "Duplicate fixture description" }),
+    "content/publications/beta.md": source("beta", { description: "Duplicate fixture description" }),
+  }, { registries, media, now: NOW }), /duplicate publication description/i);
+
+  const warnings = [];
+  loadPublicationRegistry({
+    "content/publications/alpha.md": source("alpha", { title: "A deterministic editorial title about canonical source validation before publication under controlled workflow" }),
+    "content/publications/beta.md": source("beta", { title: "A deterministic editorial title about canonical sources validation before publication under controlled workflow" }),
+    "content/publications/gamma.md": source("gamma"),
+  }, { registries, media, now: NOW, relationshipWarnings: warnings });
+  assert.ok(warnings.some((warning) => /near-duplicate title/i.test(warning)));
+  assert.ok(warnings.some((warning) => /repeated generic boilerplate across 3 records/i.test(warning)));
+  assert.ok(warnings.some((warning) => /title length|description length/i.test(warning)));
 });
 
 function experimentSource(record) {

@@ -10,7 +10,8 @@
       "height": 540,
       "mimeType": "image/svg+xml",
       "rights": "owned",
-      "status": "approved"
+      "status": "restricted",
+      "templateOnly": true
     }
   ]
 }
