@@ -24,14 +24,17 @@ The wrapper requires a clean main checkout whose HEAD and github/main both equal
 
 Run from the canonical checkout:
 
-    npm run content:check
-    npm run typecheck
-    npm run lint
-    npm test
-    npm run verify
+    npm run release:review
     npm run build:pages
     git status --short --branch
-    git diff c9d86c549a224e68d4b5fc769afddad3cc2d6aa4..HEAD --check
+    git diff --check
+    git diff github/main...HEAD --check
+
+`release:review` runs the complete network-independent `verify` gate, then uses
+`release:links` to inspect every controlled citation in deterministic batches of
+25 with at most three concurrent requests. Source findings remain advisory unless
+the release owner explicitly adds `--strict`; the complete human or JSON report
+must still be recorded in release evidence.
 
 Before push, fetch github/main and verify it is still the reviewed base. Push only the exact reviewed main chain. Rebuild after the final commit and deploy that exact SHA.
 

@@ -24,6 +24,21 @@ const articleSlugs = [
   "zero-click-search-study-notes",
 ];
 
+const expectedLegacyGuideRedirects = Object.freeze({
+  "ai-overviews-traffic-claims": "/articles/ai-overviews-traffic-claims",
+  "canonical-tags-when-they-work": "/articles/canonical-tags-when-they-work",
+  "how-to-read-an-seo-audit": "/articles/how-to-read-an-seo-audit",
+  "internal-links-audit-by-template": "/articles/internal-links-audit-by-template",
+  "local-seo-provider-scorecard": "/articles/local-seo-provider-scorecard",
+  "ranking-guarantees": "/articles/ranking-guarantees",
+  "search-console-is-not-analytics": "/articles/search-console-is-not-analytics",
+  "seo-migration-launch-checklist": "/articles/seo-migration-launch-checklist",
+  "seo-pricing-without-fairy-tales": "/articles/seo-pricing-without-fairy-tales",
+  "technical-seo-baseline": "/articles/technical-seo-baseline",
+  "what-an-seo-report-should-answer": "/articles/what-an-seo-report-should-answer",
+  "zero-click-search-study-notes": "/articles/zero-click-search-study-notes",
+});
+
 const glossarySlugs = [
   "canonical-url",
   "conversion",
@@ -203,7 +218,9 @@ test("marks branch preview Pages HTML as noindex", async () => {
 });
 
 test("redirects every retired guide detail in one hop and preserves query strings", async () => {
-  for (const [slug, target] of Object.entries(legacyGuideRedirects)) {
+  assert.equal(Object.keys(expectedLegacyGuideRedirects).length, 12);
+  assert.deepEqual(legacyGuideRedirects, expectedLegacyGuideRedirects);
+  for (const [slug, target] of Object.entries(expectedLegacyGuideRedirects)) {
     const response = await request(`/guides/${slug}?source=legacy&position=1`);
     assert.equal(response.status, 301, slug);
     assert.equal(

@@ -118,6 +118,10 @@ not part of `verify`; `--strict` is available for an explicit review gate.
 Use `--max-sources 25 --batch 1` for deterministic batches, optionally add
 `--concurrency 2` or `3`, and add `--json` for machine-readable output. The
 maximum batch size is 200 and concurrency never exceeds three.
+For release review, run `npm run release:links`; it automatically advances through
+every deterministic batch so no citations are omitted. The command stays advisory
+unless `--strict` is explicitly supplied. `npm run release:review` combines the
+network-independent verification suite with that complete advisory source pass.
 The checker validates the initial URL and every redirect as credential-free HTTPS,
 resolves every hostname, rejects localhost-like names and any private, loopback,
 link-local, reserved, documentation, multicast, or otherwise non-public address,

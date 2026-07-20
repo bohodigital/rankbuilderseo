@@ -256,12 +256,6 @@ function validateNoTemplateMarkers(publication: Publication, media: readonly Med
   }
 }
 
-function structuredSection(section: MarkdownSection, role: string): boolean {
-  if (["ordered process", "checklist"].includes(role.toLocaleLowerCase("en-US"))) return true;
-  const structuredBlocks = section.blocks.filter((block) => ["list", "table", "code", "figure"].includes(block.type)).length;
-  return structuredBlocks > 0 && structuredBlocks >= Math.ceil(section.blocks.length / 2);
-}
-
 function sectionProseWords(section: MarkdownSection): number {
   const quotes = section.blocks
     .filter((block) => block.type === "blockquote")
@@ -276,15 +270,15 @@ function formatRequirements(publication: Publication, warnings: string[]): void 
   if (publication.authoringContract === "legacy-protected-v1") return;
 
   const byRole = new Map(publication.document.sections.map((section) => [section.heading.toLocaleLowerCase("en-US"), section]));
-  const requireRole = (role: string) => {
+  const requireRole = (role: string, requireProse = true) => {
     const section = byRole.get(role.toLocaleLowerCase("en-US"));
     if (!section) fail(publication.sourceFile, `${publication.format} requires a "${role}" section under canonical-v1`);
-    if (!structuredSection(section, role) && sectionProseWords(section) < 75) {
+    if (requireProse && sectionProseWords(section) < 75) {
       fail(publication.sourceFile, `${publication.format} requires at least 75 words of meaningful prose in "${role}"`);
     }
     return section;
   };
-  const listItems = (role: string, ordered: boolean) => requireRole(role).blocks
+  const listItems = (role: string, ordered: boolean) => requireRole(role, false).blocks
     .reduce((count, block) => block.type === "list" && block.ordered === ordered ? count + block.items.length : count, 0);
 
   if (publication.format === "Claim check") {
@@ -358,16 +352,18 @@ function publicationMetadataDiagnostics(publications: readonly Publication[]): {
       }
     }
   }
-  const boilerplate = new Map<string, string[]>();
+  const boilerplate = new Map<string, Set<string>>();
   for (const publication of publications.filter((item) => item.authoringContract === "canonical-v1" && item.state !== "draft")) {
     for (const value of [publication.directAnswer, ...publication.takeaways, ...publication.claimLimits]) {
       const normalized = normalizedMetadata(value);
       if (normalized.split(" ").length < 6) continue;
-      boilerplate.set(normalized, [...(boilerplate.get(normalized) ?? []), publication.slug]);
+      const slugs = boilerplate.get(normalized) ?? new Set<string>();
+      slugs.add(publication.slug);
+      boilerplate.set(normalized, slugs);
     }
   }
   for (const slugs of boilerplate.values()) {
-    if (slugs.length >= 3) warnings.push(`repeated generic boilerplate across ${slugs.length} records: ${slugs.join(", ")}`);
+    if (slugs.size >= 3) warnings.push(`repeated generic boilerplate across ${slugs.size} records: ${[...slugs].join(", ")}`);
   }
   for (const publication of publications.filter((item) => item.authoringContract === "canonical-v1" && item.state !== "draft")) {
     if (publication.title.length < 25 || publication.title.length > 75) {
@@ -475,8 +471,19 @@ export function loadPublicationRegistry(sources: Record<string, string>, options
       if (!slugs.has(relatedSlug)) fail(publication.sourceFile, `unknown related publication: ${relatedSlug}`);
     }
   }
+  const publicationsBySlug = new Map(publications.map((publication) => [publication.slug, publication]));
+  const at = options.now ?? new Date();
+  for (const publication of publications) {
+    if (publication.state !== "archived" || publication.archiveDisposition === "retained-public") continue;
+    const targetSlug = publication.archiveTarget?.match(/^\/articles\/([a-z0-9-]+)$/)?.[1];
+    if (!targetSlug) fail(publication.sourceFile, "archived redirect/replacement targets must use /articles/<slug>");
+    const target = publicationsBySlug.get(targetSlug);
+    if (!target || publicationExposure(target, at).route !== "public") {
+      fail(publication.sourceFile, `archiveTarget must resolve to a public article: ${publication.archiveTarget}`);
+    }
+  }
   validateCitationConflicts(publications.map((publication) => ({ label: publication.sourceFile, citations: publication.citations })));
-  const diagnostics = publicationRelationshipDiagnostics(publications, [], options.now ?? new Date());
+  const diagnostics = publicationRelationshipDiagnostics(publications, [], at);
   if (diagnostics.errors.length > 0) fail("publication relationships", diagnostics.errors.join("; "));
   options.relationshipWarnings?.push(...diagnostics.warnings);
   return publications.sort((left, right) => right.publishedAt.localeCompare(left.publishedAt) || left.slug.localeCompare(right.slug));

@@ -40,6 +40,21 @@ function reviewReadyBody(format) {
   return `## Definition\n\n${words(180, "definition")}\n\n## Mechanism\n\n${words(180, "mechanism")}\n\n## Examples\n\n${words(180, "example")}\n\n## Boundaries\n\n${words(180, "boundary")}`;
 }
 
+function structuredProseBypassBody(format, targetRole) {
+  const proseRoles = {
+    Explainer: ["Definition", "Mechanism", "Examples", "Boundaries"],
+    Playbook: ["Preconditions", "Failure cases"],
+    "Claim check": ["Identified claim", "Sources and evidence", "Conclusion", "Limitations"],
+    "Data note": ["Dataset and period", "Methodology", "Result", "Limitations"],
+    Checklist: ["Completion criteria"],
+  }[format];
+  const sections = proseRoles.map((role) => `## ${role}\n\n${role === targetRole ? "- One token item" : words(80, role.toLowerCase().replaceAll(" ", ""))}`);
+  if (format === "Playbook") sections.splice(1, 0, "## Ordered process\n\n1. First bounded step\n2. Second bounded step\n3. Third bounded step\n4. Fourth bounded step");
+  if (format === "Checklist") sections.unshift("## Checklist\n\n- First bounded check\n- Second bounded check\n- Third bounded check\n- Fourth bounded check\n- Fifth bounded check");
+  sections.push(`## Supplemental context\n\n${words(1000, "supplement")}`);
+  return sections.join("\n\n");
+}
+
 function publicationSource({ metadata = {}, body } = {}) {
   const record = {
     slug: "fixture-record",
@@ -365,6 +380,28 @@ test("canonical review and public records enforce substantive thresholds while l
   );
 });
 
+test("structured blocks cannot bypass prose minimums in any required prose role", () => {
+  const roles = {
+    Explainer: ["Definition", "Mechanism", "Examples", "Boundaries"],
+    Playbook: ["Preconditions", "Failure cases"],
+    "Claim check": ["Identified claim", "Sources and evidence", "Conclusion", "Limitations"],
+    "Data note": ["Dataset and period", "Methodology", "Result", "Limitations"],
+    Checklist: ["Completion criteria"],
+  };
+  for (const [format, requiredRoles] of Object.entries(roles)) {
+    const citations = ["Claim check", "Data note"].includes(format)
+      ? [{ id: "source", title: "Source", url: "https://example.com/source", publisher: "Fixture" }]
+      : [];
+    for (const role of requiredRoles) {
+      assert.throws(
+        () => loadOne({ metadata: { format, state: "review", citations, claimLimits: [words(25, "limit")] }, body: structuredProseBypassBody(format, role) }),
+        new RegExp(`at least 75 words.*${role}`, "i"),
+        `${format}: ${role}`,
+      );
+    }
+  }
+});
+
 test("duplicate metadata fails and deterministic editorial warnings remain visible", () => {
   const source = (slug, metadata = {}) => publicationSource({
     metadata: {
@@ -396,6 +433,23 @@ test("duplicate metadata fails and deterministic editorial warnings remain visib
   assert.ok(warnings.some((warning) => /near-duplicate title/i.test(warning)));
   assert.ok(warnings.some((warning) => /repeated generic boilerplate across 3 records/i.test(warning)));
   assert.ok(warnings.some((warning) => /title length|description length/i.test(warning)));
+
+  const soloWarnings = [];
+  const repeated = "This deliberately repeated phrase belongs to one publication and must not look cross-record.";
+  loadPublicationRegistry({
+    "content/publications/solo.md": source("solo", { directAnswer: repeated, takeaways: [repeated], claimLimits: [repeated] }),
+  }, { registries, media, now: NOW, relationshipWarnings: soloWarnings });
+  assert.equal(soloWarnings.some((warning) => /repeated generic boilerplate/i.test(warning)), false);
+});
+
+test("archived redirects require a distinct existing public article target", () => {
+  for (const archiveTarget of ["/method", "/articles/missing-record", "/articles/fixture-record"]) {
+    assert.throws(
+      () => loadOne({ metadata: { state: "archived", archiveDisposition: "replacement", archiveTarget }, body: reviewReadyBody("Explainer") }),
+      /targets must use \/articles|must resolve to a public article/i,
+      archiveTarget,
+    );
+  }
 });
 
 function experimentSource(record) {
@@ -513,6 +567,10 @@ test("the periodic source-link checker reports failures without making verify ne
   const packageJson = JSON.parse(await readFile(new URL("package.json", root), "utf8"));
   assert.match(packageJson.scripts["content:links"], /check-source-links/);
   assert.doesNotMatch(packageJson.scripts.verify, /content:links/);
+  assert.match(packageJson.scripts["release:review"], /verify.*release:links/);
+  const releaseReview = await readFile(new URL("scripts/release-source-review.mjs", root), "utf8");
+  assert.match(releaseReview, /while \(reports\.at\(-1\)\.remaining > 0\)/);
+  assert.match(releaseReview, /advisory: !args\.includes\("--strict"\)/);
 });
 
 test("the source checker batches deterministically, caps concurrency, and classifies bounded failures", async () => {
