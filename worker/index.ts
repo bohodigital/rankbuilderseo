@@ -1,12 +1,11 @@
 /** Cloudflare Worker entry point for Rank Builder SEO. */
 import { handleImageOptimization, DEFAULT_DEVICE_SIZES, DEFAULT_IMAGE_SIZES } from "vinext/server/image-optimization";
 import handler from "vinext/server/app-router-entry";
-import { publications } from "../app/content/publications";
+import { legacyGuideTarget } from "../app/content/legacy-guide-redirects";
 import { applyResponsePolicies } from "./response-policy";
 
 const canonicalHost = "rankbuilderseo.com";
 const productionPagesHost = "rankbuilderseo.pages.dev";
-const retiredGuideSlugs = new Set(publications.map((publication) => publication.slug));
 
 interface Fetcher {
   fetch(input: RequestInfo | URL, init?: RequestInit): Promise<Response>;
@@ -51,8 +50,9 @@ const worker = {
     if (url.pathname === "/guides" || url.pathname === "/guides/") {
       return redirectToCanonical("/articles");
     }
-    if (guideMatch && retiredGuideSlugs.has(guideMatch[1])) {
-      return redirectToCanonical(`/articles/${guideMatch[1]}`);
+    const historicalGuideTarget = guideMatch ? legacyGuideTarget(guideMatch[1]) : undefined;
+    if (historicalGuideTarget) {
+      return redirectToCanonical(historicalGuideTarget);
     }
 
     if (url.hostname === "www.rankbuilderseo.com" || url.hostname === productionPagesHost) {

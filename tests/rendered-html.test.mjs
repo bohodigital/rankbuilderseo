@@ -2,6 +2,8 @@ import assert from "node:assert/strict";
 import { access, readFile, readdir } from "node:fs/promises";
 import test from "node:test";
 
+import { legacyGuideRedirects, legacyGuideTarget } from "../app/content/legacy-guide-redirects.ts";
+
 const root = new URL("../", import.meta.url);
 const workerUrl = new URL("../dist/server/index.js", import.meta.url);
 workerUrl.searchParams.set("test", `${process.pid}-${Date.now()}`);
@@ -201,12 +203,12 @@ test("marks branch preview Pages HTML as noindex", async () => {
 });
 
 test("redirects every retired guide detail in one hop and preserves query strings", async () => {
-  for (const slug of articleSlugs) {
+  for (const [slug, target] of Object.entries(legacyGuideRedirects)) {
     const response = await request(`/guides/${slug}?source=legacy&position=1`);
     assert.equal(response.status, 301, slug);
     assert.equal(
       response.headers.get("location"),
-      `https://rankbuilderseo.com/articles/${slug}?source=legacy&position=1`,
+      `https://rankbuilderseo.com${target}?source=legacy&position=1`,
       slug,
     );
   }
@@ -220,6 +222,13 @@ test("redirects every retired guide detail in one hop and preserves query string
 
   const unknownGuide = await request("/guides/not-a-published-slug");
   assert.equal(unknownGuide.status, 404);
+
+  assert.equal(legacyGuideTarget("new-canonical-article"), undefined);
+  assert.equal(
+    legacyGuideTarget("how-to-read-an-seo-audit"),
+    "/articles/how-to-read-an-seo-audit",
+    "archiving a destination later must not mutate the historical registry",
+  );
 
   for (const alias of ["https://www.rankbuilderseo.com", "https://rankbuilderseo.pages.dev"]) {
     const aliasResponse = await request(
