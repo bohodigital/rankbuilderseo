@@ -36,9 +36,12 @@ test("cache policy distinguishes HTML, RSC, immutable assets, durable icons, dis
   assert.equal(cachePolicyForResponse(new Request("https://rankbuilderseo.com/articles"), html, false), cachePolicies.htmlAndRsc);
   assert.equal(cachePolicyForResponse(new Request("https://rankbuilderseo.com/articles.rsc?_rsc=abc"), new Response("rsc"), false), cachePolicies.htmlAndRsc);
   assert.equal(cachePolicyForResponse(new Request("https://rankbuilderseo.com/assets/app-a1b2.js"), new Response("js"), false), cachePolicies.immutableAsset);
+  assert.equal(cachePolicyForResponse(new Request("https://rankbuilderseo.com/media/diagram.abcdef12.svg"), new Response("svg"), false), cachePolicies.fingerprintedMedia);
+  assert.equal(cachePolicyForResponse(new Request("https://rankbuilderseo.com/media/diagram.svg"), new Response("svg"), false), cachePolicies.articleMedia);
   assert.equal(cachePolicyForResponse(new Request("https://rankbuilderseo.com/og.png"), new Response("png"), false), cachePolicies.durableStaticAsset);
   assert.equal(cachePolicyForResponse(new Request("https://rankbuilderseo.com/feed.xml"), new Response("xml"), false), cachePolicies.htmlAndRsc);
   assert.equal(cachePolicyForResponse(new Request("https://preview.rankbuilderseo.pages.dev/assets/app.js"), new Response("js"), true), cachePolicies.preview);
+  assert.equal(cachePolicyForResponse(new Request("https://preview.rankbuilderseo.pages.dev/media/diagram.svg"), new Response("svg"), true), cachePolicies.preview);
 });
 
 test("preview HTML is no-store and noindex while CSP remains report-only", () => {

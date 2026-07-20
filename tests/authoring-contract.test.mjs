@@ -17,8 +17,8 @@ import {
   validateCitationUsage,
   validateDocumentMedia,
 } from "../app/content/contract.ts";
-import { inspectSource, resolvePublicTarget, runSourceLinkCheck } from "../scripts/check-source-links.mjs";
-import { mediaDimensions, validateMediaFiles } from "../scripts/content-check.mjs";
+import { inspectSource, normalizedSourceTitle, resolvePublicTarget, runSourceLinkCheck } from "../scripts/check-source-links.mjs";
+import { mediaDimensions, mediaLimits, validateMediaBudgets, validateMediaFiles } from "../scripts/content-check.mjs";
 import { scaffoldPublication } from "../scripts/content-new.mjs";
 import { semanticSignature, stableEntries } from "../app/content/stable-keys.ts";
 
@@ -263,6 +263,30 @@ test("all five format templates scaffold valid drafts and non-draft validation i
   assert.throws(() => loadOne({ metadata: { format: "Checklist", state: "review" }, body: `## Checklist\n\nOne.\n\n## Completion criteria\n\n${words(80)}` }), /actual checklist items/i);
 });
 
+test("media budgets fail review and public records while keeping draft feedback advisory", () => {
+  const records = [
+    { ...media[0], id: "vector", src: "/media/vector.svg", mimeType: "image/svg+xml", templateOnly: false },
+    { ...media[0], id: "raster", src: "/media/raster.png", mimeType: "image/png", templateOnly: false },
+  ];
+  const publication = (state, figures) => ({ slug: `${state}-fixture`, state, document: { figures: figures.map((src) => ({ src })) } });
+  assert.throws(
+    () => validateMediaBudgets([publication("review", ["/media/vector.svg"])], new Map([["/media/vector.svg", mediaLimits.svgBytes + 1]]), records),
+    /SVG media.*limit/i,
+  );
+  assert.throws(
+    () => validateMediaBudgets([publication("published", ["/media/raster.png"])], new Map([["/media/raster.png", mediaLimits.rasterBytes + 1]]), records),
+    /raster media.*limit/i,
+  );
+  assert.throws(
+    () => validateMediaBudgets([publication("review", ["/media/vector.svg", "/media/raster.png"])], new Map([
+      ["/media/vector.svg", 3 * 1024 * 1024], ["/media/raster.png", 3 * 1024 * 1024],
+    ]), records),
+    /article media totals.*limit/i,
+  );
+  const warnings = validateMediaBudgets([publication("draft", ["/media/vector.svg"])], new Map([["/media/vector.svg", mediaLimits.svgBytes + 1]]), records);
+  assert.ok(warnings.some((warning) => /SVG media.*limit/i.test(warning)));
+});
+
 test("non-draft canonical records reject placeholders in every publication surface", () => {
   const base = { state: "review", title: "A sufficiently deliberate fixture article title", description: words(20, "description"), directAnswer: words(20, "answer"), claimLimits: [words(25, "claimlimit")] };
   const cases = [
@@ -435,6 +459,13 @@ test("source targets reject private, reserved, credentialed, DNS-private, and re
     () => resolvePublicTarget("https://sources.example.org/source", async () => [{ address: "192.168.1.20", family: 4 }]),
     /resolves to non-public address 192\.168\.1\.20/i,
   );
+  await assert.rejects(
+    () => resolvePublicTarget("https://sources.example.org/source", async () => [
+      { address: "93.184.216.34", family: 4 },
+      { address: "192.168.1.20", family: 4 },
+    ]),
+    /resolves to non-public address 192\.168\.1\.20/i,
+  );
 
   let requests = 0;
   await assert.rejects(
@@ -454,15 +485,74 @@ test("source targets reject private, reserved, credentialed, DNS-private, and re
 });
 
 test("the periodic source-link checker reports failures without making verify network-dependent", async () => {
-  const results = await runSourceLinkCheck({
+  const report = await runSourceLinkCheck({
     resolveHost: publicResolver,
     fetchImpl: async () => new Response("Unavailable", { status: 503, headers: { "content-type": "text/plain" } }),
   });
-  assert.ok(results.length >= 2);
-  assert.ok(results.every(({ issue }) => issue === "HTTP 503"));
+  assert.ok(report.results.length >= 2);
+  assert.ok(report.results.every(({ category, issue }) => category === "http-error" && issue === "HTTP 503"));
   const packageJson = JSON.parse(await readFile(new URL("package.json", root), "utf8"));
   assert.match(packageJson.scripts["content:links"], /check-source-links/);
   assert.doesNotMatch(packageJson.scripts.verify, /content:links/);
+});
+
+test("the source checker batches deterministically, caps concurrency, and classifies bounded failures", async () => {
+  const sources = ["z", "a", "m", "b"].map((id) => ({ id, title: `Source ${id}`, url: `https://${id}.example.org/source`, publisher: "Example" }));
+  let active = 0;
+  let observedConcurrency = 0;
+  const report = await runSourceLinkCheck({
+    sources,
+    maxSources: 2,
+    batch: 2,
+    concurrency: 3,
+    resolveHost: publicResolver,
+    fetchImpl: async (url) => {
+      active += 1;
+      observedConcurrency = Math.max(observedConcurrency, active);
+      await new Promise((resolve) => setTimeout(resolve, url.includes("m.example.org") ? 5 : 1));
+      active -= 1;
+      return new Response("Unavailable", { status: 503 });
+    },
+  });
+  assert.deepEqual(report.results.map(({ id }) => id), ["m", "z"]);
+  assert.equal(observedConcurrency, 2);
+  assert.equal(report.total, 4);
+  assert.equal(report.remaining, 0);
+  await assert.rejects(() => runSourceLinkCheck({ sources, concurrency: 4 }), /integer from 1 to 3/i);
+
+  const oversized = await runSourceLinkCheck({
+    sources: [sources[0]], resolveHost: publicResolver,
+    fetchImpl: async () => new Response(`<!doctype html><title>Source z</title>${"x".repeat(1_000_001)}`, { headers: { "content-type": "text/html" } }),
+  });
+  assert.equal(oversized.results[0].category, "oversized-response");
+  const timeout = await runSourceLinkCheck({
+    sources: [sources[0]], resolveHost: publicResolver,
+    fetchImpl: async () => { throw new DOMException("timed out", "AbortError"); },
+  });
+  assert.equal(timeout.results[0].category, "timeout");
+});
+
+test("source redirects are bounded and publisher suffixes normalize without false title review", async () => {
+  assert.equal(normalizedSourceTitle("A Bounded Study | Example Publisher", "Example Publisher"), "a bounded study");
+  const titleResult = await inspectSource(
+    { id: "title", title: "A Bounded Study", url: "https://sources.example.org/source", publisher: "Example Publisher" },
+    { resolveHost: publicResolver, fetchImpl: async () => new Response("<title>A Bounded Study | Example Publisher</title>", { headers: { "content-type": "text/html" } }) },
+  );
+  assert.equal(titleResult.category, "ok");
+  let redirects = 0;
+  const redirectResult = await inspectSource(
+    { id: "loop", title: "Loop", url: "https://sources.example.org/source", publisher: "Fixture" },
+    {
+      resolveHost: publicResolver,
+      fetchImpl: async () => {
+        redirects += 1;
+        return new Response(null, { status: 302, headers: { location: `/redirect-${redirects}` } });
+      },
+    },
+  );
+  assert.equal(redirectResult.category, "redirect-error");
+  assert.match(redirectResult.issue, /more than 5 redirects/i);
+  assert.equal(redirects, 6);
 });
 
 test("semantic renderer keys survive distinct-item reordering", async () => {

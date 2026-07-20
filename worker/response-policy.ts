@@ -28,6 +28,8 @@ export const securityHeaders = {
 export const cachePolicies = {
   htmlAndRsc: "public, max-age=0, must-revalidate",
   immutableAsset: "public, max-age=31536000, immutable",
+  fingerprintedMedia: "public, max-age=31536000, immutable",
+  articleMedia: "public, max-age=86400, stale-while-revalidate=604800",
   durableStaticAsset: "public, max-age=3600, stale-while-revalidate=86400",
   preview: "private, no-store",
 } as const;
@@ -50,6 +52,8 @@ export function cachePolicyForResponse(request: Request, response: Response, isP
 
   const url = new URL(request.url);
   if (url.pathname.startsWith("/assets/")) return cachePolicies.immutableAsset;
+  if (/^\/media\/.+\.[a-f0-9]{8,}\.[a-z0-9]+$/i.test(url.pathname)) return cachePolicies.fingerprintedMedia;
+  if (url.pathname.startsWith("/media/")) return cachePolicies.articleMedia;
   if (durableStaticPaths.has(url.pathname)) return cachePolicies.durableStaticAsset;
   if (discoveryPaths.has(url.pathname)) return cachePolicies.htmlAndRsc;
 
