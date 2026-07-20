@@ -63,7 +63,14 @@ Ordered process/Failure cases for playbooks; Identified claim/Sources and eviden
 Conclusion/Limitations for claim checks; Dataset and period/Methodology/Result/
 Limitations for data notes; and Checklist/Completion criteria for checklists.
 Ordered process and checklist sections must contain their required list shapes,
-and source-dependent formats must contain citations.
+and source-dependent formats must contain citations and meaningful limitations.
+Review, scheduled, published, and archived canonical records require at least 75
+words of prose in each prose-oriented required section. Rendered article minimums
+are 700 words for explainers and data notes, 900 for playbooks and claim checks,
+and 600 for checklists. Playbooks require at least two ordered steps and checklists
+at least three items; fewer than four steps or five items produces an editorial
+warning. Exact duplicate titles or descriptions fail, while near-duplicates,
+repeated boilerplate, and unusual metadata lengths produce review warnings.
 
 The twelve protected publications use the explicit `legacy-protected-v1`
 migration marker so their established bodies remain byte-for-byte editorially
@@ -75,6 +82,11 @@ must reference `content/registries.json`. Media must be registered in
 `content/media.json`, local beneath `public/`, approved, dimensionally accurate,
 and include non-empty alt text, caption, credit, rights, and source information when
 the rights are not owned. Do not hotlink article images.
+Template-only, restricted, expired, placeholder, and scaffold media are accepted
+only in drafts. SVG files are limited to 250 KiB, raster files to 1.5 MiB, the
+1200x630 Open Graph PNG to 500 KiB, and one article's unique media to 5 MiB.
+Declared and actual dimensions must match and neither dimension may exceed 4000
+pixels. Oversized draft media is advisory; review and public use fails closed.
 
 The supported body subset is deliberately small:
 
@@ -103,11 +115,17 @@ Do not restore free-form read-time labels.
 Run `npm run content:links` periodically or during release review to inspect source
 redirects, failures, and changed page titles. It is intentionally advisory and is
 not part of `verify`; `--strict` is available for an explicit review gate.
+Use `--max-sources 25 --batch 1` for deterministic batches, optionally add
+`--concurrency 2` or `3`, and add `--json` for machine-readable output. The
+maximum batch size is 200 and concurrency never exceeds three.
 The checker validates the initial URL and every redirect as credential-free HTTPS,
 resolves every hostname, rejects localhost-like names and any private, loopback,
 link-local, reserved, documentation, multicast, or otherwise non-public address,
 and pins an approved DNS answer into the TLS request. Network failures remain
-review output rather than production-build failures.
+review output rather than production-build failures. Redirect loops, timeouts,
+oversized responses, unsafe targets, HTTP failures, title-review findings, and
+network failures are classified separately. Common publisher suffixes are removed
+before title comparison.
 
 ## Publication
 

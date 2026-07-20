@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { organizationStructuredData, serializeStructuredData, websiteStructuredData } from "./content/structured-data";
 import "./globals.css";
 import { sharedOpenGraph } from "./metadata";
@@ -17,7 +17,6 @@ export const metadata: Metadata = {
     },
   },
   manifest: "/site.webmanifest",
-  themeColor: "#f7f6f2",
   icons: {
     icon: [
       { url: "/favicon.svg", type: "image/svg+xml" },
@@ -39,6 +38,10 @@ export const metadata: Metadata = {
     description: "Evidence for the search-obsessed.",
     images: ["/og.png"],
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#f7f6f2",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

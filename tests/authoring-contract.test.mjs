@@ -263,6 +263,25 @@ test("all five format templates scaffold valid drafts and non-draft validation i
   assert.throws(() => loadOne({ metadata: { format: "Checklist", state: "review" }, body: `## Checklist\n\nOne.\n\n## Completion criteria\n\n${words(80)}` }), /actual checklist items/i);
 });
 
+test("lifecycle metadata fails closed for revisions, future dates, scheduling, and archive targets", () => {
+  assert.throws(
+    () => loadOne({ metadata: { state: "review", revisedAt: "2026-07-19" }, body: reviewReadyBody("Explainer") }),
+    /revisionNote is required/i,
+  );
+  assert.throws(
+    () => loadOne({ metadata: { state: "published", publishedAt: "2026-07-20", revisedAt: "2026-07-20" }, body: reviewReadyBody("Explainer") }),
+    /future publishedAt dates require state scheduled/i,
+  );
+  assert.throws(
+    () => loadOne({ metadata: { state: "scheduled", publishedAt: "2026-07-20", revisedAt: "2026-07-20", scheduledAt: "2026-07-21T00:00:00Z" }, body: reviewReadyBody("Explainer") }),
+    /scheduledAt date must match publishedAt/i,
+  );
+  assert.throws(
+    () => loadOne({ metadata: { state: "archived", archiveDisposition: "replacement", archiveTarget: "https://example.org/replacement" }, body: reviewReadyBody("Explainer") }),
+    /safe root-relative archiveTarget/i,
+  );
+});
+
 test("media budgets fail review and public records while keeping draft feedback advisory", () => {
   const records = [
     { ...media[0], id: "vector", src: "/media/vector.svg", mimeType: "image/svg+xml", templateOnly: false },

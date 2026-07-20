@@ -41,11 +41,13 @@ Before push, fetch github/main and verify it is still the reviewed base. Push on
 | --- | --- | --- |
 | HTML and RSC | public, max-age=0, must-revalidate | Navigation must observe the current release and not retain stale server-component payloads. |
 | Fingerprinted /assets files | public, max-age=31536000, immutable | Content hashes make year-long immutable caching safe. |
+| Fingerprinted /media files | public, max-age=31536000, immutable | A content hash makes immutable article-media caching safe. |
+| Stable /media files | public, max-age=86400, stale-while-revalidate=604800 | Stable article URLs get a one-day freshness bound and a resilient revalidation window. |
 | Icons, manifest, and /og.png | public, max-age=3600, stale-while-revalidate=86400 | Stable URLs need bounded refresh rather than immutable caching. |
 | /robots.txt, /sitemap.xml, and /feed.xml | public, max-age=0, must-revalidate | Discovery records must track publication eligibility and release state. |
 | Hashed Pages previews | private, no-store | Preview HTML/RSC/assets must not become durable shared-cache records. |
 
-public/_headers supplies the Pages static policy. worker/response-policy.ts applies the runtime policy. Tests require security-header parity and exercise runtime cache selection. Live release checks must sample HTML, RSC, one hashed asset, one durable image/icon, and all discovery endpoints.
+public/_headers supplies the Pages static policy. worker/response-policy.ts applies the runtime policy. Tests require security-header parity and exercise runtime cache selection. Live release checks must sample HTML, RSC, one hashed asset, one article-media asset, one durable image/icon, and all discovery endpoints.
 
 ## Request budget and RSC prefetch
 
@@ -108,4 +110,4 @@ Do not ship a search index or search UI in this release. When the feed-eligible 
 
 The release rollback deployment is 114eb386-274f-4f23-b7eb-cc0c29f5cda1 unless a newer deployment is independently verified good and recorded before release. On a release-blocking regression, use the existing Cloudflare Pages rollback path to restore the recorded deployment, then recheck apex, Pages alias, crawler endpoints, headers, and representative routes. Do not change DNS.
 
-Content-production readiness requires all three cleanup packets to be independently accepted, the exact three-commit chain to be on GitHub main, the Packet 3 SHA to be deployed through rankbuilderseo, bounded live checks to pass, and remaining external-account actions to be recorded honestly.
+Content-production readiness requires all cleanup packets to be independently accepted, the exact accepted commit chain to be on GitHub main, the accepted release SHA to be deployed through rankbuilderseo, bounded live checks to pass, and remaining external-account actions to be recorded honestly.

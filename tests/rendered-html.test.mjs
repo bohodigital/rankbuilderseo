@@ -434,9 +434,9 @@ test("emits the Cloudflare Pages deployment artifacts", async () => {
 });
 
 test("emits scoped Pages X-Robots-Tag detach rules for static preview assets", async () => {
-  const headers = await readFile(new URL("dist/client/_headers", root), "utf8");
+  const headers = (await readFile(new URL("dist/client/_headers", root), "utf8")).replace(/\r\n/g, "\n");
 
-  for (const asset of ["/assets/*", "/og.png", "/favicon.ico", "/favicon.svg", "/favicon-32x32.png", "/apple-touch-icon.png", "/icon-192.png", "/icon-512.png", "/site.webmanifest"]) {
+  for (const asset of ["/assets/*", "/media/*", "/og.png", "/favicon.ico", "/favicon.svg", "/favicon-32x32.png", "/apple-touch-icon.png", "/icon-192.png", "/icon-512.png", "/site.webmanifest"]) {
     assert.ok(headers.includes(`${asset}\n  ! X-Robots-Tag`), asset);
   }
 });
@@ -471,6 +471,8 @@ test("defines the packet-one metadata, semantic, accessibility, and asset contra
   ]);
   assert.match(layout, /icons:/);
   assert.match(layout, /manifest: "\/site\.webmanifest"/);
+  assert.match(layout, /export const viewport: Viewport/);
+  assert.doesNotMatch(layout.match(/export const metadata:[\s\S]*?\n};/)?.[0] ?? "", /themeColor/);
   assert.match(metadata, /width: 1200/);
   assert.match(metadata, /height: 630/);
   assert.match(article, /twitter:/);
@@ -496,6 +498,9 @@ test("defines the packet-one metadata, semantic, accessibility, and asset contra
   assert.match(chrome, /usePathname/);
   assert.match(chrome, /aria-current/);
   assert.match(css, /\.menu-toggle, \.primary-nav a, \.footer-nav a \{[^}]*min-width: 44px[^}]*min-height: 44px/s);
+  assert.match(css, /\.category-filters button \{[^}]*min-width: 44px[^}]*min-height: 44px/s);
+  assert.match(css, /\.search-clear \{[^}]*min-width: 44px[^}]*min-height: 44px/s);
+  assert.match(css, /summary \{[^}]*min-width: 44px[^}]*min-height: 44px/s);
   assert.match(structured, /inLanguage: "en"/);
   assert.match(structured, /isAccessibleForFree: true/);
   assert.match(structured, /wordCount: publication\.wordCount/);

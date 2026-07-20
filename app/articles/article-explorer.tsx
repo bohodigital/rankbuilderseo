@@ -21,13 +21,14 @@ export function ArticleExplorer({ articles }: { articles: Publication[] }) {
   return (
     <div className="article-explorer">
       <div className="archive-controls">
-        <label>
-          <span>Search the desk</span>
-          <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Try canonicals, reporting, pricing…" />
-        </label>
+        <div className="search-control">
+          <label htmlFor="article-search">Search the desk</label>
+          <input id="article-search" type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Try canonicals, reporting, pricing…" />
+          {query && <button className="search-clear" type="button" onClick={() => setQuery("")} aria-label="Clear article search">Clear</button>}
+        </div>
         <div className="category-filters" aria-label="Filter articles by category">
           {categories.map((item) => (
-            <button className={category === item ? "active" : ""} onClick={() => setCategory(item)} key={item}>{item}</button>
+            <button type="button" className={category === item ? "active" : ""} aria-pressed={category === item} onClick={() => setCategory(item)} key={item}>{item}</button>
           ))}
         </div>
       </div>

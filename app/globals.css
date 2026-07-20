@@ -164,12 +164,12 @@ button, input { font: inherit; }
 .archive-stats dd { margin: .45rem 0 0; font: 800 2rem var(--mono); color: var(--signal); }
 .article-explorer { width: 100%; }
 .archive-controls { display: grid; grid-template-columns: 1fr 1.2fr; gap: 3rem; align-items: end; padding-bottom: 2rem; border-bottom: 2px solid var(--line); }
-.archive-controls label { display: grid; gap: .5rem; }
-.archive-controls label span { font: 700 .65rem var(--mono); text-transform: uppercase; }
-.archive-controls input { width: 100%; padding: .85rem 0; border: 0; border-bottom: 1px solid #aaa99f; background: transparent; color: var(--ink); font: 1.25rem var(--serif); outline: none; }
+.archive-controls .search-control { position: relative; display: grid; gap: .5rem; }
+.archive-controls label { font: 700 .65rem var(--mono); text-transform: uppercase; }
+.archive-controls input { width: 100%; min-height: 44px; padding: .85rem 4.5rem .85rem 0; border: 0; border-bottom: 1px solid #aaa99f; background: transparent; color: var(--ink); font: 1.25rem var(--serif); outline: none; }
 .archive-controls input:focus { border-color: var(--blue); }
 .category-filters { display: flex; flex-wrap: wrap; gap: .45rem; }
-.category-filters button { padding: .55rem .75rem; border: 1px solid var(--line); background: transparent; color: var(--ink); cursor: pointer; font: 700 .62rem var(--mono); text-transform: uppercase; }
+.category-filters button { min-width: 44px; min-height: 44px; padding: .55rem .75rem; border: 1px solid var(--line); background: transparent; color: var(--ink); cursor: pointer; font: 700 .62rem var(--mono); text-transform: uppercase; }
 .category-filters button:hover, .category-filters button.active { background: var(--ink); color: var(--paper-light); }
 .archive-count { display: flex; justify-content: space-between; padding: 1rem 0; font: 700 .62rem var(--mono); color: var(--muted); text-transform: uppercase; }
 .article-card-grid { display: grid; grid-template-columns: repeat(3,1fr); border-top: 2px solid var(--line); border-left: 2px solid var(--line); }
@@ -242,10 +242,12 @@ button, input { font: inherit; }
 
 .glossary-explorer { padding-top: 3rem; }
 .search-box { position: relative; display: grid; gap: .6rem; padding-bottom: 2rem; border-bottom: 2px solid var(--line); }
-.search-box span { font: 700 .68rem var(--mono); text-transform: uppercase; }
-.search-box input { width: 100%; padding: 1rem 3.5rem 1rem 0; border: 0; border-bottom: 1px solid #aaa99f; background: transparent; font: 400 clamp(2rem, 5vw, 4rem) var(--serif); color: var(--ink); outline: none; }
+.search-box label { font: 700 .68rem var(--mono); text-transform: uppercase; }
+.search-box input { width: 100%; min-height: 44px; padding: 1rem 4.5rem 1rem 0; border: 0; border-bottom: 1px solid #aaa99f; background: transparent; font: 400 clamp(2rem, 5vw, 4rem) var(--serif); color: var(--ink); outline: none; }
 .search-box input:focus { border-color: var(--blue); }
 .search-box b { position: absolute; right: .5rem; bottom: 2.8rem; font-size: 2rem; }
+.search-clear { position: absolute; right: 0; bottom: .35rem; min-width: 44px; min-height: 44px; padding: .5rem .7rem; border: 1px solid var(--line); background: var(--paper-light); color: var(--ink); cursor: pointer; font: 700 .62rem var(--mono); text-transform: uppercase; }
+.search-box .search-clear { bottom: 2.35rem; }
 .glossary-count { display: flex; justify-content: space-between; padding: 1.2rem 0; font: 700 .65rem var(--mono); color: var(--muted); text-transform: uppercase; }
 .glossary-entry { scroll-margin-top: 100px; display: grid; grid-template-columns: 80px minmax(0,800px); gap: 2rem; padding: 3rem 0; border-top: 2px solid var(--line); }
 .glossary-index { font: 700 .8rem var(--mono); color: var(--signal); }
@@ -268,7 +270,7 @@ button, input { font: inherit; }
 .register-row dt { font: 700 .6rem var(--mono); text-transform: uppercase; color: var(--muted); }
 .register-row dd { margin: .3rem 0 0; font: 700 .72rem var(--mono); }
 details { margin-top: 1rem; }
-summary { cursor: pointer; font: 700 .68rem var(--mono); text-transform: uppercase; }
+summary { display: inline-flex; align-items: center; min-width: 44px; min-height: 44px; cursor: pointer; font: 700 .68rem var(--mono); text-transform: uppercase; }
 .lab-rules { padding: 6rem 0; background: var(--blue); color: #fff; }
 .rules-grid { display: grid; grid-template-columns: repeat(4,1fr); border-left: 1px solid rgba(255,255,255,.5); }
 .rules-grid div { padding: 1.5rem; border-right: 1px solid rgba(255,255,255,.5); }
