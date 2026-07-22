@@ -22,6 +22,9 @@ const articleSlugs = [
   "local-seo-provider-scorecard",
   "internal-links-audit-by-template",
   "zero-click-search-study-notes",
+  "why-google-isnt-indexing-your-page",
+  "crawling-vs-indexing-vs-ranking",
+  "google-search-console-url-inspection",
 ];
 
 const expectedLegacyGuideRedirects = Object.freeze({
@@ -323,7 +326,7 @@ test("publishes only canonical 200 self-canonicalizing URLs in crawler endpoints
   assert.match(feedText, /<summary type="text">[^<]+<\/summary>/);
 
   const sitemapUrls = extractAll(sitemapText, /<loc>([^<]+)<\/loc>/g);
-  assert.equal(sitemapUrls.length, 31);
+  assert.equal(sitemapUrls.length, 34);
   assert.equal(new Set(sitemapUrls).size, sitemapUrls.length);
 
   const pageTitles = new Set();

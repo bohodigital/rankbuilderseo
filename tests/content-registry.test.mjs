@@ -87,7 +87,7 @@ function source(overrides = {}) {
 
 test("loads the canonical Markdown registry with complete typed metadata", async () => {
   const publications = loadPublicationRegistry(await publicationSources());
-  assert.equal(publications.length, 12);
+  assert.equal(publications.length, 15);
   assert.equal(new Set(publications.map(({ slug }) => slug)).size, publications.length);
   for (const publication of publications) {
     assert.ok(publication.author.name);
@@ -152,7 +152,8 @@ test("rejects unknown identities, invalid dates, invalid citation URLs, and inco
 test("generates only the authoritative article route family", async () => {
   const publications = loadPublicationRegistry(await publicationSources());
   const routes = publicationRoutePaths(publications);
-  assert.equal(routes.length, 12);
+  assert.equal(routes.length, 15);
+  for (const route of ["/articles/why-google-isnt-indexing-your-page", "/articles/crawling-vs-indexing-vs-ranking", "/articles/google-search-console-url-inspection"]) assert.ok(routes.includes(route), route);
   assert.ok(routes.every((route) => route.startsWith("/articles/")));
   assert.ok(routes.every((route) => !route.startsWith("/guides/")));
 });
@@ -160,7 +161,7 @@ test("generates only the authoritative article route family", async () => {
 test("preserves protected URL, title, H1, description, date, and primary copy signals", async () => {
   const publications = loadPublicationRegistry(await publicationSources());
   const parity = protectedParity;
-  const actual = publications.map((publication) => ({
+  const actual = publications.filter((publication) => publication.authoringContract === "legacy-protected-v1").map((publication) => ({
     slug: publication.slug,
     title: publication.title,
     h1: publication.title,
