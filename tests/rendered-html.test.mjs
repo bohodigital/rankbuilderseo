@@ -501,6 +501,7 @@ test("keeps the editorial interface calm, accessible, and motion-safe", async ()
   assert.match(editorial, /\.ticker-track \{[^}]*animation: none/);
   assert.match(editorial, /\.system-intro, \.article-rail \{ position: static/);
   assert.match(editorial, /\.article-layout \{ grid-template-columns: 205px minmax\(0, 690px\)/);
+  assert.match(editorial, /\.article-body \{ min-width: 0; max-width: 690px/);
   assert.match(editorial, /\.lab-rules \.rules-grid span, \.lab-status\.live \{ color: var\(--signal\)/);
   assert.match(editorial, /\.article-body h2, \.rules-grid h3, \.standards-list h3, \.about-grid h2 \{ text-transform: none/);
   assert.match(editorial, /@media \(max-width: 900px\) \{[\s\S]*\.hero, \.split-heading, \.system-grid, \.article-layout \{ grid-template-columns: 1fr/);
