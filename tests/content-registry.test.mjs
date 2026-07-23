@@ -30,7 +30,7 @@ function loadPublicationRegistry(sources) {
   return loadPublicationRegistryRaw(sources, {
     registries: controlledRegistries,
     media: mediaRegistry,
-    now: new Date("2026-07-19T00:00:00Z"),
+    now: new Date("2026-07-23T00:00:00Z"),
   });
 }
 
@@ -50,6 +50,42 @@ const protectedParity = [
   {"slug":"internal-links-audit-by-template","title":"Audit internal links by template, not one URL at a time","h1":"Audit internal links by template, not one URL at a time","description":"The scalable unit of technical SEO is often the template. Find repeated link behavior before editing isolated pages.","published":"July 1, 2026","primaryCopySha256":"e474dd16159ac967b1613c77967f8464b36c39acc5b5a2514352709737a2bbde"},
   {"slug":"zero-click-search-study-notes","title":"Zero-click studies: four numbers that change the story","h1":"Zero-click studies: four numbers that change the story","description":"A data note on devices, query samples, result features, and the difference between fewer clicks and less opportunity.","published":"July 1, 2026","primaryCopySha256":"1c840fe5e02523074b45adc3d254eb43bffad756996b1c96847aac158966e91f"}
 ];
+const batch01Parity = [
+  {
+    slug: "why-google-isnt-indexing-your-page",
+    title: "Why Google Isn’t Indexing Your Page: A Complete Diagnostic Flow",
+    h1: "Why Google Isn’t Indexing Your Page: A Complete Diagnostic Flow",
+    description: "Diagnose why a page is missing from Google by checking discovery, crawling, indexability, canonicalization, rendering, and content selection in the correct order.",
+    published: "July 22, 2026",
+    route: "/articles/why-google-isnt-indexing-your-page",
+    citationIds: ["google-how-search-works", "google-technical-requirements", "gsc-url-inspection", "gsc-inspect-troubleshoot", "gsc-page-indexing", "gsc-missing-page", "google-noindex", "google-canonicalization-overview", "google-links", "google-crawl-budget", "google-canonical-methods", "google-sitemap"],
+    primaryCopySha256: "225922fc1cd3d071c0685c7216f68a8f82f3fb811d5999431e0e0c8db5068fe5",
+    sourceRecordsSha256: "4ba963861f66687a4ca5335f4178b4f57eb45136d86a5cad6dce90e15cf954bc",
+  },
+  {
+    slug: "crawling-vs-indexing-vs-ranking",
+    title: "Crawling vs. Indexing vs. Ranking: Where Search Problems Actually Happen",
+    h1: "Crawling vs. Indexing vs. Ranking: Where Search Problems Actually Happen",
+    description: "Learn the difference between discovery, crawling, rendering, indexing, canonicalization, and ranking so you can diagnose the correct search problem.",
+    published: "July 22, 2026",
+    route: "/articles/crawling-vs-indexing-vs-ranking",
+    citationIds: ["google-how-search-works", "google-technical-requirements", "gsc-url-inspection", "gsc-page-indexing", "google-canonicalization-overview", "google-links", "google-sitemap"],
+    primaryCopySha256: "d14e27f7d9657553299c159fdf17d5a23ba3a107570618e30ff9be32b871a77d",
+    sourceRecordsSha256: "7764e5b70e61e551afbc832b1b7fb3055afaf2ef3a44373f53a800fe8db3e9a7",
+  },
+  {
+    slug: "google-search-console-url-inspection",
+    title: "How to Use Google Search Console URL Inspection to Diagnose Indexing",
+    h1: "How to Use Google Search Console URL Inspection to Diagnose Indexing",
+    description: "Read indexed data, run a live test, inspect rendered output, understand canonical fields, and request indexing without confusing eligibility with inclusion.",
+    published: "July 22, 2026",
+    route: "/articles/google-search-console-url-inspection",
+    citationIds: ["google-technical-requirements", "gsc-url-inspection", "gsc-inspect-troubleshoot", "gsc-page-indexing", "gsc-missing-page", "google-noindex", "google-canonicalization-overview"],
+    primaryCopySha256: "36d1cc8c37b40d28239e4cef200e6644d21d6f443a24801a5320e9fa8b195e82",
+    sourceRecordsSha256: "17ce5922820c814b30ca0bf04768c2507ebfc7db0cdcb20cf212faed8432ac2d",
+  },
+];
+
 
 async function publicationSources() {
   const directory = new URL("content/publications/", root);
@@ -172,6 +208,37 @@ test("preserves protected URL, title, H1, description, date, and primary copy si
       .digest("hex"),
   }));
   assert.deepEqual(actual, parity);
+});
+
+test("preserves approved Batch 01 routes, copy, and source records", async () => {
+  const publications = loadPublicationRegistry(await publicationSources());
+  const actual = batch01Parity.map((expected) => {
+    const publication = publications.find(({ slug }) => slug === expected.slug);
+    assert.ok(publication, expected.slug);
+    const sourceRecords = publication.citations.map(({ id, title, url, publisher, accessedAt }) => ({
+      id,
+      title,
+      url,
+      publisher,
+      accessedAt,
+    }));
+    return {
+      slug: publication.slug,
+      title: publication.title,
+      h1: publication.title,
+      description: publication.description,
+      published: formatPublicationDate(publication.publishedAt),
+      route: publicationRoutePaths([publication])[0],
+      citationIds: publication.citations.map(({ id }) => id),
+      primaryCopySha256: createHash("sha256")
+        .update(publication.sections.flatMap((section) => [section.heading, ...section.paragraphs, ...(section.bullets ?? [])]).join("\n"))
+        .digest("hex"),
+      sourceRecordsSha256: createHash("sha256")
+        .update(JSON.stringify(sourceRecords))
+        .digest("hex"),
+    };
+  });
+  assert.deepEqual(actual, batch01Parity);
 });
 
 test("validates glossary and experiment references from separate registries", async () => {

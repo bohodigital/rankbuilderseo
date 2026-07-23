@@ -9,6 +9,12 @@ const workerUrl = new URL("../dist/server/index.js", import.meta.url);
 workerUrl.searchParams.set("test", `${process.pid}-${Date.now()}`);
 const { default: worker } = await import(workerUrl.href);
 
+const batch01Articles = [
+  { slug: "why-google-isnt-indexing-your-page", title: "Why Google Isn’t Indexing Your Page: A Complete Diagnostic Flow", route: "/articles/why-google-isnt-indexing-your-page" },
+  { slug: "crawling-vs-indexing-vs-ranking", title: "Crawling vs. Indexing vs. Ranking: Where Search Problems Actually Happen", route: "/articles/crawling-vs-indexing-vs-ranking" },
+  { slug: "google-search-console-url-inspection", title: "How to Use Google Search Console URL Inspection to Diagnose Indexing", route: "/articles/google-search-console-url-inspection" },
+];
+
 const articleSlugs = [
   "how-to-read-an-seo-audit",
   "technical-seo-baseline",
@@ -22,9 +28,7 @@ const articleSlugs = [
   "local-seo-provider-scorecard",
   "internal-links-audit-by-template",
   "zero-click-search-study-notes",
-  "why-google-isnt-indexing-your-page",
-  "crawling-vs-indexing-vs-ranking",
-  "google-search-console-url-inspection",
+  ...batch01Articles.map(({ slug }) => slug),
 ];
 
 const expectedLegacyGuideRedirects = Object.freeze({
@@ -360,6 +364,34 @@ test("publishes only canonical 200 self-canonicalizing URLs in crawler endpoints
     assert.ok(!pageTitles.has(titles[0]), `duplicate title: ${titles[0]}`);
     pageTitles.add(titles[0]);
     assert.doesNotMatch(html, /href="\/guides(?:\/|"|\?)/i, sitemapUrl);
+  }
+});
+
+test("publishes the exact Batch 01 records through canonical generated output", async () => {
+  const [archiveText, sitemapText, feedText] = await Promise.all([
+    request("/articles").then((response) => response.text()),
+    request("/sitemap.xml", "application/xml").then((response) => response.text()),
+    request("/feed.xml", "application/atom+xml").then((response) => response.text()),
+  ]);
+
+  for (const article of batch01Articles) {
+    const response = await request(article.route);
+    assert.equal(response.status, 200, article.route);
+    const html = await response.text();
+    assert.deepEqual(extractAll(html, /<h1[^>]*>([^<]+)<\/h1>/gi), [article.title], article.route);
+    assert.deepEqual(
+      extractAll(html, /<link[^>]+rel="canonical"[^>]+href="([^"]+)"[^>]*>/gi),
+      [`https://rankbuilderseo.com${article.route}`],
+      article.route,
+    );
+    assert.match(html, /<main\b/i, article.route);
+    assert.ok(archiveText.includes(`href="${article.route}"`), article.route);
+    assert.ok(sitemapText.includes(`<loc>https://rankbuilderseo.com${article.route}</loc>`), article.route);
+    assert.ok(feedText.includes(`<id>https://rankbuilderseo.com${article.route}</id>`), article.route);
+
+    const trailingSlash = await request(`${article.route}/`);
+    assert.equal(trailingSlash.status, 308, `${article.route}/`);
+    assert.equal(trailingSlash.headers.get("location"), article.route, `${article.route}/`);
   }
 });
 

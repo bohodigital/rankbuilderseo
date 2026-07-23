@@ -15,11 +15,11 @@
   "correctionHistory": [],
   "slug": "google-search-console-url-inspection",
   "title": "How to Use Google Search Console URL Inspection to Diagnose Indexing",
-  "description": "Use Google Search Console URL Inspection to separate indexed data from live tests, inspect crawling and indexing controls, and document the next diagnostic step.",
+  "description": "Read indexed data, run a live test, inspect rendered output, understand canonical fields, and request indexing without confusing eligibility with inclusion.",
   "directAnswer": "Use URL Inspection to record Google’s indexed data first, then compare it with a live test so you can distinguish stale reports, technical access, canonical selection, and content-selection issues.",
   "takeaways": [
     "Inspect the exact canonical URL and record the indexed result before running a live test.",
-    "Use the last crawl date to determine whether Google has seen the latest deployment.",
+    "Use the last reported crawl time to assess whether the indexed inspection data may predate the latest deployment.",
     "Treat a successful live test as technical eligibility, not an indexing certificate."
   ],
   "claimLimits": [
@@ -165,7 +165,7 @@ Expand Page indexing and read the exact reason. The useful diagnosis is in the d
 
 **Last crawl**
 
-This is when Google generated the indexed information you are reading.
+The `Last crawl` field records Google’s last reported crawl time in the indexed inspection data. It does not by itself prove current index inclusion, current canonical selection, or the result of the latest live fetch.
 
 Use it to answer:
 
@@ -343,40 +343,6 @@ This comparison produces the diagnosis.
 | crawled, not indexed | Live URL is indexable | Technical eligibility is not the missing decision; examine rendering, duplication, and value |
 | URL unknown | Live URL succeeds | Google can fetch it now; strengthen discovery and request indexing once |
 
-## Boundaries
-
-**Use the Page Indexing report for patterns**
-
-URL Inspection diagnoses one URL. The Page Indexing report helps identify a site-wide or section-wide pattern.
-
-Use the report to answer:
-
-- How many URLs share the status?
-- Did the count change after a release?
-- Is one template or directory affected?
-- Are the excluded URLs intentional duplicates?
-- Did a robots or canonical change affect a large section?
-
-Google advises that not every known URL should be indexed. The goal is to get important canonical pages indexed, not to force every parameter, redirect, duplicate, feed, or utility URL into the index. [Page indexing report](https://support.google.com/webmasters/answer/7440203?rd=1)[@gsc-page-indexing]
-
-**Request indexing carefully**
-
-After fixing the identifiable problem:
-
-1. run a live test;
-2. confirm the page can be indexed;
-3. verify the rendered content;
-4. click **Request indexing**.
-
-Google notes:
-
-- submission does not guarantee indexing;
-- a daily limit applies;
-- processing can take days or longer;
-- sitemaps are preferable for many new or updated URLs.
-
-Request indexing is a notification that the URL is ready for another attempt. It is not an override.
-
 **Worked diagnosis**
 
 Suppose the default result says:
@@ -411,6 +377,40 @@ Bad response:
 - request indexing repeatedly.
 
 Those actions do not address the evidence.
+
+## Boundaries
+
+**Use the Page Indexing report for patterns**
+
+URL Inspection diagnoses one URL. The Page Indexing report helps identify a site-wide or section-wide pattern.
+
+Use the report to answer:
+
+- How many URLs share the status?
+- Did the count change after a release?
+- Is one template or directory affected?
+- Are the excluded URLs intentional duplicates?
+- Did a robots or canonical change affect a large section?
+
+Google advises that not every known URL should be indexed. The goal is to get important canonical pages indexed, not to force every parameter, redirect, duplicate, feed, or utility URL into the index. [Page indexing report](https://support.google.com/webmasters/answer/7440203?rd=1)[@gsc-page-indexing]
+
+**Request indexing carefully**
+
+After fixing the identifiable problem:
+
+1. run a live test;
+2. confirm the page can be indexed;
+3. verify the rendered content;
+4. click **Request indexing**.
+
+Google notes:
+
+- submission does not guarantee indexing;
+- a daily limit applies;
+- processing can take days or longer;
+- sitemaps are preferable for many new or updated URLs.
+
+Request indexing is a notification that the URL is ready for another attempt. It is not an override.
 
 **Diagnostic worksheet**
 

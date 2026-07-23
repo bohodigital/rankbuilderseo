@@ -380,6 +380,8 @@ Investigate four categories.
 
 The Page Indexing report and the per-URL indexed result may reflect an earlier crawl. Compare the last crawl date with your latest changes and run a live test.
 
+## Boundaries
+
 **B. The page rendered poorly**
 
 A fetch can succeed while the meaningful content fails during rendering.
@@ -434,28 +436,28 @@ This is not a demand to inflate the word count. It is a demand for a reason the 
 | Not found / soft 404 | The URL is missing or behaves like an error page | Status code and page-specific content | That returning `200` makes an empty page indexable |
 | Server error | Google could not retrieve a usable response | Logs, platform health, DNS, timeouts | That content editing will solve availability |
 
-## Examples
+## Request indexing carefully
 
 **What requesting indexing actually does**
 
 URL Inspection can submit an eligible URL to Google’s indexing queue. Google states that:
 
-submission does not guarantee inclusion;
-there are daily limits;
-indexing can take days or longer;
-for many new or updated pages, a sitemap is the better submission mechanism.
+- submission does not guarantee inclusion;
+- there are daily limits;
+- indexing can take days or longer;
+- for many new or updated pages, a sitemap is the better submission mechanism.
 
 Request indexing after:
 
-the live test succeeds;
-the intended canonical is clear;
-the page is internally linked;
-the page belongs in the sitemap;
-any robots, response, rendering, or `noindex` problem is fixed.
+- the live test succeeds;
+- the intended canonical is clear;
+- the page is internally linked;
+- the page belongs in the sitemap;
+- any robots, response, rendering, or `noindex` problem is fixed.
 
 Do not submit the same unchanged URL repeatedly. That produces activity, not diagnosis.
 
-## Boundaries
+## Examples
 
 **Three worked examples**
 
@@ -488,7 +490,7 @@ A site publishes 600 pages that differ only by city name. All return `200`, self
 
 The technical controls are not necessarily broken. The section may lack enough distinct local value to justify hundreds of separate pages. Consolidation, genuine local evidence, and a smaller intentional inventory are more plausible remedies than resubmitting 600 URLs.
 
-**What not to do**
+## What not to do
 
 Avoid these common responses:
 

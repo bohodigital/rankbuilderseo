@@ -19,8 +19,8 @@
       "alt": "Flowchart for diagnosing a page missing from Google: verify the exact URL, inspect indexed data, run a live test, check HTTP access, robots and noindex, compare canonicals, verify internal links and sitemap, then evaluate rendering, duplication, and distinct value.",
       "caption": "Indexing diagnosis follows the pipeline. Confirm the URL, compare indexed and live data, verify access and directives, review canonical selection and discovery, then evaluate why a crawled page was not selected.",
       "credit": "Rank Builder SEO Research Desk",
-      "width": 960,
-      "height": 4000,
+      "width": 640,
+      "height": 3800,
       "mimeType": "image/svg+xml",
       "rights": "owned",
       "status": "approved"

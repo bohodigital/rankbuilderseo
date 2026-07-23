@@ -1,42 +1,66 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="960" height="4000" viewBox="0 0 960 4000" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="3800" viewBox="0 0 640 3800" role="img" aria-labelledby="title" aria-describedby="desc">
   <title id="title">Indexing diagnostic flow</title>
   <desc id="desc">Flowchart for diagnosing a page missing from Google: verify the exact URL, inspect indexed data, run a live test, check HTTP access, robots and noindex, compare canonicals, verify internal links and sitemap, then evaluate rendering, duplication, and distinct value.</desc>
-  <g transform="scale(1 0.93)">
-  <rect fill="#f8fafc" stroke="#1e293b" stroke-width="4" rx="24" x="60" y="40" width="840" height="190"/>
-  <text font-family="Arial, Helvetica, sans-serif" fill="#0f172a" font-size="36" font-weight="700" x="100" y="118"><tspan x="100" dy="0">Is the exact canonical URL actually missing?</tspan></text>
-  <path fill="none" stroke="#0369a1" stroke-width="5" d="M480 230V310"/><text font-family="Arial, Helvetica, sans-serif" fill="#075985" font-size="30" font-weight="700" x="510" y="280">Yes → continue.</text>
-  <rect fill="#e0f2fe" stroke="#0369a1" stroke-width="4" rx="24" x="60" y="330" width="840" height="150"/>
-  <text font-family="Arial, Helvetica, sans-serif" fill="#075985" font-size="30" font-weight="700" x="100" y="390"><tspan x="100" dy="0">No → This is a ranking or query issue, not an</tspan><tspan x="100" dy="42">indexing issue.</tspan></text>
-  <rect fill="#f8fafc" stroke="#1e293b" stroke-width="4" rx="24" x="60" y="570" width="840" height="220"/>
-  <text font-family="Arial, Helvetica, sans-serif" fill="#0f172a" font-size="36" font-weight="700" x="100" y="650"><tspan x="100" dy="0">Is the page new or the report older than the</tspan><tspan x="100" dy="46">latest deployment?</tspan></text>
-  <path fill="none" stroke="#0369a1" stroke-width="5" d="M480 790V870"/><text font-family="Arial, Helvetica, sans-serif" fill="#075985" font-size="30" font-weight="700" x="510" y="840">No → continue.</text>
-  <rect fill="#e0f2fe" stroke="#0369a1" stroke-width="4" rx="24" x="60" y="890" width="840" height="190"/>
-  <text font-family="Arial, Helvetica, sans-serif" fill="#075985" font-size="30" font-weight="700" x="100" y="955"><tspan x="100" dy="0">Yes → Verify discovery, test live, request</tspan><tspan x="100" dy="42">indexing once, then allow time.</tspan></text>
-  <rect fill="#f8fafc" stroke="#1e293b" stroke-width="4" rx="24" x="60" y="1170" width="840" height="190"/>
-  <text font-family="Arial, Helvetica, sans-serif" fill="#0f172a" font-size="36" font-weight="700" x="100" y="1250"><tspan x="100" dy="0">Can Google fetch the live URL successfully?</tspan></text>
-  <path fill="none" stroke="#0369a1" stroke-width="5" d="M480 1360V1440"/><text font-family="Arial, Helvetica, sans-serif" fill="#075985" font-size="30" font-weight="700" x="510" y="1410">Yes → continue.</text>
-  <rect fill="#e0f2fe" stroke="#0369a1" stroke-width="4" rx="24" x="60" y="1460" width="840" height="230"/>
-  <text font-family="Arial, Helvetica, sans-serif" fill="#075985" font-size="30" font-weight="700" x="100" y="1525"><tspan x="100" dy="0">No → Fix status, redirects, DNS, authentication,</tspan><tspan x="100" dy="42">timeouts, or server errors.</tspan></text>
-  <rect fill="#f8fafc" stroke="#1e293b" stroke-width="4" rx="24" x="60" y="1780" width="840" height="190"/>
-  <text font-family="Arial, Helvetica, sans-serif" fill="#0f172a" font-size="36" font-weight="700" x="100" y="1860"><tspan x="100" dy="0">Are crawling and indexing allowed?</tspan></text>
-  <path fill="none" stroke="#0369a1" stroke-width="5" d="M480 1970V2050"/><text font-family="Arial, Helvetica, sans-serif" fill="#075985" font-size="30" font-weight="700" x="510" y="2020">Yes → continue.</text>
-  <rect fill="#e0f2fe" stroke="#0369a1" stroke-width="4" rx="24" x="60" y="2070" width="840" height="190"/>
-  <text font-family="Arial, Helvetica, sans-serif" fill="#075985" font-size="30" font-weight="700" x="100" y="2135"><tspan x="100" dy="0">No → Correct robots.txt, meta robots, or</tspan><tspan x="100" dy="42">X-Robots-Tag.</tspan></text>
-  <rect fill="#f8fafc" stroke="#1e293b" stroke-width="4" rx="24" x="60" y="2350" width="840" height="190"/>
-  <text font-family="Arial, Helvetica, sans-serif" fill="#0f172a" font-size="36" font-weight="700" x="100" y="2430"><tspan x="100" dy="0">Did Google select another canonical?</tspan></text>
-  <path fill="none" stroke="#0369a1" stroke-width="5" d="M480 2540V2620"/><text font-family="Arial, Helvetica, sans-serif" fill="#075985" font-size="30" font-weight="700" x="510" y="2590">No → continue.</text>
-  <rect fill="#e0f2fe" stroke="#0369a1" stroke-width="4" rx="24" x="60" y="2640" width="840" height="230"/>
-  <text font-family="Arial, Helvetica, sans-serif" fill="#075985" font-size="30" font-weight="700" x="100" y="2705"><tspan x="100" dy="0">Yes → Decide whether consolidation is correct;</tspan><tspan x="100" dy="42">align canonical signals if not.</tspan></text>
-  <rect fill="#f8fafc" stroke="#1e293b" stroke-width="4" rx="24" x="60" y="2960" width="840" height="260"/>
-  <text font-family="Arial, Helvetica, sans-serif" fill="#0f172a" font-size="36" font-weight="700" x="100" y="3040"><tspan x="100" dy="0">Can Google discover the page through crawlable</tspan><tspan x="100" dy="46">internal links and the sitemap?</tspan></text>
-  <path fill="none" stroke="#0369a1" stroke-width="5" d="M480 3220V3300"/><text font-family="Arial, Helvetica, sans-serif" fill="#075985" font-size="30" font-weight="700" x="510" y="3270">Yes → continue.</text>
-  <rect fill="#e0f2fe" stroke="#0369a1" stroke-width="4" rx="24" x="60" y="3320" width="840" height="190"/>
-  <text font-family="Arial, Helvetica, sans-serif" fill="#075985" font-size="30" font-weight="700" x="100" y="3385"><tspan x="100" dy="0">No → Add meaningful canonical links and correct</tspan><tspan x="100" dy="42">sitemap inclusion.</tspan></text>
-  <rect fill="#f8fafc" stroke="#1e293b" stroke-width="4" rx="24" x="60" y="3600" width="840" height="190"/>
-  <text font-family="Arial, Helvetica, sans-serif" fill="#0f172a" font-size="36" font-weight="700" x="100" y="3680"><tspan x="100" dy="0">Was the page crawled but not indexed?</tspan></text>
-  <rect fill="#e0f2fe" stroke="#0369a1" stroke-width="4" rx="24" x="60" y="3820" width="840" height="180"/>
-  <text font-family="Arial, Helvetica, sans-serif" fill="#075985" font-size="30" font-weight="700" x="100" y="3885"><tspan x="100" dy="0">Yes → Compare rendered output, duplication,</tspan><tspan x="100" dy="42">distinct purpose, and site-wide patterns.</tspan></text>
-  <rect fill="#e0f2fe" stroke="#0369a1" stroke-width="4" rx="24" x="60" y="4030" width="840" height="180"/>
-  <text font-family="Arial, Helvetica, sans-serif" fill="#075985" font-size="30" font-weight="700" x="100" y="4095"><tspan x="100" dy="0">No / unknown → Record the exact Search Console</tspan><tspan x="100" dy="42">status and diagnose that stage.</tspan></text>
+  <g font-family="Arial, Helvetica, sans-serif">
+    <g fill="#f8fafc" stroke="#1e293b" stroke-width="4">
+      <rect x="30" y="40" width="580" height="150" rx="22"/>
+      <rect x="30" y="500" width="580" height="190" rx="22"/>
+      <rect x="30" y="1030" width="580" height="150" rx="22"/>
+      <rect x="30" y="1530" width="580" height="150" rx="22"/>
+      <rect x="30" y="1990" width="580" height="150" rx="22"/>
+      <rect x="30" y="2470" width="580" height="190" rx="22"/>
+      <rect x="30" y="2970" width="580" height="150" rx="22"/>
+    </g>
+    <g fill="#e0f2fe" stroke="#0369a1" stroke-width="4">
+      <rect x="30" y="250" width="500" height="180" rx="22"/>
+      <rect x="30" y="750" width="500" height="210" rx="22"/>
+      <rect x="30" y="1240" width="500" height="220" rx="22"/>
+      <rect x="30" y="1740" width="500" height="180" rx="22"/>
+      <rect x="30" y="2200" width="500" height="200" rx="22"/>
+      <rect x="30" y="2720" width="500" height="180" rx="22"/>
+      <rect x="30" y="3180" width="500" height="190" rx="22"/>
+      <rect x="30" y="3440" width="500" height="220" rx="22"/>
+    </g>
+    <g fill="none" stroke="#0369a1" stroke-width="5">
+      <path d="M120 190V250"/>
+      <path d="M580 190V245H620V470H580V500"/>
+      <path d="M120 690V750"/>
+      <path d="M580 690V745H620V1000H580V1030"/>
+      <path d="M120 1180V1240"/>
+      <path d="M580 1180V1235H620V1500H580V1530"/>
+      <path d="M120 1680V1740"/>
+      <path d="M580 1680V1735H620V1960H580V1990"/>
+      <path d="M120 2140V2200"/>
+      <path d="M580 2140V2195H620V2440H580V2470"/>
+      <path d="M120 2660V2720"/>
+      <path d="M580 2660V2715H620V2940H580V2970"/>
+      <path d="M120 3120V3180"/>
+      <path d="M580 3120V3175H620V3410H450V3440"/>
+    </g>
+    <g fill="#0f172a" font-size="36" font-weight="700" text-anchor="middle">
+      <text x="320" y="105"><tspan x="320">Is the exact canonical URL</tspan><tspan x="320" dy="42">actually missing?</tspan></text>
+      <text x="320" y="535"><tspan x="320">Is the page new or</tspan><tspan x="320" dy="42">the report older than</tspan><tspan x="320" dy="42">the latest deployment?</tspan></text>
+      <text x="320" y="1095"><tspan x="320">Can Google fetch the</tspan><tspan x="320" dy="42">live URL successfully?</tspan></text>
+      <text x="320" y="1595"><tspan x="320">Are crawling and indexing</tspan><tspan x="320" dy="42">allowed?</tspan></text>
+      <text x="320" y="2055"><tspan x="320">Did Google select another</tspan><tspan x="320" dy="42">canonical?</tspan></text>
+      <text x="320" y="2505"><tspan x="320">Can Google discover</tspan><tspan x="320" dy="38">the page through crawlable</tspan><tspan x="320" dy="38">internal links and</tspan><tspan x="320" dy="38">the sitemap?</tspan></text>
+      <text x="320" y="3035"><tspan x="320">Was the page crawled</tspan><tspan x="320" dy="42">but not indexed?</tspan></text>
+    </g>
+    <g fill="#075985" font-size="32" font-weight="700">
+      <text x="55" y="300"><tspan x="55">No → This is a ranking</tspan><tspan x="55" dy="40">or query issue, not an</tspan><tspan x="55" dy="40">indexing issue.</tspan></text>
+      <text x="570" y="230" text-anchor="end">Yes → continue.</text>
+      <text x="55" y="790"><tspan x="55">Yes → Verify discovery,</tspan><tspan x="55" dy="36">test live, request</tspan><tspan x="55" dy="36">indexing once, then</tspan><tspan x="55" dy="36">allow time.</tspan></text>
+      <text x="570" y="730" text-anchor="end">No → continue.</text>
+      <text x="55" y="1285"><tspan x="55">No → Fix status,</tspan><tspan x="55" dy="38">redirects, DNS,</tspan><tspan x="55" dy="38">authentication, timeouts,</tspan><tspan x="55" dy="38">or server errors.</tspan></text>
+      <text x="570" y="1220" text-anchor="end">Yes → continue.</text>
+      <text x="55" y="1790"><tspan x="55">No → Correct robots.txt,</tspan><tspan x="55" dy="40">meta robots, or</tspan><tspan x="55" dy="40">X-Robots-Tag.</tspan></text>
+      <text x="570" y="1720" text-anchor="end">Yes → continue.</text>
+      <text x="55" y="2245"><tspan x="55">Yes → Decide whether</tspan><tspan x="55" dy="38">consolidation is correct;</tspan><tspan x="55" dy="38">align canonical signals</tspan><tspan x="55" dy="38">if not.</tspan></text>
+      <text x="570" y="2180" text-anchor="end">No → continue.</text>
+      <text x="55" y="2770"><tspan x="55">No → Add meaningful</tspan><tspan x="55" dy="40">canonical links and</tspan><tspan x="55" dy="40">correct sitemap inclusion.</tspan></text>
+      <text x="570" y="2700" text-anchor="end">Yes → continue.</text>
+      <text x="55" y="3220"><tspan x="55">Yes → Compare rendered</tspan><tspan x="55" dy="36">output, duplication,</tspan><tspan x="55" dy="36">distinct purpose, and</tspan><tspan x="55" dy="36">site-wide patterns.</tspan></text>
+      <text x="55" y="3485"><tspan x="55">No / unknown → Record</tspan><tspan x="55" dy="40">the exact Search Console</tspan><tspan x="55" dy="40">status and diagnose</tspan><tspan x="55" dy="40">that stage.</tspan></text>
+    </g>
   </g>
 </svg>
