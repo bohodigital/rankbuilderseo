@@ -28,6 +28,22 @@ test("static and Worker security headers stay in exact report-only parity", asyn
   assert.match(staticHeaders["Content-Security-Policy-Report-Only"], /form-action 'self'/);
   assert.match(staticHeaders["Content-Security-Policy-Report-Only"], /frame-src 'none'/);
   assert.match(staticHeaders["Content-Security-Policy-Report-Only"], /manifest-src 'self'/);
+  assert.match(
+    staticHeaders["Content-Security-Policy-Report-Only"],
+    /script-src[^;]*https:\/\/www\.googletagmanager\.com/,
+  );
+  assert.match(
+    staticHeaders["Content-Security-Policy-Report-Only"],
+    /connect-src[^;]*https:\/\/www\.google-analytics\.com[^;]*https:\/\/region1\.google-analytics\.com/,
+  );
+  assert.match(
+    staticHeaders["Content-Security-Policy-Report-Only"],
+    /img-src[^;]*https:\/\/www\.google-analytics\.com[^;]*https:\/\/region1\.google-analytics\.com/,
+  );
+  assert.doesNotMatch(
+    staticHeaders["Content-Security-Policy-Report-Only"],
+    /googleadservices|doubleclick|googlesyndication|\*\.google/i,
+  );
   assert.equal(/report-uri|report-to/.test(staticHeaders["Content-Security-Policy-Report-Only"]), false);
 });
 

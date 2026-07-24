@@ -8,11 +8,11 @@ const reportOnlyCsp = [
   "manifest-src 'self'",
   "worker-src 'self'",
   "media-src 'self'",
-  "img-src 'self' data:",
+  "img-src 'self' data: https://www.google-analytics.com https://region1.google-analytics.com",
   "font-src 'self' data:",
   "style-src 'self' 'unsafe-inline'",
-  "script-src 'self' 'unsafe-inline' https://analytics.bohodigitalservices.com",
-  "connect-src 'self' https://analytics.bohodigitalservices.com",
+  "script-src 'self' 'unsafe-inline' https://analytics.bohodigitalservices.com https://www.googletagmanager.com",
+  "connect-src 'self' https://analytics.bohodigitalservices.com https://www.google-analytics.com https://region1.google-analytics.com",
 ].join("; ");
 
 export const securityHeaders = {
