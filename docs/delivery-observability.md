@@ -87,6 +87,15 @@ Umami remains self-hosted at analytics.bohodigitalservices.com, honors Do Not Tr
 
 Do not send article copy, titles, email addresses, search queries, URL query strings, or free-form reader input as event properties. Do not add scroll-depth or high-volume engagement events without a separate measurement question and privacy review.
 
+GA4 uses the existing Rank Builder SEO web stream and public measurement ID
+`G-3VYXZ0H1P8`. The first-party `/ga4-bootstrap.js` boundary loads one Google
+tag on the apex, `www`, and immutable production Pages origins. Its single
+`config` command sends the standard page view with the query string and fragment
+removed from `page_location`; Google Signals and advertising-personalization
+signals are disabled. It sends no custom events, user IDs, form values, account
+identifiers, or free-form content. The `boho_qa` session marker and browser
+automation flag suppress analytics during controlled QA.
+
 ## CSP and security headers
 
 Content Security Policy remains Content-Security-Policy-Report-Only. There is no reporting collector in this release. Violations are inspected manually in browser console/network evidence during release audits. The policy includes form-action, frame-src, manifest-src, worker-src, and media-src boundaries, but it is not enforced.

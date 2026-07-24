@@ -64,6 +64,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           data-do-not-track="true"
           data-exclude-search="true"
         />
+        <script
+          defer
+          src="/ga4-bootstrap.js"
+          data-ga4-bootstrap="rankbuilder-v1"
+          data-ga4-measurement-id="G-3VYXZ0H1P8"
+        />
       </head>
       <body>{children}</body>
     </html>
