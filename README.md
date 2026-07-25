@@ -38,12 +38,18 @@ Pages artifacts.
 
 ## Content authoring
 
-Phase 1 editorial substance is governed by the owner-approved normative
-[Phase 1 Editorial Governance](docs/phase-1-editorial-governance.md) guide,
-which defines the active topic territory, evidence standards, page formats,
-internal-linking model, review gates, measurement, and amendment authority.
-ChatGPT/editorial authority supplies approved substantive prose; Codex performs
-only bounded mechanical integration, validation, Git, and release work.
+The owner-ratified
+[Rank Builder Constitution](docs/rank-builder-constitution.md) is the primary
+editorial-governance document beneath explicit owner direction. It controls
+subordinate editorial governance and makes publication volume and proportional
+effort binding requirements.
+
+The reconciled
+[Phase 1 Editorial Governance](docs/phase-1-editorial-governance.md) guide
+continues to define the active topic territory, evidence standards, page formats,
+internal-linking model, review gates, measurement, and editorial-safety rules.
+ChatGPT/editorial authority owns substantive editorial decisions and exact copy;
+Codex performs bounded mechanical integration, validation, Git, and release work.
 
 Run the fast authoring checks while editing, and run the complete local gate before
 hand-off:

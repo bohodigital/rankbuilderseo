@@ -35,7 +35,7 @@ It defines:
 
 This document governs editorial substance. Repository validation rules, security controls, source checks, content schemas, media budgets, release gates, and deployment procedures remain binding.
 
-Where this guide conflicts with a hard repository validation rule, the repository rule controls until the discrepancy is deliberately reconciled.
+This guide is subordinate to [The Rank Builder Constitution](rank-builder-constitution.md). Where the guide conflicts with the Constitution, the Constitution controls. Hard repository validation rules, security controls, source checks, content schemas, media budgets, release gates, and deployment procedures remain binding unless deliberately changed through their authorized process.
 
 Codex must not invent substantive prose, claims, recommendations, examples, study conclusions, titles, or editorial strategy. Codex may perform mechanical schema adaptation, file creation, compilation, testing, and deployment only from approved editorial material.
 
@@ -710,7 +710,7 @@ Repository minimums remain hard floors:
 - Claim check: 900 rendered words
 - Checklist: 600 rendered words
 
-Phase 1 working ranges are:
+Phase 1 scope estimates are:
 
 | Asset | Typical range |
 |---|---:|
@@ -723,15 +723,15 @@ Phase 1 working ranges are:
 | Checklist | 800–1,500 words |
 | Tool landing page | 1,000–2,000 words plus the tool |
 
-These are scope estimates, not ranking formulas.
+These are approximate planning ranges, not desired minimums or ranking formulas. Repository floors remain binding, but ordinary pages should use the Constitution's rapid-answer and standard-guide effort budgets and stop when the search intent is satisfied.
 
 A page should end when it has resolved the reader’s problem, documented important limitations, and provided a defensible next action.
 
 # Part VIII: Page construction
 
-## 23. Universal page anatomy
+## 23. Proportional page anatomy
 
-Every Phase 1 article must contain the following elements.
+Every Phase 1 article must answer directly, provide adequate evidence, explain important qualifications, give a useful next action, and fit the internal-link graph. The elements below are a construction model, not a requirement to turn every narrow page into a major guide. Use each element only to the depth justified by the page's intent and constitutional effort class, while preserving required canonical-format sections.
 
 ### 23.1 Direct answer
 
@@ -881,9 +881,9 @@ A direct answer should not:
 
 # Part IX: Noncommodity value
 
-## 28. The two-value rule
+## 28. The proportional-value rule
 
-No Phase 1 page may be published unless it provides at least two forms of noncommodity value.
+Most ordinary Phase 1 pages should provide at least one clearly useful element beyond prose. Two or more original elements are desirable for major guides, tools, research pages, and flagship assets, but are not mandatory for every narrow page.
 
 Qualifying value includes:
 
@@ -906,7 +906,7 @@ Qualifying value includes:
 - Explicit edge-case analysis
 - A ranked diagnostic sequence
 
-A generic introduction, a list of definitions, and citations do not satisfy this rule by themselves.
+A generic introduction, a list of definitions, and citations do not by themselves establish useful differentiation. Clearer organization, original synthesis, a decision rule, a ranked diagnostic sequence, a practical example, or explicit edge-case analysis may satisfy the proportional-value rule without a custom asset.
 
 ## 29. Visual standards
 
@@ -1289,7 +1289,7 @@ Primary purpose:
 
 ## 46. Stage 1: Opportunity packet
 
-Before drafting, create an opportunity packet containing:
+Before drafting an ordinary article, create the Constitution's concise minimum editorial packet: approved title, primary intent, target route, format, short research note, approved sources, outline, internal-link plan, and exact substantive draft. Add the following opportunity fields only when they materially change selection, risk, or execution:
 
 - Working title
 - Primary query
@@ -1302,17 +1302,17 @@ Before drafting, create an opportunity packet containing:
 - Missing value in current results
 - Proposed unique value
 - Required sources
-- Required visual or tool
+- Visual or tool requirement, when justified
 - Planned inbound links
 - Planned outbound internal links
 - Volatility class
 - Update requirement
 
-No article begins from a title alone.
+No article begins from a title alone. Major guides, hubs, tools, research assets, disputed claims, and high-risk pages may use the complete opportunity packet.
 
 ## 47. Stage 2: Research brief
 
-The research brief must include:
+Ordinary pages require a concise research note with the exact question, approved sources, important qualifications, unknowns, citation IDs, and date accessed. A full research brief is appropriate for major guides, hubs, tools, research assets, disputed claims, conflicting primary sources, or high-risk topics, and may include:
 
 - Exact question being answered
 - Definitions
@@ -1327,7 +1327,7 @@ The research brief must include:
 - Citation IDs
 - Date accessed
 
-Research notes must separate source language from editorial conclusions.
+All research notes must separate source language from editorial conclusions. Research stops when important claims, exceptions, and procedures are adequately supported.
 
 ## 48. Stage 3: Editorial outline
 
@@ -1475,7 +1475,7 @@ No failed deterministic gate is dismissed as “probably fine.”
 
 ## 54. Stage 9: Release
 
-Release batches should normally contain six to eight pages.
+Release batches should normally contain six to twelve related pages.
 
 The release must use:
 
@@ -1532,34 +1532,36 @@ Choose one:
 
 # Part XIV: Publishing cadence
 
-## 56. Twelve-week schedule
+## 56. Initial milestone sequence
 
-### Weeks 1–2
+This sequence preserves Phase 1 dependencies but does not cap publication cadence. Batches should proceed at the Constitution's operating targets as soon as production, validation, and internal linking are stable. Tools and research proceed in parallel and do not block ordinary-page batches.
+
+### First production interval
 
 - Produce Batch 02
 - Establish the hub
 - Add internal links from the existing three anchor articles where permitted
 - Prepare initial Indexability Inspector specification
 
-### Weeks 3–4
+### Second production interval
 
 - Produce Batch 03
 - Complete Redirect Chain Visualizer specification
 - Begin Indexing Time Study setup
 
-### Weeks 5–6
+### Third production interval
 
 - Produce Batch 04
 - Publish first complete canonical and discovery subcluster
 - Review Search Console query emergence
 
-### Weeks 7–9
+### Fourth production interval
 
 - Produce Batch 05
 - Test platform-specific performance
 - Reject further CMS variants unless demand and distinct implementation value are demonstrated
 
-### Weeks 10–12
+### Tools, research, and review interval
 
 - Release the two tools
 - Publish study methodology
@@ -1570,24 +1572,25 @@ Choose one:
 
 ## 57. Sustainable production rate
 
-The planned rate is:
+After the first two stable batches, the normal operating target is:
 
-- Three to five complete editorial pages per week
-- One governed release every one to two weeks
-- One flagship noncommodity asset per batch
+- Eight to twelve new or materially improved pages per week
+- Scaling toward twelve to twenty pages per week when production, validation, and internal linking remain stable
+- Practical governed batch releases rather than one work order per article
+- Flagship assets only when their additional effort is justified
 - One tool or research milestone per month
 
-The production rate may increase only when:
+The production rate may scale when:
 
 - Source quality remains high
 - Duplicate warnings remain low
 - Internal links are maintained
-- Visual standards are met
+- Applicable visual standards are met
 - Review does not become superficial
 - Postpublication defects remain rare
 - Existing pages receive updates
 
-The objective is not to discover the highest rate at which Markdown can be generated.
+These operating targets do not permit defective material. They require rapid, economical production of distinct, accurate, useful pages that pass the repository contract.
 
 # Part XV: Performance measurement
 
@@ -1801,7 +1804,7 @@ The most linkable Phase 1 assets are:
 7. Original canonical-selection diagrams
 8. Versioned documentation comparisons
 
-Each batch should contain at least one asset with credible citation or backlink potential.
+Batches containing a flagship, tool, research page, or deliberately linkable asset should give it credible citation or backlink potential. Ordinary search-page batches need not manufacture a flagship asset to satisfy a quota.
 
 ## 67. Prohibited link practices
 
@@ -1883,12 +1886,12 @@ Before a batch is handed to Codex:
 - Every topic is approved.
 - Every page has a distinct intent.
 - Every page has an approved format.
-- Every page has a research brief.
-- Every page has an original-value plan.
+- Every page has a proportionate research note or, where justified, a full research brief.
+- Every page has a proportionate useful-value plan.
 - Every claim boundary is defined.
 - Every source has been opened and reviewed.
 - Every page has an internal-link plan.
-- Every visual is specified.
+- Every required visual is specified.
 - Every title and description is approved.
 - Every page has a next action.
 
@@ -1921,8 +1924,8 @@ Before production:
 - The hub has been updated.
 - No page is orphaned.
 - No unplanned duplicate intent exists.
-- At least one asset is linkable.
-- Distribution material exists.
+- Linkable or flagship assets have a credible citation purpose when the batch includes them.
+- Distribution material exists for assets designated for distribution.
 - Performance measurement is ready.
 - Rollback is ready.
 - The next batch is not being used as an excuse to ignore defects in this one.
