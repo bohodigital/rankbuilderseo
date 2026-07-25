@@ -17,3 +17,11 @@ Before publishing, run `npm test`, push the exact validated commit to the
 public GitHub `main` branch, deploy that same commit to the Cloudflare Pages
 `rankbuilderseo` project, and verify the apex, Pages alias, crawler endpoints,
 analytics marker, and representative routes.
+
+## Phase 1 editorial governance
+
+Phase 1 editorial substance is governed by
+[docs/phase-1-editorial-governance.md](docs/phase-1-editorial-governance.md).
+Approved substantive prose comes from ChatGPT/editorial authority. Agents must
+not invent or rewrite that substance; Codex is limited to the guide's bounded
+mechanical integration, validation, Git, and release work.
