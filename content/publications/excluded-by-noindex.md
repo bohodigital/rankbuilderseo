@@ -59,7 +59,10 @@
     "url-blocked-by-robots-txt",
     "google-search-console-url-inspection",
     "why-google-isnt-indexing-your-page",
-    "technical-seo-baseline"
+    "technical-seo-baseline",
+    "wordpress-site-accidentally-noindexed",
+    "nextjs-page-visible-browser-missing-google",
+    "cloudflare-pages-workers-seo"
   ]
 }
 ---

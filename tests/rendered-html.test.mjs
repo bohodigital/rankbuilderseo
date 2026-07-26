@@ -52,6 +52,14 @@ const articleSlugs = [
   "page-indexing-report-not-updating",
   "internal-links-vs-xml-sitemaps",
   "site-search-not-complete-index-checker",
+  "javascript-seo-crawling-rendering-indexing",
+  "rendered-html-missing-content",
+  "infinite-scroll-pagination-seo",
+  "crawl-budget-when-it-matters",
+  "wordpress-site-accidentally-noindexed",
+  "shopify-canonical-urls-products-collections-variants",
+  "nextjs-page-visible-browser-missing-google",
+  "cloudflare-pages-workers-seo",
 ];
 
 const expectedLegacyGuideRedirects = Object.freeze({

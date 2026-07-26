@@ -68,7 +68,9 @@
     "google-search-console-url-inspection",
     "technical-seo-baseline",
     "blocked-access-forbidden-403",
-    "indexed-though-blocked-by-robots-txt"
+    "indexed-though-blocked-by-robots-txt",
+    "crawl-budget-when-it-matters",
+    "wordpress-site-accidentally-noindexed"
   ]
 }
 ---

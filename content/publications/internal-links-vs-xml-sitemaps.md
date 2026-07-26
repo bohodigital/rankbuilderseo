@@ -32,7 +32,9 @@
     "why-google-isnt-indexing-your-page",
     "discovered-currently-not-indexed",
     "technical-seo-baseline",
-    "site-search-not-complete-index-checker"
+    "site-search-not-complete-index-checker",
+    "infinite-scroll-pagination-seo",
+    "crawl-budget-when-it-matters"
   ],
   "citations": [
     {

@@ -61,7 +61,9 @@
     "seo-migration-launch-checklist",
     "google-search-console-page-indexing-report",
     "why-google-isnt-indexing-your-page",
-    "not-found-404"
+    "not-found-404",
+    "cloudflare-pages-workers-seo",
+    "nextjs-page-visible-browser-missing-google"
   ]
 }
 ---

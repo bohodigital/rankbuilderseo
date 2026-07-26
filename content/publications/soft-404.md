@@ -68,7 +68,9 @@
     "google-search-console-page-indexing-report",
     "why-google-isnt-indexing-your-page",
     "page-with-redirect",
-    "crawled-currently-not-indexed"
+    "crawled-currently-not-indexed",
+    "rendered-html-missing-content",
+    "nextjs-page-visible-browser-missing-google"
   ]
 }
 ---

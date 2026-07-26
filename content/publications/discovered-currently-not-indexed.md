@@ -61,7 +61,9 @@
     "crawling-vs-indexing-vs-ranking",
     "google-search-console-page-indexing-report",
     "how-long-google-takes-to-index-page",
-    "server-error-5xx"
+    "server-error-5xx",
+    "crawl-budget-when-it-matters",
+    "infinite-scroll-pagination-seo"
   ]
 }
 ---

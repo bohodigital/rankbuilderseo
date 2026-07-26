@@ -61,7 +61,8 @@
     "seo-migration-launch-checklist",
     "server-error-5xx",
     "google-search-console-page-indexing-report",
-    "why-google-isnt-indexing-your-page"
+    "why-google-isnt-indexing-your-page",
+    "cloudflare-pages-workers-seo"
   ]
 }
 ---

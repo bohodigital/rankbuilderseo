@@ -61,7 +61,8 @@
     "crawled-currently-not-indexed",
     "google-search-console-url-inspection",
     "alternate-page-proper-canonical-tag",
-    "duplicate-without-user-selected-canonical"
+    "duplicate-without-user-selected-canonical",
+    "shopify-canonical-urls-products-collections-variants"
   ]
 }
 ---

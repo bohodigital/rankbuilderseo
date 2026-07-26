@@ -60,7 +60,9 @@
     "discovered-currently-not-indexed",
     "google-search-console-url-inspection",
     "google-chose-different-canonical",
-    "crawling-vs-indexing-vs-ranking"
+    "crawling-vs-indexing-vs-ranking",
+    "rendered-html-missing-content",
+    "javascript-seo-crawling-rendering-indexing"
   ]
 }
 ---

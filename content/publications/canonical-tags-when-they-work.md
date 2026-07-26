@@ -40,7 +40,8 @@
     "internal-links-audit-by-template",
     "google-chose-different-canonical",
     "alternate-page-proper-canonical-tag",
-    "duplicate-without-user-selected-canonical"
+    "duplicate-without-user-selected-canonical",
+    "shopify-canonical-urls-products-collections-variants"
   ]
 }
 ---

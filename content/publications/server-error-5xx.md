@@ -69,7 +69,10 @@
     "google-search-console-page-indexing-report",
     "technical-seo-baseline",
     "why-google-isnt-indexing-your-page",
-    "blocked-access-forbidden-403"
+    "blocked-access-forbidden-403",
+    "cloudflare-pages-workers-seo",
+    "nextjs-page-visible-browser-missing-google",
+    "crawl-budget-when-it-matters"
   ]
 }
 ---

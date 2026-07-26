@@ -123,7 +123,7 @@ function source(overrides = {}) {
 
 test("loads the canonical Markdown registry with complete typed metadata", async () => {
   const publications = loadPublicationRegistry(await publicationSources());
-  assert.equal(publications.length, 39);
+  assert.equal(publications.length, 47);
   assert.equal(new Set(publications.map(({ slug }) => slug)).size, publications.length);
   for (const publication of publications) {
     assert.ok(publication.author.name);
@@ -188,7 +188,7 @@ test("rejects unknown identities, invalid dates, invalid citation URLs, and inco
 test("generates only the authoritative article route family", async () => {
   const publications = loadPublicationRegistry(await publicationSources());
   const routes = publicationRoutePaths(publications);
-  assert.equal(routes.length, 39);
+  assert.equal(routes.length, 47);
   for (const route of [
     "/articles/why-google-isnt-indexing-your-page",
     "/articles/crawling-vs-indexing-vs-ranking",

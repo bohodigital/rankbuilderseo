@@ -31,7 +31,9 @@
     "why-google-isnt-indexing-your-page",
     "technical-seo-baseline",
     "discovered-currently-not-indexed",
-    "server-error-5xx"
+    "server-error-5xx",
+    "nextjs-page-visible-browser-missing-google",
+    "infinite-scroll-pagination-seo"
   ],
   "citations": [
     {

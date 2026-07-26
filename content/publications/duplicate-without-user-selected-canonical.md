@@ -31,7 +31,8 @@
     "canonical-tags-when-they-work",
     "google-search-console-page-indexing-report",
     "why-google-isnt-indexing-your-page",
-    "crawled-currently-not-indexed"
+    "crawled-currently-not-indexed",
+    "shopify-canonical-urls-products-collections-variants"
   ],
   "citations": [
     {

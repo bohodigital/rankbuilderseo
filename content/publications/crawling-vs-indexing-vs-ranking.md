@@ -82,7 +82,9 @@
     "technical-seo-baseline",
     "canonical-tags-when-they-work",
     "discovered-currently-not-indexed",
-    "crawled-currently-not-indexed"
+    "crawled-currently-not-indexed",
+    "javascript-seo-crawling-rendering-indexing",
+    "crawl-budget-when-it-matters"
   ]
 }
 ---
