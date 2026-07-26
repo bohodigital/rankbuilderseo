@@ -295,7 +295,7 @@ test("redirects the consolidated indexing hub and removes it from discovery", as
   assert.equal(response.status, 307);
   assert.equal(
     response.headers.get("location"),
-    `${replacementRoute}?source=archive`,
+    `https://rankbuilderseo.com${replacementRoute}`,
   );
 
   const [archiveText, sitemapText, feedText] = await Promise.all([
