@@ -11,8 +11,14 @@
   "author": "rank-builder-research-desk",
   "editor": "rank-builder-editorial-desk",
   "publishedAt": "2026-07-22",
-  "revisedAt": "2026-07-22",
-  "correctionHistory": [],
+  "revisedAt": "2026-07-25",
+  "revisionNote": "Consolidated the overlapping indexing hub and added focused status navigation plus completion criteria.",
+  "correctionHistory": [
+    {
+      "date": "2026-07-25",
+      "summary": "Consolidated the duplicate indexing-troubleshooting hub into this guide, added status navigation and evidence-based completion criteria, and retained one definitive diagnostic URL."
+    }
+  ],
   "slug": "why-google-isnt-indexing-your-page",
   "title": "Why Google Isn’t Indexing Your Page: A Complete Diagnostic Flow",
   "description": "Diagnose why a page is missing from Google by checking discovery, crawling, indexability, canonicalization, rendering, and content selection in the correct order.",
@@ -116,7 +122,6 @@
     "google-search-console-url-inspection",
     "technical-seo-baseline",
     "canonical-tags-when-they-work",
-    "google-indexing-troubleshooting",
     "google-search-console-page-indexing-report",
     "discovered-currently-not-indexed",
     "crawled-currently-not-indexed",
@@ -154,6 +159,18 @@ Use this diagnostic order:
 10. Request indexing only after the evidence shows the page is ready.
 
 Google’s minimum technical requirements are modest: Googlebot must not be blocked, the page must work with an HTTP `200` response, and the page must contain indexable content. Meeting those requirements makes a page eligible for indexing; it does not guarantee that Google will index it. [Google Search technical requirements](https://developers.google.com/search/docs/essentials/technical)[@google-technical-requirements]
+
+Use the observed stage to move into the narrower diagnosis:
+
+| Observed condition | Focused guide |
+| --- | --- |
+| You need to understand the aggregate reason families | [Google Search Console Page Indexing Report](/articles/google-search-console-page-indexing-report/) |
+| Google knows the URL but has not crawled it | [Discovered – Currently Not Indexed](/articles/discovered-currently-not-indexed/) |
+| Google crawled the URL but did not retain it | [Crawled – Currently Not Indexed](/articles/crawled-currently-not-indexed/) |
+| Crawling is blocked by a robots rule | [URL Blocked by Robots.txt](/articles/url-blocked-by-robots-txt/) |
+| A robots directive prohibits indexing | [Excluded by Noindex](/articles/excluded-by-noindex/) |
+| Google selected a different representative URL | [Google Chose a Different Canonical](/articles/google-chose-different-canonical/) |
+| The page is healthy and you need a realistic timing decision | [How Long Does Google Take to Index a Page?](/articles/how-long-google-takes-to-index-page/) |
 
 **First: make sure the page is actually missing**
 
@@ -535,6 +552,8 @@ Before you call an indexing problem unresolved, verify:
 - The page has a distinct task and value.
 - Site-wide patterns were checked before blaming one URL.
 - I requested indexing only after fixing identifiable problems.
+
+The diagnosis is complete when you can identify the preferred URL, whether Google discovered and crawled it, the final HTTP response, crawl and indexing permissions, canonical selection, rendered primary content, and whether the problem is isolated or template-wide. The repair is complete when the live page reflects the intended state and every site-controlled signal points to the preferred URL. A later indexing or ranking outcome remains separate.
 
 ## Sources and notes
 

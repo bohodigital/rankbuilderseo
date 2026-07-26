@@ -56,7 +56,6 @@
   ],
   "correctionHistory": [],
   "relatedContent": [
-    "google-indexing-troubleshooting",
     "google-search-console-url-inspection",
     "why-google-isnt-indexing-your-page",
     "discovered-currently-not-indexed",

@@ -10,6 +10,7 @@ import {
   parseSafeMarkdown,
   publicationExposure,
   publicationRelationshipDiagnostics,
+  validateInternalRoutes,
 } from "../app/content/registry.ts";
 import {
   readingMetrics,
@@ -516,6 +517,32 @@ test("relationship diagnostics flag orphans, excessive or hidden relations, and 
     records[1],
   ]);
   assert.ok(excessive.errors.some((error) => /limited to twelve records/.test(error)));
+});
+
+test("internal route validation recognizes generated routes and rejects unknown root-relative links", () => {
+  const publication = (slug, markdown) => ({
+    slug,
+    sourceFile: `content/publications/${slug}.md`,
+    document: parseSafeMarkdown(`## Definition\n\n${markdown}`),
+  });
+  const valid = publication("alpha", [
+    "[article](/articles/beta/)",
+    "[glossary](/glossary/fixture-term/)",
+    "[static](/about#corrections)",
+    "[fragment](#definition)",
+  ].join(" "));
+  assert.doesNotThrow(() => validateInternalRoutes(
+    [valid, publication("beta", "Destination.")],
+    [{ slug: "fixture-term" }],
+  ));
+  assert.throws(
+    () => validateInternalRoutes([publication("alpha", "[missing](/technical-seo/missing/)")], []),
+    /unknown internal route: \/technical-seo\/missing\//i,
+  );
+  assert.throws(
+    () => validateInternalRoutes([publication("alpha", "[missing](/articles/missing/)")], []),
+    /unknown internal route: \/articles\/missing\//i,
+  );
 });
 
 const publicResolver = async () => [{ address: "93.184.216.34", family: 4 }];

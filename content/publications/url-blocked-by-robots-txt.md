@@ -63,10 +63,9 @@
   ],
   "correctionHistory": [],
   "relatedContent": [
-    "google-indexing-troubleshooting",
+    "why-google-isnt-indexing-your-page",
     "excluded-by-noindex",
     "google-search-console-url-inspection",
-    "why-google-isnt-indexing-your-page",
     "technical-seo-baseline"
   ]
 }

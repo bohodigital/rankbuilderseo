@@ -27,6 +27,7 @@ import {
   markdownPlainText,
   parseSafeMarkdown,
   renderedWordCount,
+  type InlineNode,
   type MarkdownSection,
   type SafeMarkdownDocument,
 } from "./markdown.ts";
@@ -615,9 +616,57 @@ export function validateCompleteContentRegistry(
     ...publications.map((publication) => ({ label: publication.sourceFile, citations: publication.citations })),
     ...glossary.map((entry) => ({ label: `glossary/${entry.slug}`, citations: entry.citations })),
   ]);
+  validateInternalRoutes(publications, glossary);
   const diagnostics = publicationRelationshipDiagnostics(publications, glossary, at);
   if (diagnostics.errors.length > 0) fail("content relationships", diagnostics.errors.join("; "));
   warnings.push(...diagnostics.warnings);
+}
+
+const staticContentRoutes = new Set([
+  "/",
+  "/about",
+  "/articles",
+  "/glossary",
+  "/lab",
+  "/method",
+  "/privacy",
+]);
+
+function linkTargets(nodes: readonly InlineNode[]): string[] {
+  return nodes.flatMap((node) => {
+    if (node.type === "link") return [node.href, ...linkTargets(node.children)];
+    if (node.type === "strong" || node.type === "emphasis") return linkTargets(node.children);
+    return [];
+  });
+}
+
+function documentLinkTargets(document: SafeMarkdownDocument): string[] {
+  return document.blocks.flatMap((block) => {
+    if (block.type === "heading" || block.type === "paragraph" || block.type === "blockquote") return linkTargets(block.children);
+    if (block.type === "list") return block.items.flatMap(linkTargets);
+    if (block.type === "table") return [...block.header, ...block.rows.flat()].flatMap(linkTargets);
+    return [];
+  });
+}
+
+export function validateInternalRoutes(
+  publications: readonly Pick<Publication, "slug" | "sourceFile" | "document">[],
+  glossary: readonly Pick<GlossaryEntry, "slug">[],
+): void {
+  const publicationSlugs = new Set(publications.map(({ slug }) => slug));
+  const glossarySlugs = new Set(glossary.map(({ slug }) => slug));
+  for (const publication of publications) {
+    for (const href of documentLinkTargets(publication.document)) {
+      if (!href.startsWith("/") || href.startsWith("/media/")) continue;
+      const path = href.split("#", 1)[0].replace(/\/+$/, "") || "/";
+      if (staticContentRoutes.has(path)) continue;
+      const articleSlug = path.match(/^\/articles\/([a-z0-9-]+)$/)?.[1];
+      if (articleSlug && publicationSlugs.has(articleSlug)) continue;
+      const glossarySlug = path.match(/^\/glossary\/([a-z0-9-]+)$/)?.[1];
+      if (glossarySlug && glossarySlugs.has(glossarySlug)) continue;
+      fail(publication.sourceFile, `unknown internal route: ${href}`);
+    }
+  }
 }
 
 export type RegistryBundleSources = {

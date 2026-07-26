@@ -81,7 +81,6 @@
     "google-search-console-url-inspection",
     "technical-seo-baseline",
     "canonical-tags-when-they-work",
-    "google-indexing-troubleshooting",
     "discovered-currently-not-indexed",
     "crawled-currently-not-indexed"
   ]

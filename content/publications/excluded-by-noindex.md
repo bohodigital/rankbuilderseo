@@ -56,7 +56,6 @@
   ],
   "correctionHistory": [],
   "relatedContent": [
-    "google-indexing-troubleshooting",
     "url-blocked-by-robots-txt",
     "google-search-console-url-inspection",
     "why-google-isnt-indexing-your-page",
@@ -83,6 +82,10 @@ You need:
 
 Google supports `noindex` through a robots meta tag or an HTTP response header. When Google crawls a page and sees the rule, it drops the page from Google Search results. [Block Search indexing with noindex](https://developers.google.com/search/docs/crawling-indexing/block-indexing)[@google-noindex]
 
+Confirm the intended audience and privacy boundary with the page owner before treating the directive as an error.
+
+## Ordered process
+
 1. **Confirm the exact status.**
 
 Inspect the URL in Search Console.
@@ -98,8 +101,6 @@ Look for:
 Google’s Page Indexing documentation recommends checking both the source or response headers and the live version. [Page indexing report](https://support.google.com/webmasters/answer/7440203)[@gsc-page-indexing]
 
 Do not assume that every “not indexed” page has `noindex`. Search Console distinguishes directive exclusions from redirects, robots blocks, duplicates, HTTP errors, and content-selection states.
-
-## Ordered process
 
 2. **Inspect the final HTML.**
 

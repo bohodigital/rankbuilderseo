@@ -57,7 +57,6 @@
   ],
   "correctionHistory": [],
   "relatedContent": [
-    "google-indexing-troubleshooting",
     "why-google-isnt-indexing-your-page",
     "discovered-currently-not-indexed",
     "crawled-currently-not-indexed",

@@ -56,10 +56,9 @@
   ],
   "correctionHistory": [],
   "relatedContent": [
-    "google-indexing-troubleshooting",
+    "why-google-isnt-indexing-your-page",
     "discovered-currently-not-indexed",
     "google-search-console-url-inspection",
-    "why-google-isnt-indexing-your-page",
     "google-chose-different-canonical",
     "crawling-vs-indexing-vs-ranking"
   ]

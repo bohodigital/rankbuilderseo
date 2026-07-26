@@ -56,11 +56,10 @@
   ],
   "correctionHistory": [],
   "relatedContent": [
-    "google-indexing-troubleshooting",
+    "why-google-isnt-indexing-your-page",
     "canonical-tags-when-they-work",
     "crawled-currently-not-indexed",
-    "google-search-console-url-inspection",
-    "why-google-isnt-indexing-your-page"
+    "google-search-console-url-inspection"
   ]
 }
 ---
