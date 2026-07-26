@@ -33,10 +33,17 @@ const articleSlugs = [
   "discovered-currently-not-indexed",
   "excluded-by-noindex",
   "google-chose-different-canonical",
-  "google-indexing-troubleshooting",
   "google-search-console-page-indexing-report",
   "how-long-google-takes-to-index-page",
   "url-blocked-by-robots-txt",
+  "page-with-redirect",
+  "redirect-error-search-console",
+  "soft-404",
+  "not-found-404",
+  "server-error-5xx",
+  "blocked-unauthorized-request-401",
+  "blocked-access-forbidden-403",
+  "blocked-other-4xx",
 ];
 
 const expectedLegacyGuideRedirects = Object.freeze({
@@ -278,6 +285,26 @@ test("redirects every retired guide detail in one hop and preserves query string
       "https://rankbuilderseo.com/articles/how-to-read-an-seo-audit?source=alias",
       alias,
     );
+  }
+});
+
+test("redirects the consolidated indexing hub and removes it from discovery", async () => {
+  const archivedRoute = "/articles/google-indexing-troubleshooting";
+  const replacementRoute = "/articles/why-google-isnt-indexing-your-page";
+  const response = await request(`${archivedRoute}?source=archive`);
+  assert.equal(response.status, 307);
+  assert.equal(
+    response.headers.get("location"),
+    `${replacementRoute}?source=archive`,
+  );
+
+  const [archiveText, sitemapText, feedText] = await Promise.all([
+    request("/articles").then((result) => result.text()),
+    request("/sitemap.xml", "application/xml").then((result) => result.text()),
+    request("/feed.xml", "application/atom+xml").then((result) => result.text()),
+  ]);
+  for (const output of [archiveText, sitemapText, feedText]) {
+    assert.ok(!output.includes(archivedRoute), archivedRoute);
   }
 });
 
