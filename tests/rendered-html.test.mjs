@@ -44,6 +44,14 @@ const articleSlugs = [
   "blocked-unauthorized-request-401",
   "blocked-access-forbidden-403",
   "blocked-other-4xx",
+  "alternate-page-proper-canonical-tag",
+  "duplicate-without-user-selected-canonical",
+  "indexed-though-blocked-by-robots-txt",
+  "sitemap-could-not-be-read",
+  "why-request-indexing-is-not-working",
+  "page-indexing-report-not-updating",
+  "internal-links-vs-xml-sitemaps",
+  "site-search-not-complete-index-checker",
 ];
 
 const expectedLegacyGuideRedirects = Object.freeze({

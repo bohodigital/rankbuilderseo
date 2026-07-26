@@ -37,7 +37,10 @@
   "relatedContent": [
     "technical-seo-baseline",
     "seo-migration-launch-checklist",
-    "internal-links-audit-by-template"
+    "internal-links-audit-by-template",
+    "google-chose-different-canonical",
+    "alternate-page-proper-canonical-tag",
+    "duplicate-without-user-selected-canonical"
   ]
 }
 ---

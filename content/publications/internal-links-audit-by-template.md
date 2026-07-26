@@ -30,7 +30,9 @@
     "technical-seo-baseline",
     "canonical-tags-when-they-work",
     "seo-migration-launch-checklist",
-    "not-found-404"
+    "not-found-404",
+    "internal-links-vs-xml-sitemaps",
+    "sitemap-could-not-be-read"
   ]
 }
 ---

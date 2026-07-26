@@ -61,7 +61,9 @@
     "discovered-currently-not-indexed",
     "crawled-currently-not-indexed",
     "google-search-console-url-inspection",
-    "crawling-vs-indexing-vs-ranking"
+    "crawling-vs-indexing-vs-ranking",
+    "why-request-indexing-is-not-working",
+    "page-indexing-report-not-updating"
   ]
 }
 ---

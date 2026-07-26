@@ -64,7 +64,10 @@
     "page-with-redirect",
     "soft-404",
     "server-error-5xx",
-    "blocked-other-4xx"
+    "blocked-other-4xx",
+    "alternate-page-proper-canonical-tag",
+    "sitemap-could-not-be-read",
+    "page-indexing-report-not-updating"
   ]
 }
 ---

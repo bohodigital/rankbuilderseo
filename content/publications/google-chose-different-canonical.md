@@ -59,7 +59,9 @@
     "why-google-isnt-indexing-your-page",
     "canonical-tags-when-they-work",
     "crawled-currently-not-indexed",
-    "google-search-console-url-inspection"
+    "google-search-console-url-inspection",
+    "alternate-page-proper-canonical-tag",
+    "duplicate-without-user-selected-canonical"
   ]
 }
 ---

@@ -67,7 +67,8 @@
     "excluded-by-noindex",
     "google-search-console-url-inspection",
     "technical-seo-baseline",
-    "blocked-access-forbidden-403"
+    "blocked-access-forbidden-403",
+    "indexed-though-blocked-by-robots-txt"
   ]
 }
 ---
