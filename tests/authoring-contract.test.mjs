@@ -93,7 +93,7 @@ function loadOne(options = {}, mediaRecords = media) {
 test("renders the contracted Markdown subset into a typed safe document", () => {
   const document = parseSafeMarkdown(`## Supported syntax {#stable-anchor}
 
-A [safe link](https://example.com/source), [local link](/articles), **bold**, *italics*, \`inline code\`, and a citation.[@source-id]
+A [safe link](https://example.com/source), [local link](/articles), **bold**, *italics*, \`inline code\`, \`<head>\`, and a citation.[@source-id]
 
 1. First ordered step
 2. Second ordered step
@@ -511,6 +511,11 @@ test("relationship diagnostics flag orphans, excessive or hidden relations, and 
   assert.ok(diagnostics.errors.some((error) => /needs related reading|no incoming related link/.test(error)));
   assert.ok(diagnostics.errors.some((error) => /new glossary term is unused/.test(error)));
   assert.ok(diagnostics.warnings.some((warning) => /mentions glossary term/.test(warning)));
+  const excessive = publicationRelationshipDiagnostics([
+    { ...records[0], relatedContent: Array.from({ length: 13 }, (_, index) => `related-${index}`) },
+    records[1],
+  ]);
+  assert.ok(excessive.errors.some((error) => /limited to twelve records/.test(error)));
 });
 
 const publicResolver = async () => [{ address: "93.184.216.34", family: 4 }];

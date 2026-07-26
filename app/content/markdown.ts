@@ -237,7 +237,8 @@ export function parseSafeMarkdown(body: string, label = "Markdown body"): SafeMa
       continue;
     }
 
-    if (/<\/?(?:script|iframe|style|[A-Za-z][A-Za-z0-9.-]*)(?:\s|>|\/)/i.test(line) || /<!--|-->|<\?/.test(line)) {
+    const safetyLine = line.replace(/`[^`]*`/g, "");
+    if (/<\/?(?:script|iframe|style|[A-Za-z][A-Za-z0-9.-]*)(?:\s|>|\/)/i.test(safetyLine) || /<!--|-->|<\?/.test(safetyLine)) {
       fail(label, "raw HTML, scripts, iframes, and component-like tags are not allowed");
     }
     if (/^\s{2,}(?:-|\d+\.)\s/.test(raw)) fail(label, "nested lists are not supported");
@@ -333,7 +334,7 @@ export function parseSafeMarkdown(body: string, label = "Markdown body"): SafeMa
     while (index < lines.length) {
       const candidate = lines[index].trim();
       if (!candidate || beginsBlock(candidate, lines[index + 1]?.trim() ?? "")) break;
-      if (/<\/?[A-Za-z!]/.test(candidate)) fail(label, "raw HTML is not allowed");
+      if (/<\/?[A-Za-z!]/.test(candidate.replace(/`[^`]*`/g, ""))) fail(label, "raw HTML is not allowed");
       paragraph.push(candidate);
       index += 1;
     }

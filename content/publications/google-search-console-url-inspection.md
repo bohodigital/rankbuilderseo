@@ -80,7 +80,13 @@
     "why-google-isnt-indexing-your-page",
     "crawling-vs-indexing-vs-ranking",
     "technical-seo-baseline",
-    "canonical-tags-when-they-work"
+    "canonical-tags-when-they-work",
+    "google-indexing-troubleshooting",
+    "google-search-console-page-indexing-report",
+    "excluded-by-noindex",
+    "url-blocked-by-robots-txt",
+    "google-chose-different-canonical",
+    "how-long-google-takes-to-index-page"
   ]
 }
 ---

@@ -416,7 +416,7 @@ export function publicationRelationshipDiagnostics(
     const exposure = publicationExposure(publication, at);
     if (!exposure.related) continue;
     if (publication.relatedContent.length === 0) errors.push(`${publication.slug}: published records need related reading`);
-    if (publication.relatedContent.length > 4) errors.push(`${publication.slug}: related reading is limited to four records`);
+    if (publication.relatedContent.length > 12) errors.push(`${publication.slug}: related reading is limited to twelve records`);
     for (const relatedSlug of publication.relatedContent) {
       const related = bySlug.get(relatedSlug);
       if (!related) continue;

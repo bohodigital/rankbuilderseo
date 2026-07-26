@@ -29,6 +29,14 @@ const articleSlugs = [
   "internal-links-audit-by-template",
   "zero-click-search-study-notes",
   ...batch01Articles.map(({ slug }) => slug),
+  "crawled-currently-not-indexed",
+  "discovered-currently-not-indexed",
+  "excluded-by-noindex",
+  "google-chose-different-canonical",
+  "google-indexing-troubleshooting",
+  "google-search-console-page-indexing-report",
+  "how-long-google-takes-to-index-page",
+  "url-blocked-by-robots-txt",
 ];
 
 const expectedLegacyGuideRedirects = Object.freeze({
@@ -154,7 +162,7 @@ test("renders the production homepage with metadata and analytics", async () => 
     ).length,
     1,
   );
-  assert.doesNotMatch(html, /codex-preview|Your site is taking shape|noindex/i);
+  assert.doesNotMatch(html, /codex-preview|Your site is taking shape|<meta[^>]+name="robots"[^>]+content="[^"]*noindex/i);
 });
 
 test("redirects www to the apex while preserving the request path", async () => {
@@ -334,7 +342,7 @@ test("publishes only canonical 200 self-canonicalizing URLs in crawler endpoints
   assert.match(feedText, /<summary type="text">[^<]+<\/summary>/);
 
   const sitemapUrls = extractAll(sitemapText, /<loc>([^<]+)<\/loc>/g);
-  assert.equal(sitemapUrls.length, 34);
+  assert.equal(sitemapUrls.length, articleSlugs.length + 19);
   assert.equal(new Set(sitemapUrls).size, sitemapUrls.length);
 
   const pageTitles = new Set();
