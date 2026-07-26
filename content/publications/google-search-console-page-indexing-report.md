@@ -60,7 +60,11 @@
     "why-google-isnt-indexing-your-page",
     "discovered-currently-not-indexed",
     "crawled-currently-not-indexed",
-    "search-console-is-not-analytics"
+    "search-console-is-not-analytics",
+    "page-with-redirect",
+    "soft-404",
+    "server-error-5xx",
+    "blocked-other-4xx"
   ]
 }
 ---

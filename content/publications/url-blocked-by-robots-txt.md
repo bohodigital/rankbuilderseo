@@ -66,7 +66,8 @@
     "why-google-isnt-indexing-your-page",
     "excluded-by-noindex",
     "google-search-console-url-inspection",
-    "technical-seo-baseline"
+    "technical-seo-baseline",
+    "blocked-access-forbidden-403"
   ]
 }
 ---

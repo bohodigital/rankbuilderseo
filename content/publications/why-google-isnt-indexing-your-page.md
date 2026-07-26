@@ -128,7 +128,8 @@
     "excluded-by-noindex",
     "url-blocked-by-robots-txt",
     "google-chose-different-canonical",
-    "how-long-google-takes-to-index-page"
+    "how-long-google-takes-to-index-page",
+    "page-with-redirect"
   ]
 }
 ---

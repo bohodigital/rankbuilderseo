@@ -29,7 +29,10 @@
   "relatedContent": [
     "technical-seo-baseline",
     "canonical-tags-when-they-work",
-    "internal-links-audit-by-template"
+    "internal-links-audit-by-template",
+    "page-with-redirect",
+    "redirect-error-search-console",
+    "not-found-404"
   ]
 }
 ---

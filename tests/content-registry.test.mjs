@@ -123,7 +123,7 @@ function source(overrides = {}) {
 
 test("loads the canonical Markdown registry with complete typed metadata", async () => {
   const publications = loadPublicationRegistry(await publicationSources());
-  assert.equal(publications.length, 23);
+  assert.equal(publications.length, 31);
   assert.equal(new Set(publications.map(({ slug }) => slug)).size, publications.length);
   for (const publication of publications) {
     assert.ok(publication.author.name);
@@ -188,8 +188,20 @@ test("rejects unknown identities, invalid dates, invalid citation URLs, and inco
 test("generates only the authoritative article route family", async () => {
   const publications = loadPublicationRegistry(await publicationSources());
   const routes = publicationRoutePaths(publications);
-  assert.equal(routes.length, 23);
-  for (const route of ["/articles/why-google-isnt-indexing-your-page", "/articles/crawling-vs-indexing-vs-ranking", "/articles/google-search-console-url-inspection"]) assert.ok(routes.includes(route), route);
+  assert.equal(routes.length, 31);
+  for (const route of [
+    "/articles/why-google-isnt-indexing-your-page",
+    "/articles/crawling-vs-indexing-vs-ranking",
+    "/articles/google-search-console-url-inspection",
+    "/articles/page-with-redirect",
+    "/articles/redirect-error-search-console",
+    "/articles/soft-404",
+    "/articles/not-found-404",
+    "/articles/server-error-5xx",
+    "/articles/blocked-unauthorized-request-401",
+    "/articles/blocked-access-forbidden-403",
+    "/articles/blocked-other-4xx",
+  ]) assert.ok(routes.includes(route), route);
   assert.ok(routes.every((route) => route.startsWith("/articles/")));
   assert.ok(routes.every((route) => !route.startsWith("/guides/")));
 });

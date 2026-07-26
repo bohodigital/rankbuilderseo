@@ -29,7 +29,8 @@
   "relatedContent": [
     "canonical-tags-when-they-work",
     "seo-migration-launch-checklist",
-    "internal-links-audit-by-template"
+    "internal-links-audit-by-template",
+    "server-error-5xx"
   ]
 }
 ---

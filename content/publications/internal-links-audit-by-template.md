@@ -29,7 +29,8 @@
   "relatedContent": [
     "technical-seo-baseline",
     "canonical-tags-when-they-work",
-    "seo-migration-launch-checklist"
+    "seo-migration-launch-checklist",
+    "not-found-404"
   ]
 }
 ---
