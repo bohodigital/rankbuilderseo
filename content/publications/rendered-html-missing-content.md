@@ -121,6 +121,8 @@ Example shell:
 
 If the content appears only after rendering, every resource and request in that path becomes part of the indexing dependency chain.
 
+The [Indexability Inspector checks returned HTML only](/tools/indexability-inspector/); use URL Inspection for Google's rendered result.
+
 If the content is absent from both the initial and Google-rendered HTML, continue through the resource and runtime checks. If it appears in Google’s rendered HTML but the page remains unindexed, move back to canonicalization, duplication, and index selection rather than treating rendering as the cause.
 
 4. **Inspect failed resources.**

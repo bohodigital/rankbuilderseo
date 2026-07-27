@@ -44,7 +44,8 @@
   "relatedContent": [
     "what-an-seo-report-should-answer",
     "zero-click-search-study-notes",
-    "ai-overviews-traffic-claims"
+    "ai-overviews-traffic-claims",
+    "google-indexing-time-study-baseline"
   ]
 }
 ---

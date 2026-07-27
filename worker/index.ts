@@ -3,15 +3,20 @@ import { handleImageOptimization, DEFAULT_DEVICE_SIZES, DEFAULT_IMAGE_SIZES } fr
 import handler from "vinext/server/app-router-entry";
 import { legacyGuideTarget } from "../app/content/legacy-guide-redirects";
 import { applyResponsePolicies } from "./response-policy";
+import { handleToolApi, type ToolEnv } from "./tool-api";
 
 const canonicalHost = "rankbuilderseo.com";
 const productionPagesHost = "rankbuilderseo.pages.dev";
+const toolPagePaths = new Set([
+  "/tools/indexability-inspector",
+  "/tools/redirect-chain-visualizer",
+]);
 
 interface Fetcher {
   fetch(input: RequestInfo | URL, init?: RequestInit): Promise<Response>;
 }
 
-interface Env {
+interface Env extends ToolEnv {
   ASSETS: Fetcher;
   IMAGES: {
     input(stream: ReadableStream): {
@@ -59,6 +64,15 @@ const worker = {
       return redirectToCanonical(url.pathname);
     }
 
+    if (toolPagePaths.has(url.pathname)) {
+      return redirectToCanonical(`${url.pathname}/`);
+    }
+
+    const toolResponse = await handleToolApi(request, env);
+    if (toolResponse) return applyResponsePolicies(request, toolResponse, {
+      isPreviewDeployment: isPagesDeploymentHost,
+    });
+
     // Pages advanced mode sends every request through this worker. Serve the
     // immutable client build from the ASSETS binding before the app router so
     // stylesheets and hydration bundles do not fall through to a Vinext 404.
@@ -82,9 +96,17 @@ const worker = {
       });
     }
 
+    const appRequest = url.pathname.endsWith("/")
+      && toolPagePaths.has(url.pathname.slice(0, -1))
+      ? new Request(
+          new URL(`${url.pathname.slice(0, -1)}${url.search}`, request.url),
+          request,
+        )
+      : request;
+
     return applyResponsePolicies(
       request,
-      await handler.fetch(request, env, ctx),
+      await handler.fetch(appRequest, env, ctx),
       {
         noindexHtml: isPagesDeploymentHost,
         isPreviewDeployment: isPagesDeploymentHost,

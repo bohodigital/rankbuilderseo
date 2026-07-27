@@ -63,7 +63,9 @@
     "google-search-console-url-inspection",
     "crawling-vs-indexing-vs-ranking",
     "why-request-indexing-is-not-working",
-    "page-indexing-report-not-updating"
+    "page-indexing-report-not-updating",
+    "google-indexing-time-study-methodology",
+    "google-indexing-time-study-baseline"
   ]
 }
 ---
@@ -243,4 +245,4 @@ Google does not expose a guaranteed indexing queue position, deadline, or comple
 
 Search Console reports can lag, and “indexed” does not guarantee ranking for a particular query. Site size, history, server behavior, URL inventory, internal links, page type, canonicalization, and content distinctness can all change the observed timeline.
 
-Rank Builder’s planned indexing-time study can measure controlled observations on this site, but those results will describe a sample, not a universal Google deadline.
+Rank Builder has registered an [indexing-time methodology](/articles/google-indexing-time-study-methodology/) and published the [first cohort baseline](/articles/google-indexing-time-study-baseline/); duration estimates remain withheld until the evidence threshold is met.

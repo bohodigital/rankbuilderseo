@@ -97,6 +97,8 @@ test("analytics events remain sparse, named, and free of page copy or query data
     readFile(new URL("app/articles/[slug]/page.tsx", root), "utf8"),
     readFile(new URL("app/glossary/[slug]/page.tsx", root), "utf8"),
     readFile(new URL("app/about/page.tsx", root), "utf8"),
+    readFile(new URL("app/tools/indexability-inspector/inspector-client.tsx", root), "utf8"),
+    readFile(new URL("app/tools/redirect-chain-visualizer/visualizer-client.tsx", root), "utf8"),
   ]);
   const joined = sources.join("\n");
   const names = [...joined.matchAll(/data-umami-event="([^"]+)"/g)].map((match) => match[1]);
@@ -105,6 +107,10 @@ test("analytics events remain sparse, named, and free of page copy or query data
     "related-article-click",
     "correction-path-click",
     "correction-email-click",
+    "indexability-inspector-submit",
+    "indexability-inspector-export",
+    "redirect-visualizer-submit",
+    "redirect-visualizer-export",
   ]));
   assert.equal(/scroll-depth|search-query|article-title/.test(joined), false);
 });

@@ -241,6 +241,8 @@ Compare:
 
 Differences can come from Workers, Transform Rules, cache, Pages defaults, or account-level redirects.
 
+Use the [Redirect Chain Visualizer to confirm the public edge path rather than the repository's intended path](/tools/redirect-chain-visualizer/).
+
 10. **Verify cache state.**
 
 Record response headers such as cache status, age, ETag, and deployment-specific markers where available.

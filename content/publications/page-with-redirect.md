@@ -96,6 +96,8 @@ Google’s crawlers generally follow redirects and process the content received 
 
 This trace is functional, but it reveals three different source URLs converging on one final page. Each source can appear as “Page with redirect.” That is expected if the redirects are intentional.
 
+Trace every HTTP hop with the [Redirect Chain Visualizer](/tools/redirect-chain-visualizer/).
+
 Permanent redirects tell Google that the new target should normally be shown in search. Temporary redirects tell Google that the source may remain the preferred search URL. Server-side redirects are the clearest method when the platform permits them. [Redirects and Google Search](https://developers.google.com/search/docs/crawling-indexing/301-redirects)[@google-redirects]
 
 URL Inspection does not make the source and destination interchangeable. Inspect the final destination directly. Review its page fetch, indexing permission, user-declared canonical, and Google-selected canonical. The live test is useful for confirming current access, but it does not reproduce every indexed-data decision. [URL Inspection Tool](https://support.google.com/webmasters/answer/9012289?hl=en)[@gsc-url-inspection]

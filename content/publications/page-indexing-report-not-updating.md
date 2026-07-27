@@ -32,7 +32,9 @@
     "how-long-google-takes-to-index-page",
     "why-google-isnt-indexing-your-page",
     "search-console-is-not-analytics",
-    "crawled-currently-not-indexed"
+    "crawled-currently-not-indexed",
+    "google-indexing-time-study-methodology",
+    "google-indexing-time-study-baseline"
   ],
   "citations": [
     {

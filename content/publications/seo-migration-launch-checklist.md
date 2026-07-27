@@ -53,6 +53,8 @@ Freeze an inventory of indexable URLs, traffic-bearing landing pages, backlinks,
 
 Test representative URLs across every template and redirect rule. Confirm that production navigation, canonicals, robots rules, sitemaps, and measurement all reference the final hostname.
 
+Use the [Redirect Chain Visualizer on representative legacy URLs before launch approval](/tools/redirect-chain-visualizer/).
+
 ## After launch
 
 Monitor server errors, redirect chains, index coverage, Search Console signals, and revenue-critical landing pages. Triage by business consequence, not by raw error count.

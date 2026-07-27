@@ -60,6 +60,8 @@ const articleSlugs = [
   "shopify-canonical-urls-products-collections-variants",
   "nextjs-page-visible-browser-missing-google",
   "cloudflare-pages-workers-seo",
+  "google-indexing-time-study-methodology",
+  "google-indexing-time-study-baseline",
 ];
 
 const expectedLegacyGuideRedirects = Object.freeze({
@@ -334,6 +336,8 @@ test("serves the representative route matrix and a real 404", async () => {
     "/lab",
     "/method",
     "/privacy",
+    "/tools/indexability-inspector/",
+    "/tools/redirect-chain-visualizer/",
   ];
 
   for (const path of expected) {
@@ -349,6 +353,45 @@ test("serves the representative route matrix and a real 404", async () => {
 
   const missingTerm = await request("/glossary/definitely-missing");
   assert.equal(missingTerm.status, 404);
+});
+
+test("publishes both tools with canonical WebApplication structured data", async () => {
+  const tools = [
+    "/tools/indexability-inspector/",
+    "/tools/redirect-chain-visualizer/",
+  ];
+  const sitemapText = await request("/sitemap.xml", "application/xml").then(
+    (response) => response.text(),
+  );
+
+  for (const path of tools) {
+    const canonical = `https://rankbuilderseo.com${path}`;
+    assert.equal(
+      (sitemapText.match(new RegExp(`<loc>${canonical}</loc>`, "g")) ?? []).length,
+      1,
+      path,
+    );
+    const response = await request(path);
+    const html = await response.text();
+    assert.equal((html.match(/<main(?:\s|>)/g) ?? []).length, 1, path);
+    assert.equal((html.match(/<h1(?:\s|>)/g) ?? []).length, 1, path);
+    assert.deepEqual(
+      extractAll(html, /<link[^>]+rel="canonical"[^>]+href="([^"]+)"[^>]*>/gi),
+      [canonical],
+      path,
+    );
+    const structuredData = extractAll(
+      html,
+      /<script[^>]+type="application\/ld\+json"[^>]*>(.*?)<\/script>/gis,
+    ).map((value) => JSON.parse(value));
+    const application = structuredData.find((entry) => entry["@type"] === "WebApplication");
+    assert.ok(application, path);
+    assert.equal(application.url, canonical, path);
+    assert.equal(application.offers?.price, "0", path);
+    assert.equal(application.offers?.priceCurrency, "USD", path);
+  }
+
+  assert.doesNotMatch(sitemapText, /\/api\/tools\//);
 });
 
 test("publishes only canonical 200 self-canonicalizing URLs in crawler endpoints", async () => {
@@ -385,7 +428,7 @@ test("publishes only canonical 200 self-canonicalizing URLs in crawler endpoints
   assert.match(feedText, /<summary type="text">[^<]+<\/summary>/);
 
   const sitemapUrls = extractAll(sitemapText, /<loc>([^<]+)<\/loc>/g);
-  assert.equal(sitemapUrls.length, articleSlugs.length + 19);
+  assert.equal(sitemapUrls.length, articleSlugs.length + 21);
   assert.equal(new Set(sitemapUrls).size, sitemapUrls.length);
 
   const pageTitles = new Set();
@@ -401,9 +444,14 @@ test("publishes only canonical 200 self-canonicalizing URLs in crawler endpoints
     const openGraphUrls = extractAll(html, /<meta[^>]+property="og:url"[^>]+content="([^"]+)"[^>]*>/gi);
     assert.deepEqual(openGraphUrls, [sitemapUrl], sitemapUrl);
     const openGraphImages = extractAll(html, /<meta[^>]+property="og:image"[^>]+content="([^"]+)"[^>]*>/gi);
+    const expectedOpenGraphImage = url.pathname === "/tools/indexability-inspector/"
+      ? "https://rankbuilderseo.com/media/indexability-inspector-hero.jpg"
+      : url.pathname === "/tools/redirect-chain-visualizer/"
+        ? "https://rankbuilderseo.com/media/redirect-chain-visualizer-hero.jpg"
+        : "https://rankbuilderseo.com/og.png";
     assert.deepEqual(
       openGraphImages,
-      ["https://rankbuilderseo.com/og.png"],
+      [expectedOpenGraphImage],
       sitemapUrl,
     );
     const openGraphSiteNames = extractAll(html, /<meta[^>]+property="og:site_name"[^>]+content="([^"]+)"[^>]*>/gi);

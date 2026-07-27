@@ -101,6 +101,8 @@ Record the response exactly. An empty header, invalid scheme, whitespace, contro
 
 2. **Trace the complete chain one hop at a time.**
 
+Run the [Redirect Chain Visualizer to expose loops, chains, protocol changes, and failed destinations](/tools/redirect-chain-visualizer/).
+
 Do not rely only on the final browser address. Build a table:
 
 | Hop | Requested URL | Status | Location |

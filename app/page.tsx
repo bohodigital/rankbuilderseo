@@ -89,6 +89,18 @@ export default function Home() {
           </div>
         </section>
 
+        <section className="section shell evidence-tools">
+          <div className="section-heading split-heading">
+            <div><p className="eyebrow">Inspect the evidence</p><h2>Public signals.<br />Honest limits.</h2></div>
+            <p>Use the public tools to check observable page and redirect signals, then compare the result with Rank Builder&apos;s documented indexing research.</p>
+          </div>
+          <div className="evidence-tool-grid">
+            <Link href="/tools/indexability-inspector/"><span>Tool</span><h3>Indexability Inspector</h3><p>Inspect status, directives, robots access, canonicals, and returned HTML.</p></Link>
+            <Link href="/tools/redirect-chain-visualizer/"><span>Tool</span><h3>Redirect Chain Visualizer</h3><p>Trace each public HTTP hop and inspect the final destination.</p></Link>
+            <Link href="/articles/google-indexing-time-study-methodology/"><span>Research</span><h3>Indexing Time Study</h3><p>Read the registered method and current cohort baseline.</p></Link>
+          </div>
+        </section>
+
         <section className="section section-ink">
           <div className="shell">
             <div className="section-heading light-heading split-heading">

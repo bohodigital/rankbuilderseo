@@ -440,6 +440,58 @@
       "mimeType": "image/jpeg",
       "rights": "licensed",
       "status": "approved"
+    },
+    {
+      "id": "batch-06-indexability-inspector-hero",
+      "src": "/media/indexability-inspector-hero.jpg",
+      "alt": "Magnifying glass beside the corner of a laptop",
+      "caption": "The inspector separates observable page signals from the much larger question of whether a search engine has selected the URL for its index.",
+      "credit": "Photo by MJ Duford on Unsplash",
+      "sourceUrl": "https://unsplash.com/photos/magnifying-glass-sits-near-a-laptop-on-a-table-P_5mirRrg0k",
+      "width": 1200,
+      "height": 630,
+      "mimeType": "image/jpeg",
+      "rights": "licensed",
+      "status": "approved"
+    },
+    {
+      "id": "batch-06-redirect-chain-hero",
+      "src": "/media/redirect-chain-visualizer-hero.jpg",
+      "alt": "Aerial view of a multilane highway interchange",
+      "caption": "A redirect chain becomes understandable when every transition, destination, and failure is shown in order.",
+      "credit": "Photo by Jakub Żerdzicki on Unsplash",
+      "sourceUrl": "https://unsplash.com/photos/aerial-view-of-a-highway-interchange-with-cars-glnxs44jWSc",
+      "width": 1200,
+      "height": 630,
+      "mimeType": "image/jpeg",
+      "rights": "licensed",
+      "status": "approved"
+    },
+    {
+      "id": "batch-06-indexing-study-methodology-hero",
+      "src": "/media/google-indexing-time-study-methodology-hero.jpg",
+      "alt": "Clipboard, notebook, pen, hourglass, and stationery arranged on a dark surface",
+      "caption": "A useful indexing study begins with a registered protocol, dated observations, and explicit rules for what counts as evidence.",
+      "credit": "Photo by Alexander Kaufmann on Unsplash",
+      "sourceUrl": "https://unsplash.com/photos/a-clipboard-with-a-notepad-pen-paper-scissors-and-other-items-F-2jfXs2INI",
+      "width": 1200,
+      "height": 630,
+      "mimeType": "image/jpeg",
+      "rights": "licensed",
+      "status": "approved"
+    },
+    {
+      "id": "batch-06-indexing-study-baseline-hero",
+      "src": "/media/google-indexing-time-study-baseline-hero.jpg",
+      "alt": "Laptop displaying charts beside a notebook and mug",
+      "caption": "The baseline records what was measurable before the new indexing corpus had time to influence search performance.",
+      "credit": "Photo by nicoll camacho on Unsplash",
+      "sourceUrl": "https://unsplash.com/photos/laptop-displaying-charts-next-to-notebook-and-mug-adFE-OdO7RA",
+      "width": 1200,
+      "height": 630,
+      "mimeType": "image/jpeg",
+      "rights": "licensed",
+      "status": "approved"
     }
   ]
 }

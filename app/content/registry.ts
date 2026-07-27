@@ -630,6 +630,8 @@ const staticContentRoutes = new Set([
   "/lab",
   "/method",
   "/privacy",
+  "/tools/indexability-inspector",
+  "/tools/redirect-chain-visualizer",
 ]);
 
 function linkTargets(nodes: readonly InlineNode[]): string[] {

@@ -79,7 +79,6 @@
   "relatedContent": [
     "why-google-isnt-indexing-your-page",
     "crawling-vs-indexing-vs-ranking",
-    "technical-seo-baseline",
     "canonical-tags-when-they-work",
     "google-search-console-page-indexing-report",
     "excluded-by-noindex",
@@ -87,7 +86,9 @@
     "google-chose-different-canonical",
     "how-long-google-takes-to-index-page",
     "rendered-html-missing-content",
-    "javascript-seo-crawling-rendering-indexing"
+    "javascript-seo-crawling-rendering-indexing",
+    "google-indexing-time-study-methodology",
+    "google-indexing-time-study-baseline"
   ]
 }
 ---
@@ -117,6 +118,8 @@ For an indexing diagnosis:
 8. Request indexing once after the live page is ready.
 
 Google describes URL Inspection as the tool for seeing indexed information about one URL, testing a live version, viewing rendered output, learning the selected canonical, and requesting indexing. [URL Inspection Tool](https://support.google.com/webmasters/answer/9012289?hl=en-FM)[@gsc-url-inspection]
+
+For a public, non-Google inspection of response status, directives, and declared canonical signals, use the [Indexability Inspector](/tools/indexability-inspector/).
 
 ## Inspect the exact URL
 

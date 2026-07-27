@@ -12,6 +12,10 @@ const staticPaths = [
   "/method",
   "/privacy",
 ];
+const toolPaths = [
+  "/tools/indexability-inspector/",
+  "/tools/redirect-chain-visualizer/",
+];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticEntries = staticPaths.map((path) => ({
@@ -30,5 +34,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: "monthly" as const,
     priority: 0.6,
   }));
-  return [...staticEntries, ...publicationEntries, ...glossaryEntries];
+  const toolEntries = toolPaths.map((path) => ({
+    url: `${origin}${path}`,
+    lastModified: "2026-07-26",
+    changeFrequency: "monthly" as const,
+    priority: 0.8,
+  }));
+  return [...staticEntries, ...toolEntries, ...publicationEntries, ...glossaryEntries];
 }

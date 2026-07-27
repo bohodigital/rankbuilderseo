@@ -1,0 +1,101 @@
+{
+  "studyId": "RB-STUDY-INDEXING-001",
+  "version": 1,
+  "status": "baseline-only",
+  "generatedAt": "2026-07-26T23:30:00Z",
+  "baseline": {
+    "startDate": "2026-07-13",
+    "endDate": "2026-07-24",
+    "completeDays": 12,
+    "impressions": 298,
+    "clicks": 0,
+    "ctr": 0,
+    "weightedAveragePosition": 64.54362416107382,
+    "minimumDailyImpressions": 17,
+    "maximumDailyImpressions": 36,
+    "searchConsoleDataThrough": "2026-07-24",
+    "observedAt": "2026-07-26T09:35:32Z",
+    "queryFingerprint": "d0f7b3208d888d78"
+  },
+  "reportingGates": {
+    "minimumConfirmedIndexedUrlsForMedian": 10,
+    "minimumConfirmedIndexedUrlsForPercentiles": 20,
+    "minimumFollowupDays": 7,
+    "maximumPrimaryWindowDays": 28
+  },
+  "cohorts": [
+    {
+      "id": "batch-02-active",
+      "releaseCommit": "cf80bb2316bdee90727f2d0ea312e3bf3a269a71",
+      "releaseDate": "2026-07-25",
+      "eligibleUrlCount": 7,
+      "urls": [
+        "google-search-console-page-indexing-report",
+        "discovered-currently-not-indexed",
+        "crawled-currently-not-indexed",
+        "excluded-by-noindex",
+        "url-blocked-by-robots-txt",
+        "google-chose-different-canonical",
+        "how-long-google-takes-to-index-page"
+      ]
+    },
+    {
+      "id": "batch-03",
+      "releaseCommit": "77f51363fc6c93e4a9c90eec01cbcf972fc08adf",
+      "releaseDate": "2026-07-25",
+      "eligibleUrlCount": 8,
+      "urls": [
+        "page-with-redirect",
+        "redirect-error-search-console",
+        "soft-404",
+        "not-found-404",
+        "server-error-5xx",
+        "blocked-unauthorized-request-401",
+        "blocked-access-forbidden-403",
+        "blocked-other-4xx"
+      ]
+    },
+    {
+      "id": "batch-04",
+      "releaseCommit": "3204ad21b370c714e3854888980275cedad1f7bf",
+      "releaseDate": "2026-07-26",
+      "eligibleUrlCount": 8,
+      "urls": [
+        "alternate-page-proper-canonical-tag",
+        "duplicate-without-user-selected-canonical",
+        "indexed-though-blocked-by-robots-txt",
+        "sitemap-could-not-be-read",
+        "why-request-indexing-is-not-working",
+        "page-indexing-report-not-updating",
+        "internal-links-vs-xml-sitemaps",
+        "site-search-not-complete-index-checker"
+      ]
+    },
+    {
+      "id": "batch-05",
+      "releaseCommit": "206fcf85c30a1aa9220e7b4777ed0811a80de3b5",
+      "releaseDate": "2026-07-26",
+      "eligibleUrlCount": 8,
+      "urls": [
+        "javascript-seo-crawling-rendering-indexing",
+        "rendered-html-missing-content",
+        "infinite-scroll-pagination-seo",
+        "crawl-budget-when-it-matters",
+        "wordpress-site-accidentally-noindexed",
+        "shopify-canonical-urls-products-collections-variants",
+        "nextjs-page-visible-browser-missing-google",
+        "cloudflare-pages-workers-seo"
+      ]
+    }
+  ],
+  "observations": [],
+  "summary": {
+    "eligibleUrls": 31,
+    "cohorts": 4,
+    "urlsWithInspectionObservations": 0,
+    "confirmedIndexedUrls": 0,
+    "confirmedFirstImpressionUrls": 0,
+    "durationEstimateAvailable": false,
+    "publicConclusion": "No indexing-duration estimate is reported yet because URL-level observations have not met the registered reporting gates."
+  }
+}

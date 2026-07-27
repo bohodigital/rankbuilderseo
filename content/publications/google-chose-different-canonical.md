@@ -233,6 +233,8 @@ Pointing canonicals to a broken or prohibited page invites Google to choose anot
 
 The matrix reveals disagreement that is easy to miss when inspecting one tag at a time.
 
+Use the [Indexability Inspector to compare the public canonical annotations and final response](/tools/indexability-inspector/).
+
 | Situation | Why Google may choose differently | Appropriate response |
 | --- | --- | --- |
 | Tracking URL canonicalizes to clean URL | Clean URL is the stable representative | Accept and link to the clean URL. |

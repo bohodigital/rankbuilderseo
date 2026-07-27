@@ -32,7 +32,9 @@
     "why-google-isnt-indexing-your-page",
     "crawled-currently-not-indexed",
     "discovered-currently-not-indexed",
-    "sitemap-could-not-be-read"
+    "sitemap-could-not-be-read",
+    "google-indexing-time-study-methodology",
+    "google-indexing-time-study-baseline"
   ],
   "citations": [
     {

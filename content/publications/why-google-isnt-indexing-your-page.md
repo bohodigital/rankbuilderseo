@@ -120,7 +120,6 @@
   "relatedContent": [
     "crawling-vs-indexing-vs-ranking",
     "google-search-console-url-inspection",
-    "technical-seo-baseline",
     "canonical-tags-when-they-work",
     "google-search-console-page-indexing-report",
     "discovered-currently-not-indexed",
@@ -129,7 +128,8 @@
     "url-blocked-by-robots-txt",
     "google-chose-different-canonical",
     "how-long-google-takes-to-index-page",
-    "page-with-redirect"
+    "google-indexing-time-study-methodology",
+    "google-indexing-time-study-baseline"
   ]
 }
 ---
@@ -534,6 +534,8 @@ Avoid these common responses:
 Google does not guarantee crawling, indexing, or serving even when a page follows its technical requirements. A sound diagnosis improves the page and its signals; it does not manufacture a guarantee.
 
 **Final checklist**
+
+Run the [Indexability Inspector to check the public response, directives, and canonical signals](/tools/indexability-inspector/).
 
 Before you call an indexing problem unresolved, verify:
 
