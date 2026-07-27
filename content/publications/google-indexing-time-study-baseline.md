@@ -124,7 +124,7 @@ This is not a randomized sample of the web. It is a practical cohort of connecte
 
 ## Methodology
 
-The full registered protocol appears in [Google Indexing Time Study: Methodology](/articles/google-indexing-time-study-methodology/).
+The full registered protocol appears in [Google Indexing Time Study: Methodology](/articles/google-indexing-time-study-methodology).
 
 For this status report, a URL counts as eligible only when it is:
 

@@ -207,4 +207,4 @@ This status does not tell you exactly when Google will crawl the URL. It does no
 
 Google’s crawl allocation is algorithmic and depends on sitewide conditions that Search Console does not expose as one simple score.
 
-Use the status to choose the correct stage of investigation. If Google later crawls the URL but does not index it, move to [Crawled – Currently Not Indexed](/articles/crawled-currently-not-indexed/) rather than continuing to diagnose discovery.
+Use the status to choose the correct stage of investigation. If Google later crawls the URL but does not index it, move to [Crawled – Currently Not Indexed](/articles/crawled-currently-not-indexed) rather than continuing to diagnose discovery.

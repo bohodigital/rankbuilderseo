@@ -442,7 +442,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
 .breadcrumbs { display: flex; flex-wrap: wrap; gap: .45rem; margin-bottom: 1.5rem; color: var(--muted); font: 700 .68rem/1.4 var(--mono); text-transform: uppercase; }
 .breadcrumbs a { color: inherit; text-decoration: underline; text-underline-offset: .18em; }
 .site-header nav a[aria-current="page"], .header-link[aria-current="page"] { border-color: var(--signal); color: var(--signal); }
-.menu-toggle, .primary-nav a, .footer-nav a { min-width: 44px; min-height: 44px; display: inline-flex; align-items: center; }
+.menu-toggle, .primary-nav a, .footer-nav a { min-width: 44px; min-height: 44px; align-items: center; }
+.primary-nav a, .footer-nav a { display: inline-flex; }
 .primary-nav a { justify-content: center; }
 .footer-nav a { align-items: center; }
 .article-rail nav { display: flex; flex-direction: column; gap: .9rem; }

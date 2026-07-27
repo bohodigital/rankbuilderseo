@@ -178,7 +178,7 @@ Use Crawl Stats to see whether forbidden responses cluster in time and URL famil
 - **Rate limiting emits `403`.** Overload and forbidden access become indistinguishable.
 - **A `robots.txt` change is used to fix access.** Crawl preferences do not repair the HTTP response.
 
-The [401 playbook](/articles/blocked-unauthorized-request-401/) covers a credential challenge. The [Other 4xx explainer](/articles/blocked-other-4xx/) covers other client-error responses. If the edge cannot reach a healthy origin and emits a gateway failure, continue with [Server Error 5xx](/articles/server-error-5xx/).
+The [401 playbook](/articles/blocked-unauthorized-request-401) covers a credential challenge. The [Other 4xx explainer](/articles/blocked-other-4xx) covers other client-error responses. If the edge cannot reach a healthy origin and emits a gateway failure, continue with [Server Error 5xx](/articles/server-error-5xx).
 
 Treat a security exception as a production change: identify the exact policy owner, preserve the prior rule, and verify that unrelated protected routes remain closed after the public route recovers.
 
@@ -198,4 +198,4 @@ The repair is complete when:
 - verified Googlebot evidence and live URL Inspection show successful access;
 - Crawl Stats no longer shows a continuing 403 pattern after recrawl.
 
-Do not promise an immediate indexing change. The live response can be fixed before the [Page Indexing report](/articles/google-search-console-page-indexing-report/) updates. Continue with the [robots.txt guide](/articles/url-blocked-by-robots-txt/) only if a separate crawl rule also applies.
+Do not promise an immediate indexing change. The live response can be fixed before the [Page Indexing report](/articles/google-search-console-page-indexing-report) updates. Continue with the [robots.txt guide](/articles/url-blocked-by-robots-txt) only if a separate crawl rule also applies.

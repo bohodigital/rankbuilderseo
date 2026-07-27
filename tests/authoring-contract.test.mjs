@@ -526,8 +526,8 @@ test("internal route validation recognizes generated routes and rejects unknown 
     document: parseSafeMarkdown(`## Definition\n\n${markdown}`),
   });
   const valid = publication("alpha", [
-    "[article](/articles/beta/)",
-    "[glossary](/glossary/fixture-term/)",
+    "[article](/articles/beta)",
+    "[glossary](/glossary/fixture-term)",
     "[static](/about#corrections)",
     "[fragment](#definition)",
   ].join(" "));
@@ -537,11 +537,15 @@ test("internal route validation recognizes generated routes and rejects unknown 
   ));
   assert.throws(
     () => validateInternalRoutes([publication("alpha", "[missing](/technical-seo/missing/)")], []),
-    /unknown internal route: \/technical-seo\/missing\//i,
+    /noncanonical trailing slash in internal route: \/technical-seo\/missing\//i,
   );
   assert.throws(
     () => validateInternalRoutes([publication("alpha", "[missing](/articles/missing/)")], []),
-    /unknown internal route: \/articles\/missing\//i,
+    /noncanonical trailing slash in internal route: \/articles\/missing\//i,
+  );
+  assert.throws(
+    () => validateInternalRoutes([publication("alpha", "[redirecting](/articles/beta/)"), publication("beta", "Destination.")], []),
+    /noncanonical trailing slash in internal route: \/articles\/beta\//i,
   );
 });
 

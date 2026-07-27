@@ -114,7 +114,7 @@ A deleted product redirects to the store homepage even though a direct successor
 
 **Canonical contradiction**
 
-A page returns `200`, declares itself canonical, but a routing rule redirects it for some devices or hostnames. Test the exact protocol, hostname, path, query, and user-facing route. Then align the redirect with the [canonical decision](/articles/google-chose-different-canonical/).
+A page returns `200`, declares itself canonical, but a routing rule redirects it for some devices or hostnames. Test the exact protocol, hostname, path, query, and user-facing route. Then align the redirect with the [canonical decision](/articles/google-chose-different-canonical).
 
 **Stale site-controlled links**
 
@@ -134,7 +134,7 @@ The status becomes a problem when the redirect:
 
 Do not remove a valid redirect merely to make the report row disappear. Search Console includes many intentionally excluded URLs. The goal is a coherent URL system, not an all-green inventory.
 
-Use the [Redirect Error playbook](/articles/redirect-error-search-console/) when Google cannot complete the path. Use the [migration checklist](/articles/seo-migration-launch-checklist/) when many URLs are moving together. Return a true `404` or `410` when content is gone without a replacement instead of sending every missing URL to the homepage.
+Use the [Redirect Error playbook](/articles/redirect-error-search-console) when Google cannot complete the path. Use the [migration checklist](/articles/seo-migration-launch-checklist) when many URLs are moving together. Return a true `404` or `410` when content is gone without a replacement instead of sending every missing URL to the homepage.
 
 **Completion checklist**
 
@@ -147,4 +147,4 @@ Use the [Redirect Error playbook](/articles/redirect-error-search-console/) when
 - The final page’s canonical agrees with the intended destination.
 - The redirect remains available for old external links where appropriate.
 
-Once those conditions hold, “Page with redirect” can remain an expected report status. The destination’s indexing outcome belongs to the broader [indexing diagnostic flow](/articles/why-google-isnt-indexing-your-page/) and the [Page Indexing report](/articles/google-search-console-page-indexing-report/).
+Once those conditions hold, “Page with redirect” can remain an expected report status. The destination’s indexing outcome belongs to the broader [indexing diagnostic flow](/articles/why-google-isnt-indexing-your-page) and the [Page Indexing report](/articles/google-search-console-page-indexing-report).

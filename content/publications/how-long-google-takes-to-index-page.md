@@ -245,4 +245,4 @@ Google does not expose a guaranteed indexing queue position, deadline, or comple
 
 Search Console reports can lag, and “indexed” does not guarantee ranking for a particular query. Site size, history, server behavior, URL inventory, internal links, page type, canonicalization, and content distinctness can all change the observed timeline.
 
-Rank Builder has registered an [indexing-time methodology](/articles/google-indexing-time-study-methodology/) and published the [first cohort baseline](/articles/google-indexing-time-study-baseline/); duration estimates remain withheld until the evidence threshold is met.
+Rank Builder has registered an [indexing-time methodology](/articles/google-indexing-time-study-methodology) and published the [first cohort baseline](/articles/google-indexing-time-study-baseline); duration estimates remain withheld until the evidence threshold is met.

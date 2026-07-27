@@ -475,8 +475,8 @@ Record this for every investigated URL:
 
 ## Related guides
 
-- [Why Google Isn’t Indexing Your Page](/articles/why-google-isnt-indexing-your-page/)
-- [Crawling vs. Indexing vs. Ranking](/articles/crawling-vs-indexing-vs-ranking/)
-- [Technical SEO Baseline Checklist](/articles/technical-seo-baseline/)
-- [Canonical URL](/glossary/canonical-url/)
-- [robots.txt](/glossary/robots-txt/)
+- [Why Google Isn’t Indexing Your Page](/articles/why-google-isnt-indexing-your-page)
+- [Crawling vs. Indexing vs. Ranking](/articles/crawling-vs-indexing-vs-ranking)
+- [Technical SEO Baseline Checklist](/articles/technical-seo-baseline)
+- [Canonical URL](/glossary/canonical-url)
+- [robots.txt](/glossary/robots-txt)

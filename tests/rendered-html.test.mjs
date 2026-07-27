@@ -336,6 +336,7 @@ test("serves the representative route matrix and a real 404", async () => {
     "/lab",
     "/method",
     "/privacy",
+    "/tools",
     "/tools/indexability-inspector/",
     "/tools/redirect-chain-visualizer/",
   ];
@@ -394,6 +395,31 @@ test("publishes both tools with canonical WebApplication structured data", async
   assert.doesNotMatch(sitemapText, /\/api\/tools\//);
 });
 
+test("publishes an indexable Tools collection and stable parent navigation", async () => {
+  const response = await request("/tools");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  assert.deepEqual(
+    extractAll(html, /<link[^>]+rel="canonical"[^>]+href="([^"]+)"[^>]*>/gi),
+    ["https://rankbuilderseo.com/tools"],
+  );
+  for (const destination of [
+    "/tools/indexability-inspector/",
+    "/tools/redirect-chain-visualizer/",
+    "/privacy",
+  ]) {
+    assert.match(html, new RegExp(`href="${destination.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}"`), destination);
+  }
+  const structuredData = extractAll(
+    html,
+    /<script[^>]+type="application\/ld\+json"[^>]*>(.*?)<\/script>/gis,
+  ).map((value) => JSON.parse(value));
+  const collection = structuredData.find((entry) => entry["@type"] === "CollectionPage");
+  assert.equal(collection?.url, "https://rankbuilderseo.com/tools");
+  assert.equal(collection?.hasPart?.length, 2);
+  assert.ok(collection?.hasPart?.every((entry) => entry["@type"] === "WebApplication"));
+});
+
 test("publishes only canonical 200 self-canonicalizing URLs in crawler endpoints", async () => {
   const robots = await request("/robots.txt", "text/plain");
   assert.equal(robots.status, 200);
@@ -428,7 +454,7 @@ test("publishes only canonical 200 self-canonicalizing URLs in crawler endpoints
   assert.match(feedText, /<summary type="text">[^<]+<\/summary>/);
 
   const sitemapUrls = extractAll(sitemapText, /<loc>([^<]+)<\/loc>/g);
-  assert.equal(sitemapUrls.length, articleSlugs.length + 21);
+  assert.equal(sitemapUrls.length, articleSlugs.length + 22);
   assert.equal(new Set(sitemapUrls).size, sitemapUrls.length);
 
   const pageTitles = new Set();
@@ -448,7 +474,18 @@ test("publishes only canonical 200 self-canonicalizing URLs in crawler endpoints
       ? "https://rankbuilderseo.com/media/indexability-inspector-hero.jpg"
       : url.pathname === "/tools/redirect-chain-visualizer/"
         ? "https://rankbuilderseo.com/media/redirect-chain-visualizer-hero.jpg"
-        : "https://rankbuilderseo.com/og.png";
+        : url.pathname.startsWith("/articles/")
+          ? (() => {
+              const figureSource = html.match(/<figure[^>]*>\s*<img[^>]+src="([^"]+)"/i)?.[1];
+              if (!figureSource) return "https://rankbuilderseo.com/og.png";
+              const renderedImage = new URL(
+                figureSource.replaceAll("&amp;", "&"),
+                "https://rankbuilderseo.com",
+              );
+              const originalSource = renderedImage.searchParams.get("url") ?? renderedImage.pathname;
+              return new URL(originalSource, "https://rankbuilderseo.com").href;
+            })()
+          : "https://rankbuilderseo.com/og.png";
     assert.deepEqual(
       openGraphImages,
       [expectedOpenGraphImage],
@@ -511,6 +548,8 @@ test("keeps Organization, Article, and Breadcrumb data aligned with canonical re
     assert.equal(organization?.name, "Republic of Bohemia LLC", slug);
     assert.equal(article?.mainEntityOfPage, `https://rankbuilderseo.com/articles/${slug}`, slug);
     assert.equal(article?.publisher?.["@id"], "https://rankbuilderseo.com/#organization", slug);
+    const openGraphImage = extractAll(html, /<meta[^>]+property="og:image"[^>]+content="([^"]+)"[^>]*>/gi)[0];
+    assert.equal(article?.image, openGraphImage, slug);
     assert.equal(breadcrumbs?.itemListElement.at(-1).item, `https://rankbuilderseo.com/articles/${slug}`, slug);
   }
 });
@@ -561,7 +600,7 @@ test("renders a complete semantic mobile navigation contract", async () => {
   assert.match(html, /<button[^>]+class="menu-toggle"[^>]+aria-expanded="false"[^>]+aria-controls="primary-navigation"/i);
   const navigation = html.match(/<nav[^>]+id="primary-navigation"[^>]+aria-label="Primary navigation"[^>]*>(.*?)<\/nav>/is);
   assert.ok(navigation, "primary navigation is rendered");
-  for (const destination of ["/articles", "/glossary", "/lab", "/method", "/about"]) {
+  for (const destination of ["/articles", "/tools", "/glossary", "/lab", "/method", "/about"]) {
     assert.match(navigation[1], new RegExp(`href="${destination}"`), destination);
   }
 

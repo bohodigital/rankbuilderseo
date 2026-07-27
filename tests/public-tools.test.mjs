@@ -326,6 +326,8 @@ test("tool clients keep submitted URLs out of analytics properties and expose ac
   const source = await readFile(new URL("../app/tools/indexability-inspector/inspector-client.tsx", import.meta.url), "utf8")
     + await readFile(new URL("../app/tools/redirect-chain-visualizer/visualizer-client.tsx", import.meta.url), "utf8");
   assert.doesNotMatch(source, /data-umami-event--(?:url|query|report)/);
+  assert.doesNotMatch(source, /(?:url|hostname):\s*(?:url|report|payload)/);
+  assert.match(source, /href="\/tools#acceptable-use"/);
   assert.match(source, /role="status" aria-live="polite"/);
   assert.match(source, /role="alert"/);
   assert.match(source, /tabIndex=\{-1\}/);

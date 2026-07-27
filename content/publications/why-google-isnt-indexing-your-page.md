@@ -165,13 +165,13 @@ Use the observed stage to move into the narrower diagnosis:
 
 | Observed condition | Focused guide |
 | --- | --- |
-| You need to understand the aggregate reason families | [Google Search Console Page Indexing Report](/articles/google-search-console-page-indexing-report/) |
-| Google knows the URL but has not crawled it | [Discovered – Currently Not Indexed](/articles/discovered-currently-not-indexed/) |
-| Google crawled the URL but did not retain it | [Crawled – Currently Not Indexed](/articles/crawled-currently-not-indexed/) |
-| Crawling is blocked by a robots rule | [URL Blocked by Robots.txt](/articles/url-blocked-by-robots-txt/) |
-| A robots directive prohibits indexing | [Excluded by Noindex](/articles/excluded-by-noindex/) |
-| Google selected a different representative URL | [Google Chose a Different Canonical](/articles/google-chose-different-canonical/) |
-| The page is healthy and you need a realistic timing decision | [How Long Does Google Take to Index a Page?](/articles/how-long-google-takes-to-index-page/) |
+| You need to understand the aggregate reason families | [Google Search Console Page Indexing Report](/articles/google-search-console-page-indexing-report) |
+| Google knows the URL but has not crawled it | [Discovered – Currently Not Indexed](/articles/discovered-currently-not-indexed) |
+| Google crawled the URL but did not retain it | [Crawled – Currently Not Indexed](/articles/crawled-currently-not-indexed) |
+| Crawling is blocked by a robots rule | [URL Blocked by Robots.txt](/articles/url-blocked-by-robots-txt) |
+| A robots directive prohibits indexing | [Excluded by Noindex](/articles/excluded-by-noindex) |
+| Google selected a different representative URL | [Google Chose a Different Canonical](/articles/google-chose-different-canonical) |
+| The page is healthy and you need a realistic timing decision | [How Long Does Google Take to Index a Page?](/articles/how-long-google-takes-to-index-page) |
 
 **First: make sure the page is actually missing**
 
@@ -208,7 +208,7 @@ Google describes Search as three broad stages:
 
 Discovery and rendering fit inside that broader process. A URL can be known but not yet crawled. A page can be fetched but render badly. A crawled document can be excluded as a duplicate. An indexed page can fail to rank for the query you care about.
 
-See [Crawling vs. Indexing vs. Ranking](/articles/crawling-vs-indexing-vs-ranking/) for the full distinction.
+See [Crawling vs. Indexing vs. Ranking](/articles/crawling-vs-indexing-vs-ranking) for the full distinction.
 
 ![Flowchart for diagnosing a page missing from Google: verify the exact URL, inspect indexed data, run a live test, check HTTP access, robots and noindex, compare canonicals, verify internal links and sitemap, then evaluate rendering, duplication, and distinct value.](/media/indexing-diagnostic-flow.svg "Indexing diagnosis follows the pipeline. Confirm the URL, compare indexed and live data, verify access and directives, review canonical selection and discovery, then evaluate why a crawled page was not selected.")
 
@@ -312,7 +312,7 @@ Use:
 - `noindex` to prevent indexing while allowing the crawler to read the directive;
 - authentication for genuinely private material.
 
-See [robots.txt](/glossary/robots-txt/) for the control itself.
+See [robots.txt](/glossary/robots-txt) for the control itself.
 
 **Step 6: Is indexing explicitly prohibited?**
 
@@ -355,7 +355,7 @@ If Google selected the wrong canonical, make the signals consistent:
 - remove accidental near-duplicate routes;
 - ensure the preferred page is at least as complete and useful as its alternatives.
 
-See [Canonical URL](/glossary/canonical-url/) for the underlying concept.
+See [Canonical URL](/glossary/canonical-url) for the underlying concept.
 
 **Step 8: Can Google discover the page through crawlable links?**
 
@@ -373,7 +373,7 @@ Check whether:
 
 A sitemap can help Google discover preferred URLs, but it does not replace internal navigation and does not guarantee indexing. Include complete, absolute canonical URLs that you want shown in search. [Build and submit a sitemap](https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap?hl=en)[@google-sitemap]
 
-See [Sitemap](/glossary/xml-sitemap/) for the file’s role.
+See [Sitemap](/glossary/xml-sitemap) for the file’s role.
 
 **Step 9: Was the page discovered but not crawled?**
 
@@ -576,9 +576,9 @@ This guide relies primarily on Google’s current documentation:
 
 ## Related guides
 
-- [Technical SEO Baseline Checklist](/articles/technical-seo-baseline/)
-- [Crawling vs. Indexing vs. Ranking](/articles/crawling-vs-indexing-vs-ranking/)
-- [How to Use Google Search Console URL Inspection](/articles/google-search-console-url-inspection/)
-- [Canonical URL](/glossary/canonical-url/)
-- [robots.txt](/glossary/robots-txt/)
-- [Sitemap](/glossary/xml-sitemap/)
+- [Technical SEO Baseline Checklist](/articles/technical-seo-baseline)
+- [Crawling vs. Indexing vs. Ranking](/articles/crawling-vs-indexing-vs-ranking)
+- [How to Use Google Search Console URL Inspection](/articles/google-search-console-url-inspection)
+- [Canonical URL](/glossary/canonical-url)
+- [robots.txt](/glossary/robots-txt)
+- [Sitemap](/glossary/xml-sitemap)

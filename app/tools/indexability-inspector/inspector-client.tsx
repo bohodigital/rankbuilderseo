@@ -39,6 +39,13 @@ function download(filename: string, content: string, type: string): void {
   URL.revokeObjectURL(link.href);
 }
 
+function trackToolEvent(event: string, data: Record<string, string>): void {
+  const analytics = (window as Window & {
+    umami?: { track(name: string, properties?: Record<string, string>): void };
+  }).umami;
+  analytics?.track(event, data);
+}
+
 export function InspectorClient() {
   const [url, setUrl] = useState("");
   const [report, setReport] = useState<IndexabilityReport | null>(null);
@@ -54,6 +61,8 @@ export function InspectorClient() {
     setBusy(true);
     setError("");
     setReport(null);
+    trackToolEvent("tool-inspection-started", { tool: "indexability-inspector" });
+    let errorTracked = false;
     try {
       const response = await fetch("/api/tools/indexability-inspector", {
         method: "POST",
@@ -62,11 +71,28 @@ export function InspectorClient() {
         signal: controller.current.signal,
       });
       const payload = await response.json() as IndexabilityReport | ToolApiError;
-      if (!response.ok || "error" in payload) throw new Error("error" in payload ? payload.error : "The inspection failed.");
+      if (!response.ok || "error" in payload) {
+        trackToolEvent("tool-inspection-error", {
+          tool: "indexability-inspector",
+          error_class: "code" in payload ? payload.code : `http-${response.status}`,
+        });
+        errorTracked = true;
+        throw new Error("error" in payload ? payload.error : "The inspection failed.");
+      }
       setReport(payload);
+      trackToolEvent("tool-inspection-completed", {
+        tool: "indexability-inspector",
+        result_class: payload.classification,
+      });
       requestAnimationFrame(() => resultHeading.current?.focus());
     } catch (reason) {
       if (reason instanceof DOMException && reason.name === "AbortError") return;
+      if (!errorTracked) {
+        trackToolEvent("tool-inspection-error", {
+          tool: "indexability-inspector",
+          error_class: "network-or-client",
+        });
+      }
       setError(reason instanceof Error ? reason.message : "The inspection failed.");
     } finally {
       setBusy(false);
@@ -102,8 +128,9 @@ export function InspectorClient() {
         required
       />
       <p id="inspector-help">Use a complete public http or https URL. The inspector does not log in, submit forms, execute JavaScript, or impersonate Googlebot.</p>
+      <p>Submit only public URLs you own or are authorized to test. <a href="/tools#acceptable-use">Review acceptable use</a>.</p>
       <div className="tool-actions">
-        <button className="button button-dark" type="submit" disabled={busy} data-umami-event="indexability-inspector-submit">
+        <button className="button button-dark" type="submit" disabled={busy}>
           {busy ? "Inspecting…" : "Inspect URL"}
         </button>
         <button className="button button-ghost" type="button" onClick={clear}>Clear report</button>

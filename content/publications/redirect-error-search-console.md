@@ -180,7 +180,7 @@ Test the source, each important variant, and the final URL. Inspect the final de
 - **A temporary redirect is left indefinitely.** The response no longer describes the intended URL relationship.
 - **All missing URLs go to the homepage.** Relevance is lost and the result may be treated as a soft 404.
 
-If the source cleanly reaches the target and Search Console reports “Page with redirect,” use the [status explainer](/articles/page-with-redirect/) instead. If the final response fails at the server layer, continue with [Server Error 5xx](/articles/server-error-5xx/).
+If the source cleanly reaches the target and Search Console reports “Page with redirect,” use the [status explainer](/articles/page-with-redirect) instead. If the final response fails at the server layer, continue with [Server Error 5xx](/articles/server-error-5xx).
 
 When separate tools disagree, compare the exact requested URL, request time, resolved IP or edge, cache state, and complete response headers. A cached browser redirect, a region-specific edge rule, or a recently deployed application route can each produce a truthful but incomplete observation.
 
@@ -200,4 +200,4 @@ The repair is complete when:
 - representative edge and origin requests agree;
 - the destination passes a current live inspection.
 
-Google’s next report update may lag the live repair. Record the fix time, last crawl time, and exact source so that stale reporting is not mistaken for a new failure. The same evidence also supports the [migration checklist](/articles/seo-migration-launch-checklist/), the [canonical review](/articles/google-chose-different-canonical/), and the broader [indexing diagnostic flow](/articles/why-google-isnt-indexing-your-page/).
+Google’s next report update may lag the live repair. Record the fix time, last crawl time, and exact source so that stale reporting is not mistaken for a new failure. The same evidence also supports the [migration checklist](/articles/seo-migration-launch-checklist), the [canonical review](/articles/google-chose-different-canonical), and the broader [indexing diagnostic flow](/articles/why-google-isnt-indexing-your-page).

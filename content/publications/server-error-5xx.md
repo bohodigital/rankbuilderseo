@@ -182,7 +182,7 @@ Google says `5xx` and `429` responses prompt temporary crawl slowdown. Already i
 - **Search Console is treated as live incident monitoring.** Use production telemetry for immediate response and Search Console for Google-specific evidence.
 - **Logs are retained without privacy boundaries.** Operational evidence should remain bounded and protected.
 
-If Google has delayed crawling after a capacity event, connect this investigation to [Discovered – Currently Not Indexed](/articles/discovered-currently-not-indexed/). If the error occurs in a redirect chain, use the [Redirect Error playbook](/articles/redirect-error-search-console/).
+If Google has delayed crawling after a capacity event, connect this investigation to [Discovered – Currently Not Indexed](/articles/discovered-currently-not-indexed). If the error occurs in a redirect chain, use the [Redirect Error playbook](/articles/redirect-error-search-console).
 
 [Trace the chain when a redirect reaches a failing gateway or origin](/tools/redirect-chain-visualizer/).
 
@@ -204,4 +204,4 @@ Recovery is complete when:
 - the sitemap and internal links name healthy final destinations;
 - monitoring remains in place for recurrence.
 
-Search recovery is a later outcome. Record the incident window and continue monitoring Crawl Stats and the [Page Indexing report](/articles/google-search-console-page-indexing-report/) without promising an exact recrawl or reindex time. The [technical SEO baseline](/articles/technical-seo-baseline/) should keep availability checks in routine release work.
+Search recovery is a later outcome. Record the incident window and continue monitoring Crawl Stats and the [Page Indexing report](/articles/google-search-console-page-indexing-report) without promising an exact recrawl or reindex time. The [technical SEO baseline](/articles/technical-seo-baseline) should keep availability checks in routine release work.

@@ -23,6 +23,15 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const route = publicationRouteBySlug.get(slug);
   const publication = route?.exposure.route === "public" ? route.publication : undefined;
   const canonical = `https://rankbuilderseo.com/articles/${publication?.slug ?? slug}`;
+  const image = publication?.heroImage
+    ? {
+        url: new URL(publication.heroImage.src, canonical).href,
+        width: publication.heroImage.width,
+        height: publication.heroImage.height,
+        alt: publication.heroImage.alt,
+        type: publication.heroImage.mimeType,
+      }
+    : sharedOpenGraph.images[0];
   return publication ? {
     title: publication.title,
     description: publication.description,
@@ -36,12 +45,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       description: publication.description,
       publishedTime: publication.publishedAt,
       modifiedTime: publication.revisedAt,
+      images: [image],
     },
     twitter: {
       card: "summary_large_image",
       title: publication.title,
       description: publication.description,
-      images: ["/og.png"],
+      images: [image.url],
     },
   } : {};
 }

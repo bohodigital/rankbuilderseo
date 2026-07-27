@@ -27,6 +27,13 @@ function plainText(report: RedirectTraceReport): string {
   ].join("\n");
 }
 
+function trackToolEvent(event: string, data: Record<string, string>): void {
+  const analytics = (window as Window & {
+    umami?: { track(name: string, properties?: Record<string, string>): void };
+  }).umami;
+  analytics?.track(event, data);
+}
+
 export function VisualizerClient() {
   const [url, setUrl] = useState("");
   const [report, setReport] = useState<RedirectTraceReport | null>(null);
@@ -42,6 +49,8 @@ export function VisualizerClient() {
     setBusy(true);
     setError("");
     setReport(null);
+    trackToolEvent("tool-inspection-started", { tool: "redirect-chain-visualizer" });
+    let errorTracked = false;
     try {
       const response = await fetch("/api/tools/redirect-chain-visualizer", {
         method: "POST",
@@ -50,11 +59,28 @@ export function VisualizerClient() {
         signal: controller.current.signal,
       });
       const payload = await response.json() as RedirectTraceReport | ToolApiError;
-      if (!response.ok || "error" in payload) throw new Error("error" in payload ? payload.error : "The redirect trace failed.");
+      if (!response.ok || "error" in payload) {
+        trackToolEvent("tool-inspection-error", {
+          tool: "redirect-chain-visualizer",
+          error_class: "code" in payload ? payload.code : `http-${response.status}`,
+        });
+        errorTracked = true;
+        throw new Error("error" in payload ? payload.error : "The redirect trace failed.");
+      }
       setReport(payload);
+      trackToolEvent("tool-inspection-completed", {
+        tool: "redirect-chain-visualizer",
+        result_class: payload.classification,
+      });
       requestAnimationFrame(() => resultHeading.current?.focus());
     } catch (reason) {
       if (reason instanceof DOMException && reason.name === "AbortError") return;
+      if (!errorTracked) {
+        trackToolEvent("tool-inspection-error", {
+          tool: "redirect-chain-visualizer",
+          error_class: "network-or-client",
+        });
+      }
       setError(reason instanceof Error ? reason.message : "The redirect trace failed.");
     } finally {
       setBusy(false);
@@ -90,8 +116,9 @@ export function VisualizerClient() {
         required
       />
       <p>The visualizer follows public HTTP redirects only. It does not execute JavaScript, submit forms, reuse cookies, or authenticate.</p>
+      <p>Submit only public URLs you own or are authorized to test. <a href="/tools#acceptable-use">Review acceptable use</a>.</p>
       <div className="tool-actions">
-        <button className="button button-dark" type="submit" disabled={busy} data-umami-event="redirect-visualizer-submit">
+        <button className="button button-dark" type="submit" disabled={busy}>
           {busy ? "Tracing…" : "Trace redirects"}
         </button>
         <button className="button button-ghost" type="button" onClick={clear}>Clear trace</button>

@@ -135,12 +135,12 @@ export default function RedirectChainVisualizerPage() {
       <section>
         <h2>Related reading</h2>
         <ul>
-          <li><Link href="/articles/page-with-redirect/">Page With Redirect</Link></li>
-          <li><Link href="/articles/redirect-error-search-console/">Redirect Error in Search Console</Link></li>
-          <li><Link href="/articles/google-chose-different-canonical/">Google Chose a Different Canonical</Link></li>
-          <li><Link href="/articles/server-error-5xx/">Server Error 5xx</Link></li>
-          <li><Link href="/articles/cloudflare-pages-workers-seo/">Cloudflare Pages and Workers SEO</Link></li>
-          <li><Link href="/articles/seo-migration-launch-checklist/">SEO Migration Launch Checklist</Link></li>
+          <li><Link href="/articles/page-with-redirect">Page With Redirect</Link></li>
+          <li><Link href="/articles/redirect-error-search-console">Redirect Error in Search Console</Link></li>
+          <li><Link href="/articles/google-chose-different-canonical">Google Chose a Different Canonical</Link></li>
+          <li><Link href="/articles/server-error-5xx">Server Error 5xx</Link></li>
+          <li><Link href="/articles/cloudflare-pages-workers-seo">Cloudflare Pages and Workers SEO</Link></li>
+          <li><Link href="/articles/seo-migration-launch-checklist">SEO Migration Launch Checklist</Link></li>
         </ul>
       </section>
       <p className="tool-disclosure">The Redirect Chain Visualizer inspects public HTTP behavior. It is not a browser emulator, a Search Console replacement, or a guarantee of search-engine canonical selection.</p>

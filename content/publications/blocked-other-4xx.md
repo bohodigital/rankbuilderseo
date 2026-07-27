@@ -114,7 +114,7 @@ Faceted navigation repeatedly appends parameters until the URL returns `414`. St
 
 **Rate limiting**
 
-The WAF returns `429` during traffic spikes. Unlike ordinary client errors, Google treats `429` like a server error that signals overload and can reduce crawling. Review capacity and rate-limit design with the [5xx availability playbook](/articles/server-error-5xx/).
+The WAF returns `429` during traffic spikes. Unlike ordinary client errors, Google treats `429` like a server error that signals overload and can reduce crawling. Review capacity and rate-limit design with the [5xx availability playbook](/articles/server-error-5xx).
 
 **Legal restriction**
 
@@ -155,4 +155,4 @@ Do not convert every `4xx` into `200`. A truthful client error protects the inte
 - Review whether the response is intentional.
 - Retest through the public path and live URL Inspection.
 
-The repair is complete when the response accurately matches the intended resource state and site-controlled discovery no longer points to accidental errors. Use the focused [401](/articles/blocked-unauthorized-request-401/), [403](/articles/blocked-access-forbidden-403/), and [404](/articles/not-found-404/) guides for those states. Use the [Page Indexing report guide](/articles/google-search-console-page-indexing-report/) to evaluate the pattern rather than chasing the raw count.
+The repair is complete when the response accurately matches the intended resource state and site-controlled discovery no longer points to accidental errors. Use the focused [401](/articles/blocked-unauthorized-request-401), [403](/articles/blocked-access-forbidden-403), and [404](/articles/not-found-404) guides for those states. Use the [Page Indexing report guide](/articles/google-search-console-page-indexing-report) to evaluate the pattern rather than chasing the raw count.

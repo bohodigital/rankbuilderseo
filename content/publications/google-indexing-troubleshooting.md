@@ -113,11 +113,11 @@ Use the earliest supported failure:
 | Stage | Evidence | First destination |
 | --- | --- | --- |
 | Unknown or undiscovered | Google has no useful record of the URL | Check links, sitemap inclusion, and publication status. |
-| Discovered, not crawled | Search Console reports “Discovered – currently not indexed” | Read [Discovered – Currently Not Indexed](/articles/discovered-currently-not-indexed/). |
-| Crawled, not indexed | Search Console reports “Crawled – currently not indexed” | Read [Crawled – Currently Not Indexed](/articles/crawled-currently-not-indexed/). |
-| Crawl blocked | Robots or access evidence prevents fetching | Read [URL Blocked by Robots.txt](/articles/url-blocked-by-robots-txt/). |
-| Indexing prohibited | Google detects `noindex` | Read [Excluded by Noindex](/articles/excluded-by-noindex/). |
-| Duplicate or alternate URL | Google selected another canonical | Read [Google Chose a Different Canonical](/articles/google-chose-different-canonical/). |
+| Discovered, not crawled | Search Console reports “Discovered – currently not indexed” | Read [Discovered – Currently Not Indexed](/articles/discovered-currently-not-indexed). |
+| Crawled, not indexed | Search Console reports “Crawled – currently not indexed” | Read [Crawled – Currently Not Indexed](/articles/crawled-currently-not-indexed). |
+| Crawl blocked | Robots or access evidence prevents fetching | Read [URL Blocked by Robots.txt](/articles/url-blocked-by-robots-txt). |
+| Indexing prohibited | Google detects `noindex` | Read [Excluded by Noindex](/articles/excluded-by-noindex). |
+| Duplicate or alternate URL | Google selected another canonical | Read [Google Chose a Different Canonical](/articles/google-chose-different-canonical). |
 | Indexed but absent for a query | URL is indexed, but search visibility is weak | Move to relevance, quality, competition, and internal-link analysis. |
 
 The Page Indexing report groups URLs by broad reasons. Those reasons are triage labels, not always complete root-cause explanations. Use the report to identify patterns and URL Inspection to investigate representative URLs. [Page indexing report](https://support.google.com/webmasters/answer/7440203)[@gsc-page-indexing]

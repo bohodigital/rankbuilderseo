@@ -159,7 +159,7 @@ Use an uncached request, a normal browser, and a current live URL test. URL Insp
 - **Crawler requests receive a different application state.** Bot protection, cookies, geography, or failed APIs can change rendering.
 - **A transient backend failure is treated as permanent removal.** Fix the availability layer before returning a lasting `404` or `410`.
 
-If the page is genuinely gone, follow the [Not Found 404 decision guide](/articles/not-found-404/). If the failure is caused by an unstable backend, continue with [Server Error 5xx](/articles/server-error-5xx/).
+If the page is genuinely gone, follow the [Not Found 404 decision guide](/articles/not-found-404). If the failure is caused by an unstable backend, continue with [Server Error 5xx](/articles/server-error-5xx).
 
 When a live test and ordinary browser disagree, compare the exact rendered main content, resource failures, response time, and cache state. The correct repair follows the resource’s intended state, not whichever tool produced the more convenient label.
 
@@ -179,4 +179,4 @@ The repair is complete when:
 - internal links and sitemaps exclude removed URLs;
 - live URL Inspection shows the intended response and rendered result.
 
-The Page Indexing report may continue showing the earlier classification until Google recrawls the URL. Use the report as inventory, not as an instant deployment monitor. The broader [Page Indexing guide](/articles/google-search-console-page-indexing-report/) and [indexing flow](/articles/why-google-isnt-indexing-your-page/) provide the next diagnostic context.
+The Page Indexing report may continue showing the earlier classification until Google recrawls the URL. Use the report as inventory, not as an instant deployment monitor. The broader [Page Indexing guide](/articles/google-search-console-page-indexing-report) and [indexing flow](/articles/why-google-isnt-indexing-your-page) provide the next diagnostic context.

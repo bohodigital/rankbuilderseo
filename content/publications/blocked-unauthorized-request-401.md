@@ -157,7 +157,7 @@ Test signed out, through the public edge, and with URL Inspection. Compare index
 - **Authentication redirects to a `200` login page.** The indexing symptom may become a soft 404 or irrelevant indexed page.
 - **A public page embeds private API content.** The shell loads, but the main content fails for unauthenticated users and crawlers.
 
-Use the [403 playbook](/articles/blocked-access-forbidden-403/) when the request reaches the server but a firewall or rule refuses it without an authentication challenge. Use [Excluded by Noindex](/articles/excluded-by-noindex/) for a public page that may be crawled but should not appear in search.
+Use the [403 playbook](/articles/blocked-access-forbidden-403) when the request reaches the server but a firewall or rule refuses it without an authentication challenge. Use [Excluded by Noindex](/articles/excluded-by-noindex) for a public page that may be crawled but should not appear in search.
 
 Resolve contradictory evidence by testing the same public URL with and without a session at the same time. Match both requests to the edge, proxy, and application logs so that a cached success, silent login redirect, or inherited staging rule is not mistaken for the current unauthenticated state.
 
@@ -182,4 +182,4 @@ For a public page:
 - live URL Inspection can fetch the page;
 - internal links and the sitemap use the public canonical URL.
 
-The [Other 4xx explainer](/articles/blocked-other-4xx/) covers adjacent client-error states, while the [Page Indexing report guide](/articles/google-search-console-page-indexing-report/) helps separate isolated examples from a shared access pattern.
+The [Other 4xx explainer](/articles/blocked-other-4xx) covers adjacent client-error states, while the [Page Indexing report guide](/articles/google-search-console-page-indexing-report) helps separate isolated examples from a shared access pattern.

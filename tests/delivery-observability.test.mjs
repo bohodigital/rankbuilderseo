@@ -107,11 +107,24 @@ test("analytics events remain sparse, named, and free of page copy or query data
     "related-article-click",
     "correction-path-click",
     "correction-email-click",
-    "indexability-inspector-submit",
     "indexability-inspector-export",
-    "redirect-visualizer-submit",
     "redirect-visualizer-export",
   ]));
+  for (const event of [
+    "tool-inspection-started",
+    "tool-inspection-completed",
+    "tool-inspection-error",
+  ]) {
+    assert.match(joined, new RegExp(`trackToolEvent\\("${event}"`), event);
+  }
+  assert.match(joined, /result_class:/);
+  assert.match(joined, /error_class:/);
+  const trackingCalls = [...joined.matchAll(/trackToolEvent\("[^"]+"[\s\S]*?\n\s*\}\);/g)]
+    .map((match) => match[0]);
+  assert.ok(trackingCalls.length >= 6);
+  for (const call of trackingCalls) {
+    assert.doesNotMatch(call, /\b(?:url|hostname)\s*:/);
+  }
   assert.equal(/scroll-depth|search-query|article-title/.test(joined), false);
 });
 
@@ -122,6 +135,7 @@ test("measured prefetch policy preserves primary defaults and disables low-prior
   assert.match(source, /className="header-link" href="\/about" prefetch=\{false\}/);
   assert.match(source, /href="\/privacy" prefetch=\{false\}/);
   assert.match(source, /<NavigationLink href="\/articles" onClick=\{closeMenu\}>/);
+  assert.match(source, /<NavigationLink href="\/tools" onClick=\{closeMenu\}>/);
 });
 
 test("publication eligibility uses the injected build clock instead of Worker startup time", async () => {

@@ -33,6 +33,38 @@ export function websiteStructuredData(): JsonRecord {
   };
 }
 
+export function toolsCollectionStructuredData(): JsonRecord {
+  const url = `${origin}/tools`;
+  return {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": `${url}#collection`,
+    name: "Free SEO inspection tools",
+    description:
+      "Bounded public utilities for inspecting indexability signals and HTTP redirect paths.",
+    url,
+    inLanguage: "en",
+    isPartOf: { "@id": `${origin}/#website` },
+    publisher: { "@id": organizationId },
+    hasPart: [
+      {
+        "@type": "WebApplication",
+        name: "Indexability Inspector",
+        url: `${origin}/tools/indexability-inspector/`,
+        applicationCategory: "BusinessApplication",
+        operatingSystem: "Web",
+      },
+      {
+        "@type": "WebApplication",
+        name: "Redirect Chain Visualizer",
+        url: `${origin}/tools/redirect-chain-visualizer/`,
+        applicationCategory: "BusinessApplication",
+        operatingSystem: "Web",
+      },
+    ],
+  };
+}
+
 function breadcrumbs(items: Array<{ name: string; url: string }>): JsonRecord {
   return {
     "@type": "BreadcrumbList",
@@ -47,6 +79,9 @@ function breadcrumbs(items: Array<{ name: string; url: string }>): JsonRecord {
 
 export function articleStructuredData(publication: Publication): JsonRecord {
   const url = `${origin}/articles/${publication.slug}`;
+  const image = publication.heroImage
+    ? new URL(publication.heroImage.src, origin).href
+    : `${origin}/og.png`;
   return {
     "@context": "https://schema.org",
     "@graph": [
@@ -58,7 +93,7 @@ export function articleStructuredData(publication: Publication): JsonRecord {
         datePublished: publication.publishedAt,
         dateModified: publication.revisedAt,
         url,
-        image: `${origin}/og.png`,
+        image,
         inLanguage: "en",
         isAccessibleForFree: true,
         wordCount: publication.wordCount,

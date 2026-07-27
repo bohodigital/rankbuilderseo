@@ -97,7 +97,7 @@ export default function Home() {
           <div className="evidence-tool-grid">
             <Link href="/tools/indexability-inspector/"><span>Tool</span><h3>Indexability Inspector</h3><p>Inspect status, directives, robots access, canonicals, and returned HTML.</p></Link>
             <Link href="/tools/redirect-chain-visualizer/"><span>Tool</span><h3>Redirect Chain Visualizer</h3><p>Trace each public HTTP hop and inspect the final destination.</p></Link>
-            <Link href="/articles/google-indexing-time-study-methodology/"><span>Research</span><h3>Indexing Time Study</h3><p>Read the registered method and current cohort baseline.</p></Link>
+            <Link href="/articles/google-indexing-time-study-methodology"><span>Research</span><h3>Indexing Time Study</h3><p>Read the registered method and current cohort baseline.</p></Link>
           </div>
         </section>
 

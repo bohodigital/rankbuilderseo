@@ -96,6 +96,7 @@ export type Publication = LifecycleRecord & {
   readingMinutes: number;
   readTime: string;
   readTimeOverrideMinutes?: number;
+  heroImage?: MediaRecord;
   sourceFile: string;
 };
 
@@ -415,6 +416,9 @@ function parsePublicationSource(source: string, sourceFile: string, options: Pub
   const citationMode = oneOf(metadata.citationMode, citationModes, `${sourceFile}.citationMode`);
   validateCitationUsage(publicationCitations, document, citationMode, sourceFile);
   validateDocumentMedia(document, options.media, sourceFile, lifecycle.state);
+  const heroImage = document.figures.length > 0
+    ? options.media.find((item) => item.src === document.figures[0].src)
+    : undefined;
   const directAnswer = requiredString(metadata.directAnswer, `${sourceFile}.directAnswer`);
   const takeaways = stringList(metadata.takeaways, `${sourceFile}.takeaways`);
   const claimLimits = stringList(metadata.claimLimits, `${sourceFile}.claimLimits`);
@@ -445,6 +449,7 @@ function parsePublicationSource(source: string, sourceFile: string, options: Pub
     relatedContent: stringList(metadata.relatedContent, `${sourceFile}.relatedContent`, true),
     document,
     sections: document.sections,
+    ...(heroImage ? { heroImage } : {}),
     ...metrics,
     ...lifecycle,
     sourceFile,
@@ -630,8 +635,13 @@ const staticContentRoutes = new Set([
   "/lab",
   "/method",
   "/privacy",
+  "/tools",
   "/tools/indexability-inspector",
   "/tools/redirect-chain-visualizer",
+]);
+const canonicalTrailingSlashRoutes = new Set([
+  "/tools/indexability-inspector/",
+  "/tools/redirect-chain-visualizer/",
 ]);
 
 function linkTargets(nodes: readonly InlineNode[]): string[] {
@@ -660,6 +670,10 @@ export function validateInternalRoutes(
   for (const publication of publications) {
     for (const href of documentLinkTargets(publication.document)) {
       if (!href.startsWith("/") || href.startsWith("/media/")) continue;
+      const [rawPath] = href.split("#", 1);
+      if (rawPath !== "/" && rawPath.endsWith("/") && !canonicalTrailingSlashRoutes.has(rawPath)) {
+        fail(publication.sourceFile, `noncanonical trailing slash in internal route: ${href}`);
+      }
       const path = href.split("#", 1)[0].replace(/\/+$/, "") || "/";
       if (staticContentRoutes.has(path)) continue;
       const articleSlug = path.match(/^\/articles\/([a-z0-9-]+)$/)?.[1];

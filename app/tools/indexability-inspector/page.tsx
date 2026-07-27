@@ -139,12 +139,12 @@ export default function IndexabilityInspectorPage() {
       <section>
         <h2>Related reading</h2>
         <ul>
-          <li><Link href="/articles/why-google-isnt-indexing-your-page/">Why Google Isn&apos;t Indexing Your Page</Link></li>
-          <li><Link href="/articles/excluded-by-noindex/">Excluded by Noindex</Link></li>
-          <li><Link href="/articles/url-blocked-by-robots-txt/">URL Blocked by Robots.txt</Link></li>
-          <li><Link href="/articles/google-chose-different-canonical/">Google Chose a Different Canonical</Link></li>
-          <li><Link href="/articles/google-search-console-url-inspection/">Google Search Console URL Inspection</Link></li>
-          <li><Link href="/articles/rendered-html-missing-content/">Rendered HTML Missing Content</Link></li>
+          <li><Link href="/articles/why-google-isnt-indexing-your-page">Why Google Isn&apos;t Indexing Your Page</Link></li>
+          <li><Link href="/articles/excluded-by-noindex">Excluded by Noindex</Link></li>
+          <li><Link href="/articles/url-blocked-by-robots-txt">URL Blocked by Robots.txt</Link></li>
+          <li><Link href="/articles/google-chose-different-canonical">Google Chose a Different Canonical</Link></li>
+          <li><Link href="/articles/google-search-console-url-inspection">Google Search Console URL Inspection</Link></li>
+          <li><Link href="/articles/rendered-html-missing-content">Rendered HTML Missing Content</Link></li>
         </ul>
       </section>
       <p className="tool-disclosure">The Indexability Inspector reports observable public signals. It is not affiliated with Google and does not access Google&apos;s private index or Search Console data.</p>

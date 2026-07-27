@@ -69,7 +69,7 @@
 
 ## Definition
 
-![Row of identical doors along a brick building facade](/media/alternate-page-proper-canonical-tag-hero.jpg "An alternate URL can remain accessible while one representative URL is selected for the duplicate group.")
+![Historic building framed through a stone doorway](/media/alternate-page-proper-canonical-tag-hero.jpg "An alternate URL can remain accessible while one representative URL is selected for the duplicate group.")
 
 “Alternate page with proper canonical tag” means Google considers the inspected URL an alternate version of another page and agrees that another URL should represent the group.
 
@@ -169,7 +169,7 @@ To support separate indexing:
 
 **Google selected an unexpected canonical**
 
-If URL Inspection shows a different canonical than the tag declares, move to [Google Chose a Different Canonical](/articles/google-chose-different-canonical/). That is a different diagnosis.
+If URL Inspection shows a different canonical than the tag declares, move to [Google Chose a Different Canonical](/articles/google-chose-different-canonical). That is a different diagnosis.
 
 The “proper canonical tag” status generally indicates agreement. “Google chose a different canonical than user” indicates disagreement.
 

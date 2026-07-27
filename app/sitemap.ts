@@ -11,6 +11,7 @@ const staticPaths = [
   "/lab",
   "/method",
   "/privacy",
+  "/tools",
 ];
 const toolPaths = [
   "/tools/indexability-inspector/",

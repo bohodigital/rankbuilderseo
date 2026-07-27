@@ -364,7 +364,7 @@ Ranking for one query is not an index test.
 
 ## Related guides
 
-- [Why Google Isn’t Indexing Your Page](/articles/why-google-isnt-indexing-your-page/)
-- [How to Use Google Search Console URL Inspection](/articles/google-search-console-url-inspection/)
-- [Technical SEO Baseline Checklist](/articles/technical-seo-baseline/)
-- [Canonical URL](/glossary/canonical-url/)
+- [Why Google Isn’t Indexing Your Page](/articles/why-google-isnt-indexing-your-page)
+- [How to Use Google Search Console URL Inspection](/articles/google-search-console-url-inspection)
+- [Technical SEO Baseline Checklist](/articles/technical-seo-baseline)
+- [Canonical URL](/glossary/canonical-url)

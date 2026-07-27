@@ -106,7 +106,7 @@ A discontinued event page has no successor, no useful historical content, and no
 
 **Broken internal route**
 
-A card template generates `/products/blue-widget/`, but the real route is `/product/blue-widget/`. Repair the template, not each rendered card. The [template-level internal-links audit](/articles/internal-links-audit-by-template/) is the scalable approach.
+A card template generates `/products/blue-widget/`, but the real route is `/product/blue-widget/`. Repair the template, not each rendered card. The [template-level internal-links audit](/articles/internal-links-audit-by-template) is the scalable approach.
 
 **Removed URL still in the sitemap**
 
@@ -114,7 +114,7 @@ The `404` is intentional, but the sitemap keeps asking Google to crawl it. Remov
 
 **Custom page with the wrong status**
 
-The page says “not found” but returns `200`. That is a [soft 404](/articles/soft-404/), not a real 404. Configure the server or routing layer to preserve the missing status while rendering the helpful interface.
+The page says “not found” but returns `200`. That is a [soft 404](/articles/soft-404), not a real 404. Configure the server or routing layer to preserve the missing status while rendering the helpful interface.
 
 ## Boundaries
 
@@ -155,4 +155,4 @@ Do not redirect every missing URL to the homepage. The homepage rarely answers t
 - Important external-link destinations were reviewed for a real replacement.
 - The source and destination are checked separately after any redirect.
 
-Search Console may retain a recent 404 example while Google recrawls and updates its reporting. That is not evidence that the correct response failed. Use the [Page Indexing report](/articles/google-search-console-page-indexing-report/) to distinguish expected exclusions from site-controlled defects, and the [migration checklist](/articles/seo-migration-launch-checklist/) when URL changes happen at scale.
+Search Console may retain a recent 404 example while Google recrawls and updates its reporting. That is not evidence that the correct response failed. Use the [Page Indexing report](/articles/google-search-console-page-indexing-report) to distinguish expected exclusions from site-controlled defects, and the [migration checklist](/articles/seo-migration-launch-checklist) when URL changes happen at scale.

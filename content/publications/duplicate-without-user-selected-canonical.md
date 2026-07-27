@@ -220,4 +220,4 @@ The diagnosis is complete when you can identify:
 - which signals currently support each URL;
 - whether a redirect, canonical annotation, internal-link cleanup, sitemap cleanup, or content separation is the appropriate response.
 
-If Google selected the wrong URL despite a declared preference, continue with [Google Chose a Different Canonical](/articles/google-chose-different-canonical/). If no preference existed and Google’s choice is reasonable, the status may require no urgent repair.
+If Google selected the wrong URL despite a declared preference, continue with [Google Chose a Different Canonical](/articles/google-chose-different-canonical). If no preference existed and Google’s choice is reasonable, the status may require no urgent repair.
