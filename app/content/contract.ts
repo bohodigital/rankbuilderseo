@@ -38,6 +38,7 @@ export type MediaRecord = {
   caption: string;
   credit: string;
   sourceUrl?: string;
+  reuseExemption?: string;
   width: number;
   height: number;
   mimeType: MediaMimeType;
@@ -222,6 +223,9 @@ export function parseMediaRegistry(source: string): MediaRecord[] {
     if (mimeForSource(src) !== mimeType) fail(`${label}.mimeType`, `does not match ${src}`);
     const rights = oneOf(item.rights, mediaRights, `${label}.rights`);
     const sourceUrl = item.sourceUrl === undefined ? undefined : httpsUrl(item.sourceUrl, `${label}.sourceUrl`);
+    const reuseExemption = item.reuseExemption === undefined
+      ? undefined
+      : requiredString(item.reuseExemption, `${label}.reuseExemption`);
     if (item.templateOnly !== undefined && typeof item.templateOnly !== "boolean") {
       fail(`${label}.templateOnly`, "must be a boolean when declared");
     }
@@ -233,6 +237,7 @@ export function parseMediaRegistry(source: string): MediaRecord[] {
       caption: requiredString(item.caption, `${label}.caption`),
       credit: requiredString(item.credit, `${label}.credit`),
       ...(sourceUrl ? { sourceUrl } : {}),
+      ...(reuseExemption ? { reuseExemption } : {}),
       width: integer(item.width, `${label}.width`, 1, 4000),
       height: integer(item.height, `${label}.height`, 1, 4000),
       mimeType,

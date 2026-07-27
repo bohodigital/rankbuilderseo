@@ -62,6 +62,7 @@ export async function scaffoldPublication({ format, slug, title, dryRun = false 
     media: await readFile(new URL("content/media.json", root), "utf8"),
     glossary: await readFile(new URL("content/glossary.md", root), "utf8"),
     experiments: await readFile(new URL("content/experiments.md", root), "utf8"),
+    topics: await readFile(new URL("content/topics.json", root), "utf8"),
   });
 
   if (!dryRun) await writeFile(outputUrl, source, { encoding: "utf8", flag: "wx" });

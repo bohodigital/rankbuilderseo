@@ -61,6 +61,7 @@ export function SiteHeader() {
           className={`primary-nav${menuOpen ? " is-open" : ""}`}
           aria-label="Primary navigation"
         >
+          <NavigationLink href="/topics" onClick={closeMenu}>Topics</NavigationLink>
           <NavigationLink href="/articles" onClick={closeMenu}>Articles</NavigationLink>
           <NavigationLink href="/tools" onClick={closeMenu}>Tools</NavigationLink>
           <NavigationLink href="/glossary" onClick={closeMenu}>Glossary</NavigationLink>
@@ -83,7 +84,7 @@ export function SiteFooter() {
           <h2>Useful SEO answers, on repeat.</h2>
         </div>
         <div className="footer-nav">
-          <div><span>Read</span><Link href="/articles" prefetch={false}>Articles</Link><Link href="/tools" prefetch={false}>Tools</Link><Link href="/glossary" prefetch={false}>Glossary</Link><Link href="/lab" prefetch={false}>Experiment lab</Link></div>
+          <div><span>Read</span><Link href="/topics" prefetch={false}>Topics</Link><Link href="/articles" prefetch={false}>Articles</Link><Link href="/tools" prefetch={false}>Tools</Link><Link href="/glossary" prefetch={false}>Glossary</Link><Link href="/lab" prefetch={false}>Experiment lab</Link></div>
           <div><span>Trust</span><Link href="/method" prefetch={false}>Research method</Link><Link href="/about" prefetch={false}>About</Link><Link href="/about#corrections" prefetch={false}>Corrections</Link><Link href="/privacy" prefetch={false}>Privacy</Link></div>
         </div>
       </div>

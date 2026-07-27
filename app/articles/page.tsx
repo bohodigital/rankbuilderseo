@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { publications } from "../content/publications";
 import { sharedOpenGraph } from "../metadata";
 import { SiteFooter, SiteHeader } from "../site-chrome";
+import { topicByPublicationSlug, topics } from "../content/topics";
 import { ArticleExplorer } from "./article-explorer";
 
 export const metadata: Metadata = {
@@ -19,7 +20,10 @@ export const metadata: Metadata = {
 
 export default function ArticlesPage() {
   const categories = new Set(publications.map((article) => article.category)).size;
-  const series = new Set(publications.map((article) => article.series)).size;
+  const topicAssignments = Object.fromEntries(publications.map((article) => [
+    article.slug,
+    topicByPublicationSlug.get(article.slug)?.slug ?? "",
+  ]));
   return <><SiteHeader /><main id="main-content">
     <section className="page-hero article-archive-hero shell">
       <p className="eyebrow">The article desk / Updated continuously</p>
@@ -27,11 +31,11 @@ export default function ArticlesPage() {
       <p>Every article follows the same durable structure: a direct answer, visible evidence level, practical takeaways, claim limits, and a reviewed date.</p>
       <dl className="archive-stats">
         <div><dt>Published</dt><dd>{String(publications.length).padStart(2, "0")}</dd></div>
+        <div><dt>Topics</dt><dd>{String(topics.length).padStart(2, "0")}</dd></div>
         <div><dt>Categories</dt><dd>{String(categories).padStart(2, "0")}</dd></div>
-        <div><dt>Series</dt><dd>{String(series).padStart(2, "0")}</dd></div>
         <div><dt>Template</dt><dd>01</dd></div>
       </dl>
     </section>
-    <section className="section shell"><ArticleExplorer articles={publications} /></section>
+    <section className="section shell"><ArticleExplorer articles={publications} topics={topics} topicAssignments={topicAssignments} /></section>
   </main><SiteFooter /></>;
 }

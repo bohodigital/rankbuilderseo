@@ -149,6 +149,7 @@
       "caption": "Redirect errors become understandable when every hop is recorded rather than hidden behind the final browser location.",
       "credit": "Photo by Jakub Żerdzicki on Unsplash",
       "sourceUrl": "https://unsplash.com/photos/aerial-view-of-a-highway-interchange-with-cars-glnxs44jWSc",
+      "reuseExemption": "The public redirect-chain tool deliberately shares the source photograph with the closely related redirect-error article; the local crops and destinations are distinct.",
       "width": 1200,
       "height": 630,
       "mimeType": "image/jpeg",

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { experiments } from "./content/experiments";
 import { glossary } from "./content/glossary";
 import { publications } from "./content/publications";
+import { topics } from "./content/topics";
 import { SiteFooter, SiteHeader } from "./site-chrome";
 
 export default function Home() {
@@ -42,13 +43,34 @@ export default function Home() {
           </div>
         </section>
 
+        <section className="section shell home-topics">
+          <div className="section-heading split-heading">
+            <div>
+              <p className="eyebrow">Browse by topic / {String(topics.length).padStart(2, "0")} controlled paths</p>
+              <h2>Start with the problem.<br />Follow the evidence.</h2>
+            </div>
+            <p>Each topic provides a start-here sequence and the complete primary article inventory assigned to it.</p>
+          </div>
+          <div className="topic-card-grid">
+            {topics.map((topic) => (
+              <Link className="topic-card" href={`/topics/${topic.slug}`} key={topic.slug}>
+                <span>{String(topic.displayOrder).padStart(2, "0")}</span>
+                <h3>{topic.title}</h3>
+                <p>{topic.description}</p>
+                <b>Explore this topic →</b>
+              </Link>
+            ))}
+          </div>
+          <div className="center-action"><Link className="button button-ghost" href="/topics">Browse all topics <span>→</span></Link></div>
+        </section>
+
         <section className="section shell">
           <div className="section-heading split-heading">
             <div>
               <p className="eyebrow">Latest articles / {String(publications.length).padStart(2, "0")} published</p>
               <h2>Fresh answers.<br />Same high bar.</h2>
             </div>
-            <p>Every story is part of a durable category and series, making the archive easier to grow, browse, update, and trust.</p>
+            <p>Every article belongs to one controlled primary topic while its existing category and series remain visible as secondary metadata.</p>
           </div>
 
           <div className="feature-grid">
@@ -95,8 +117,8 @@ export default function Home() {
             <p>Use the public tools to check observable page and redirect signals, then compare the result with Rank Builder&apos;s documented indexing research.</p>
           </div>
           <div className="evidence-tool-grid">
-            <Link href="/tools/indexability-inspector/"><span>Tool</span><h3>Indexability Inspector</h3><p>Inspect status, directives, robots access, canonicals, and returned HTML.</p></Link>
-            <Link href="/tools/redirect-chain-visualizer/"><span>Tool</span><h3>Redirect Chain Visualizer</h3><p>Trace each public HTTP hop and inspect the final destination.</p></Link>
+            <Link href="/tools/indexability-inspector"><span>Tool</span><h3>Indexability Inspector</h3><p>Inspect status, directives, robots access, canonicals, and returned HTML.</p></Link>
+            <Link href="/tools/redirect-chain-visualizer"><span>Tool</span><h3>Redirect Chain Visualizer</h3><p>Trace each public HTTP hop and inspect the final destination.</p></Link>
             <Link href="/articles/google-indexing-time-study-methodology"><span>Research</span><h3>Indexing Time Study</h3><p>Read the registered method and current cohort baseline.</p></Link>
           </div>
         </section>

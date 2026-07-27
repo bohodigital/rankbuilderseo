@@ -8,6 +8,7 @@ import { articleStructuredData, serializeStructuredData } from "../../content/st
 import { stableEntries } from "../../content/stable-keys";
 import { sharedOpenGraph } from "../../metadata";
 import { SiteFooter, SiteHeader } from "../../site-chrome";
+import { topicByPublicationSlug } from "../../content/topics";
 import { ArticleContent } from "../article-content";
 
 function sectionNumber(index: number): string {
@@ -62,6 +63,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
   if (!route) notFound();
   if (route.exposure.route === "redirect") redirect(route.exposure.redirectTo!);
   const publication = route.publication;
+  const topic = topicByPublicationSlug.get(publication.slug);
   const related = publication.relatedContent
     .map((relatedSlug) => publicationBySlug.get(relatedSlug))
     .filter((item): item is Publication => Boolean(item));
@@ -81,10 +83,10 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
     <article className="article-shell shell">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: serializeStructuredData(articleStructuredData(publication)) }}
+        dangerouslySetInnerHTML={{ __html: serializeStructuredData(articleStructuredData(publication, topic)) }}
       />
       <nav className="breadcrumbs" aria-label="Breadcrumb">
-        <Link href="/">Home</Link><span aria-hidden="true">/</span><Link href="/articles">Articles</Link><span aria-hidden="true">/</span><span aria-current="page">{publication.title}</span>
+        <Link href="/">Home</Link><span aria-hidden="true">/</span><Link href="/topics">Topics</Link>{topic && <><span aria-hidden="true">/</span><Link href={`/topics/${topic.slug}`}>{topic.title}</Link></>}<span aria-hidden="true">/</span><span aria-current="page">{publication.title}</span>
       </nav>
       <header className="article-header">
         <p className="eyebrow">{publication.category} / {publication.format}</p>
@@ -101,6 +103,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
       <div className="article-layout">
         <aside className="article-rail">
           <p>Article record</p>
+          {topic && <div className="rail-record"><span>Primary topic</span><b><Link href={`/topics/${topic.slug}`}>{topic.title}</Link></b></div>}
           <div className="rail-record"><span>Series</span><b>{publication.series}</b></div>
           <div className="rail-record"><span>Evidence</span><b>{publication.evidenceLevel}</b></div>
           <div className="rail-record"><span>For</span><b>{publication.audience}</b></div>

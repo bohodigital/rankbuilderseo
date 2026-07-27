@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { glossary } from "./content/glossary";
 import { sitemapPublications } from "./content/publications";
+import { topics } from "./content/topics";
 
 const origin = "https://rankbuilderseo.com";
 const staticPaths = [
@@ -12,10 +13,11 @@ const staticPaths = [
   "/method",
   "/privacy",
   "/tools",
+  "/topics",
 ];
 const toolPaths = [
-  "/tools/indexability-inspector/",
-  "/tools/redirect-chain-visualizer/",
+  "/tools/indexability-inspector",
+  "/tools/redirect-chain-visualizer",
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -41,5 +43,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: "monthly" as const,
     priority: 0.8,
   }));
-  return [...staticEntries, ...toolEntries, ...publicationEntries, ...glossaryEntries];
+  const topicEntries = topics.map((topic) => ({
+    url: `${origin}/topics/${topic.slug}`,
+    changeFrequency: "monthly" as const,
+    priority: 0.8,
+  }));
+  return [...staticEntries, ...topicEntries, ...toolEntries, ...publicationEntries, ...glossaryEntries];
 }

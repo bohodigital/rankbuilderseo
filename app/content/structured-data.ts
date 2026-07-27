@@ -1,4 +1,4 @@
-import type { GlossaryEntry, Publication } from "./registry";
+import type { GlossaryEntry, Publication, Topic } from "./registry";
 
 const origin = "https://rankbuilderseo.com";
 const organizationId = `${origin}/#organization`;
@@ -50,18 +50,69 @@ export function toolsCollectionStructuredData(): JsonRecord {
       {
         "@type": "WebApplication",
         name: "Indexability Inspector",
-        url: `${origin}/tools/indexability-inspector/`,
+        url: `${origin}/tools/indexability-inspector`,
         applicationCategory: "BusinessApplication",
         operatingSystem: "Web",
       },
       {
         "@type": "WebApplication",
         name: "Redirect Chain Visualizer",
-        url: `${origin}/tools/redirect-chain-visualizer/`,
+        url: `${origin}/tools/redirect-chain-visualizer`,
         applicationCategory: "BusinessApplication",
         operatingSystem: "Web",
       },
     ],
+  };
+}
+
+export function topicStructuredData(topic: Topic, publications: readonly Publication[]): JsonRecord {
+  const url = `${origin}/topics/${topic.slug}`;
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        "@id": `${url}#collection`,
+        name: topic.title,
+        description: topic.description,
+        url,
+        inLanguage: "en",
+        isPartOf: { "@id": `${origin}/#website` },
+        publisher: { "@id": organizationId },
+        hasPart: publications.map((publication) => ({
+          "@type": "Article",
+          name: publication.title,
+          description: publication.description,
+          url: `${origin}/articles/${publication.slug}`,
+        })),
+      },
+      breadcrumbs([
+        { name: "Home", url: `${origin}/` },
+        { name: "Topics", url: `${origin}/topics` },
+        { name: topic.title, url },
+      ]),
+    ],
+  };
+}
+
+export function topicsIndexStructuredData(topics: readonly Topic[]): JsonRecord {
+  const url = `${origin}/topics`;
+  return {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": `${url}#collection`,
+    name: "SEO topics",
+    description: "Seven controlled paths through Rank Builder's articles, tools, glossary, and research.",
+    url,
+    inLanguage: "en",
+    isPartOf: { "@id": `${origin}/#website` },
+    publisher: { "@id": organizationId },
+    hasPart: topics.map((topic) => ({
+      "@type": "CollectionPage",
+      name: topic.title,
+      description: topic.description,
+      url: `${origin}/topics/${topic.slug}`,
+    })),
   };
 }
 
@@ -77,7 +128,7 @@ function breadcrumbs(items: Array<{ name: string; url: string }>): JsonRecord {
   };
 }
 
-export function articleStructuredData(publication: Publication): JsonRecord {
+export function articleStructuredData(publication: Publication, topic?: Topic): JsonRecord {
   const url = `${origin}/articles/${publication.slug}`;
   const image = publication.heroImage
     ? new URL(publication.heroImage.src, origin).href
@@ -112,7 +163,12 @@ export function articleStructuredData(publication: Publication): JsonRecord {
         articleSection: publication.category,
         ...(publication.citations.length > 0 ? { citation: publication.citations.map(({ url: citationUrl }) => citationUrl) } : {}),
       },
-      breadcrumbs([
+      breadcrumbs(topic ? [
+        { name: "Home", url: `${origin}/` },
+        { name: "Topics", url: `${origin}/topics` },
+        { name: topic.title, url: `${origin}/topics/${topic.slug}` },
+        { name: publication.title, url },
+      ] : [
         { name: "Home", url: `${origin}/` },
         { name: "Articles", url: `${origin}/articles` },
         { name: publication.title, url },

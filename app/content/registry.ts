@@ -133,6 +133,19 @@ export type Experiment = {
   relatedPublications: string[];
 };
 
+export type Topic = {
+  slug: string;
+  title: string;
+  description: string;
+  startHere: string[];
+  primaryPublications: string[];
+  secondaryPublications: string[];
+  relatedTools: string[];
+  relatedRoutes: string[];
+  relatedGlossary: string[];
+  displayOrder: number;
+};
+
 type UnknownRecord = Record<string, unknown>;
 
 function fail(label: string, message: string): never {
@@ -416,8 +429,11 @@ function parsePublicationSource(source: string, sourceFile: string, options: Pub
   const citationMode = oneOf(metadata.citationMode, citationModes, `${sourceFile}.citationMode`);
   validateCitationUsage(publicationCitations, document, citationMode, sourceFile);
   validateDocumentMedia(document, options.media, sourceFile, lifecycle.state);
-  const heroImage = document.figures.length > 0
+  const firstFigure = document.figures[0]
     ? options.media.find((item) => item.src === document.figures[0].src)
+    : undefined;
+  const heroImage = firstFigure?.width === 1200 && firstFigure.height === 630
+    ? firstFigure
     : undefined;
   const directAnswer = requiredString(metadata.directAnswer, `${sourceFile}.directAnswer`);
   const takeaways = stringList(metadata.takeaways, `${sourceFile}.takeaways`);
@@ -639,11 +655,6 @@ const staticContentRoutes = new Set([
   "/tools/indexability-inspector",
   "/tools/redirect-chain-visualizer",
 ]);
-const canonicalTrailingSlashRoutes = new Set([
-  "/tools/indexability-inspector/",
-  "/tools/redirect-chain-visualizer/",
-]);
-
 function linkTargets(nodes: readonly InlineNode[]): string[] {
   return nodes.flatMap((node) => {
     if (node.type === "link") return [node.href, ...linkTargets(node.children)];
@@ -652,13 +663,121 @@ function linkTargets(nodes: readonly InlineNode[]): string[] {
   });
 }
 
-function documentLinkTargets(document: SafeMarkdownDocument): string[] {
+export function documentLinkTargets(document: SafeMarkdownDocument): string[] {
   return document.blocks.flatMap((block) => {
     if (block.type === "heading" || block.type === "paragraph" || block.type === "blockquote") return linkTargets(block.children);
     if (block.type === "list") return block.items.flatMap(linkTargets);
     if (block.type === "table") return [...block.header, ...block.rows.flat()].flatMap(linkTargets);
     return [];
   });
+}
+
+const topicToolRoutes = new Set([
+  "/tools/indexability-inspector",
+  "/tools/redirect-chain-visualizer",
+]);
+const topicRelatedRoutes = new Set(["/lab"]);
+
+function optionalSlugList(value: unknown, label: string): string[] {
+  return value === undefined ? [] : stringList(value, label, true)
+    .map((item, index) => slugValue(item, `${label}[${index}]`));
+}
+
+function optionalRouteList(value: unknown, label: string, allowed: ReadonlySet<string>): string[] {
+  if (value === undefined) return [];
+  const routes = stringList(value, label, true);
+  for (const route of routes) {
+    if (!allowed.has(route)) fail(label, `unknown or noncanonical route: ${route}`);
+  }
+  return routes;
+}
+
+export function parseTopicRegistrySource(
+  source: string,
+  publications: readonly Publication[],
+  glossary: readonly GlossaryEntry[],
+  at = new Date(),
+): Topic[] {
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(source);
+  } catch (error) {
+    fail("content/topics.json", `is not valid JSON (${error instanceof Error ? error.message : "unknown error"})`);
+  }
+  if (!Array.isArray(parsed)) fail("content/topics.json", "must be an array");
+
+  const publicationBySlug = new Map(publications.map((publication) => [publication.slug, publication]));
+  const publicSlugs = new Set(publications
+    .filter((publication) => publicationExposure(publication, at).route === "public")
+    .map((publication) => publication.slug));
+  const archivedSlugs = new Set(publications
+    .filter((publication) => publication.state === "archived")
+    .map((publication) => publication.slug));
+  const glossarySlugs = new Set(glossary.map((entry) => entry.slug));
+  const topicSlugs = new Set<string>();
+  const displayOrders = new Set<number>();
+  const primaryOwners = new Map<string, string>();
+
+  const topics = parsed.map((raw, index) => {
+    const label = `content/topics.json[${index}]`;
+    const item = object(raw, label);
+    const slug = slugValue(item.slug, `${label}.slug`);
+    if (topicSlugs.has(slug)) fail("content/topics.json", `duplicate topic slug: ${slug}`);
+    topicSlugs.add(slug);
+    const displayOrder = item.displayOrder;
+    if (!Number.isInteger(displayOrder) || Number(displayOrder) < 1) fail(`${label}.displayOrder`, "must be a positive integer");
+    if (displayOrders.has(Number(displayOrder))) fail("content/topics.json", `duplicate displayOrder: ${displayOrder}`);
+    displayOrders.add(Number(displayOrder));
+
+    const startHere = optionalSlugList(item.startHere, `${label}.startHere`);
+    const primaryPublications = optionalSlugList(item.primaryPublications, `${label}.primaryPublications`);
+    const secondaryPublications = optionalSlugList(item.secondaryPublications, `${label}.secondaryPublications`);
+    const relatedGlossary = optionalSlugList(item.relatedGlossary, `${label}.relatedGlossary`);
+    const topicPublicationSlugs = new Set([...primaryPublications, ...secondaryPublications]);
+
+    if (startHere.length === 0) fail(label, "requires at least one startHere publication");
+    if (topicPublicationSlugs.size < 3) fail(label, "requires at least three public publications");
+    if (topicPublicationSlugs.size !== primaryPublications.length + secondaryPublications.length) {
+      fail(label, "cannot repeat a publication within one topic");
+    }
+    for (const publicationSlug of topicPublicationSlugs) {
+      if (!publicationBySlug.has(publicationSlug)) fail(label, `unknown publication: ${publicationSlug}`);
+      if (!publicSlugs.has(publicationSlug)) fail(label, `publication is not public: ${publicationSlug}`);
+      if (archivedSlugs.has(publicationSlug)) fail(label, `archived publication cannot belong to a topic: ${publicationSlug}`);
+    }
+    for (const publicationSlug of startHere) {
+      if (!topicPublicationSlugs.has(publicationSlug)) fail(label, `startHere publication does not belong to this topic: ${publicationSlug}`);
+    }
+    for (const publicationSlug of primaryPublications) {
+      const existingOwner = primaryOwners.get(publicationSlug);
+      if (existingOwner) fail("content/topics.json", `primary publication ${publicationSlug} belongs to both ${existingOwner} and ${slug}`);
+      primaryOwners.set(publicationSlug, slug);
+    }
+    for (const glossarySlug of relatedGlossary) {
+      if (!glossarySlugs.has(glossarySlug)) fail(label, `unknown glossary term: ${glossarySlug}`);
+    }
+
+    return {
+      slug,
+      title: requiredString(item.title, `${label}.title`),
+      description: requiredString(item.description, `${label}.description`),
+      startHere,
+      primaryPublications,
+      secondaryPublications,
+      relatedTools: optionalRouteList(item.relatedTools, `${label}.relatedTools`, topicToolRoutes),
+      relatedRoutes: optionalRouteList(item.relatedRoutes, `${label}.relatedRoutes`, topicRelatedRoutes),
+      relatedGlossary,
+      displayOrder: Number(displayOrder),
+    };
+  });
+
+  for (const publicationSlug of publicSlugs) {
+    if (!primaryOwners.has(publicationSlug)) fail("content/topics.json", `public publication has no primary topic: ${publicationSlug}`);
+  }
+  for (const publicationSlug of primaryOwners.keys()) {
+    if (!publicSlugs.has(publicationSlug)) fail("content/topics.json", `nonpublic publication has a primary topic: ${publicationSlug}`);
+  }
+  return topics.sort((left, right) => left.displayOrder - right.displayOrder);
 }
 
 export function validateInternalRoutes(
@@ -671,7 +790,7 @@ export function validateInternalRoutes(
     for (const href of documentLinkTargets(publication.document)) {
       if (!href.startsWith("/") || href.startsWith("/media/")) continue;
       const [rawPath] = href.split("#", 1);
-      if (rawPath !== "/" && rawPath.endsWith("/") && !canonicalTrailingSlashRoutes.has(rawPath)) {
+      if (rawPath !== "/" && rawPath.endsWith("/")) {
         fail(publication.sourceFile, `noncanonical trailing slash in internal route: ${href}`);
       }
       const path = href.split("#", 1)[0].replace(/\/+$/, "") || "/";
@@ -691,6 +810,7 @@ export type RegistryBundleSources = {
   media: string;
   glossary: string;
   experiments: string;
+  topics: string;
 };
 
 export function loadCompleteContentRegistry(sources: RegistryBundleSources, now = new Date()) {
@@ -700,6 +820,7 @@ export function loadCompleteContentRegistry(sources: RegistryBundleSources, now 
   const publications = loadPublicationRegistry(sources.publications, { registries, media, now, relationshipWarnings: warnings });
   const glossary = parseGlossaryRegistrySource(sources.glossary, registries);
   const experiments = parseExperimentRegistrySource(sources.experiments, publications);
+  const topics = parseTopicRegistrySource(sources.topics, publications, glossary, now);
   validateCompleteContentRegistry(publications, glossary, warnings, now);
-  return { registries, media, publications, glossary, experiments, warnings: [...new Set(warnings)] };
+  return { registries, media, publications, glossary, experiments, topics, warnings: [...new Set(warnings)] };
 }

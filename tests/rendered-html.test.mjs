@@ -161,12 +161,12 @@ test("renders the production homepage with metadata and analytics", async () => 
   assert.equal(response.headers.get("x-frame-options"), "DENY");
   assert.equal(response.headers.get("x-robots-tag"), null);
   assert.equal(response.headers.get("cache-control"), "public, max-age=0, must-revalidate");
-  assert.equal(response.headers.get("content-security-policy"), null);
-  const reportOnlyCsp = response.headers.get("content-security-policy-report-only") ?? "";
-  assert.match(reportOnlyCsp, /default-src 'self'/);
-  assert.match(reportOnlyCsp, /script-src[^;]*analytics\.bohodigitalservices\.com/);
-  assert.match(reportOnlyCsp, /connect-src[^;]*analytics\.bohodigitalservices\.com/);
-  assert.match(reportOnlyCsp, /frame-ancestors 'none'/);
+  const enforcedCsp = response.headers.get("content-security-policy") ?? "";
+  assert.equal(response.headers.get("content-security-policy-report-only"), null);
+  assert.match(enforcedCsp, /default-src 'self'/);
+  assert.match(enforcedCsp, /script-src[^;]*analytics\.bohodigitalservices\.com/);
+  assert.match(enforcedCsp, /connect-src[^;]*analytics\.bohodigitalservices\.com/);
+  assert.match(enforcedCsp, /frame-ancestors 'none'/);
 
   const html = await response.text();
   assert.match(html, /<title>Rank Builder SEO/i);
@@ -337,8 +337,10 @@ test("serves the representative route matrix and a real 404", async () => {
     "/method",
     "/privacy",
     "/tools",
-    "/tools/indexability-inspector/",
-    "/tools/redirect-chain-visualizer/",
+    "/topics",
+    "/topics/google-indexing-search-console",
+    "/tools/indexability-inspector",
+    "/tools/redirect-chain-visualizer",
   ];
 
   for (const path of expected) {
@@ -358,8 +360,8 @@ test("serves the representative route matrix and a real 404", async () => {
 
 test("publishes both tools with canonical WebApplication structured data", async () => {
   const tools = [
-    "/tools/indexability-inspector/",
-    "/tools/redirect-chain-visualizer/",
+    "/tools/indexability-inspector",
+    "/tools/redirect-chain-visualizer",
   ];
   const sitemapText = await request("/sitemap.xml", "application/xml").then(
     (response) => response.text(),
@@ -395,6 +397,19 @@ test("publishes both tools with canonical WebApplication structured data", async
   assert.doesNotMatch(sitemapText, /\/api\/tools\//);
 });
 
+test("redirects slash-bearing tool variants once to slashless canonical routes", async () => {
+  for (const canonical of [
+    "/tools/indexability-inspector",
+    "/tools/redirect-chain-visualizer",
+  ]) {
+    const response = await request(`${canonical}/`);
+    assert.equal(response.status, 301, canonical);
+    assert.equal(response.headers.get("location"), `https://rankbuilderseo.com${canonical}`, canonical);
+    const destination = await request(canonical);
+    assert.equal(destination.status, 200, canonical);
+  }
+});
+
 test("publishes an indexable Tools collection and stable parent navigation", async () => {
   const response = await request("/tools");
   assert.equal(response.status, 200);
@@ -404,8 +419,8 @@ test("publishes an indexable Tools collection and stable parent navigation", asy
     ["https://rankbuilderseo.com/tools"],
   );
   for (const destination of [
-    "/tools/indexability-inspector/",
-    "/tools/redirect-chain-visualizer/",
+    "/tools/indexability-inspector",
+    "/tools/redirect-chain-visualizer",
     "/privacy",
   ]) {
     assert.match(html, new RegExp(`href="${destination.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}"`), destination);
@@ -454,7 +469,7 @@ test("publishes only canonical 200 self-canonicalizing URLs in crawler endpoints
   assert.match(feedText, /<summary type="text">[^<]+<\/summary>/);
 
   const sitemapUrls = extractAll(sitemapText, /<loc>([^<]+)<\/loc>/g);
-  assert.equal(sitemapUrls.length, articleSlugs.length + 22);
+  assert.equal(sitemapUrls.length, articleSlugs.length + 30);
   assert.equal(new Set(sitemapUrls).size, sitemapUrls.length);
 
   const pageTitles = new Set();
@@ -470,14 +485,14 @@ test("publishes only canonical 200 self-canonicalizing URLs in crawler endpoints
     const openGraphUrls = extractAll(html, /<meta[^>]+property="og:url"[^>]+content="([^"]+)"[^>]*>/gi);
     assert.deepEqual(openGraphUrls, [sitemapUrl], sitemapUrl);
     const openGraphImages = extractAll(html, /<meta[^>]+property="og:image"[^>]+content="([^"]+)"[^>]*>/gi);
-    const expectedOpenGraphImage = url.pathname === "/tools/indexability-inspector/"
+    const expectedOpenGraphImage = url.pathname === "/tools/indexability-inspector"
       ? "https://rankbuilderseo.com/media/indexability-inspector-hero.jpg"
-      : url.pathname === "/tools/redirect-chain-visualizer/"
+      : url.pathname === "/tools/redirect-chain-visualizer"
         ? "https://rankbuilderseo.com/media/redirect-chain-visualizer-hero.jpg"
         : url.pathname.startsWith("/articles/")
           ? (() => {
               const figureSource = html.match(/<figure[^>]*>\s*<img[^>]+src="([^"]+)"/i)?.[1];
-              if (!figureSource) return "https://rankbuilderseo.com/og.png";
+              if (!figureSource || figureSource.includes("indexing-diagnostic-flow.svg")) return "https://rankbuilderseo.com/og.png";
               const renderedImage = new URL(
                 figureSource.replaceAll("&amp;", "&"),
                 "https://rankbuilderseo.com",
@@ -551,6 +566,32 @@ test("keeps Organization, Article, and Breadcrumb data aligned with canonical re
     const openGraphImage = extractAll(html, /<meta[^>]+property="og:image"[^>]+content="([^"]+)"[^>]*>/gi)[0];
     assert.equal(article?.image, openGraphImage, slug);
     assert.equal(breadcrumbs?.itemListElement.at(-1).item, `https://rankbuilderseo.com/articles/${slug}`, slug);
+  }
+});
+
+test("aligns modern hero and legacy fallback images across Open Graph, Twitter, and Article data", async () => {
+  const cases = [
+    {
+      route: "/articles/server-error-5xx",
+      image: "https://rankbuilderseo.com/media/server-error-5xx-hero.jpg",
+    },
+    {
+      route: "/articles/how-to-read-an-seo-audit",
+      image: "https://rankbuilderseo.com/og.png",
+    },
+  ];
+  for (const { route, image } of cases) {
+    const response = await request(route);
+    const html = await response.text();
+    assert.equal(response.status, 200, route);
+    assert.deepEqual(extractAll(html, /<meta[^>]+property="og:image"[^>]+content="([^"]+)"[^>]*>/gi), [image], route);
+    assert.deepEqual(extractAll(html, /<meta[^>]+property="og:image:width"[^>]+content="([^"]+)"[^>]*>/gi), ["1200"], route);
+    assert.deepEqual(extractAll(html, /<meta[^>]+property="og:image:height"[^>]+content="([^"]+)"[^>]*>/gi), ["630"], route);
+    assert.deepEqual(extractAll(html, /<meta[^>]+name="twitter:image"[^>]+content="([^"]+)"[^>]*>/gi), [image], route);
+    const schemas = extractAll(html, /<script[^>]+type="application\/ld\+json"[^>]*>(.*?)<\/script>/gis).map(JSON.parse);
+    const article = schemas.find((schema) => Array.isArray(schema["@graph"]))?.["@graph"]
+      ?.find((schema) => schema["@type"] === "Article");
+    assert.equal(article?.image, image, route);
   }
 });
 
@@ -637,7 +678,7 @@ test("emits scoped Pages X-Robots-Tag detach rules for static preview assets", a
 
 test("keeps the editorial interface calm, accessible, and motion-safe", async () => {
   const css = await readFile(new URL("app/globals.css", root), "utf8");
-  const editorial = css.split("/* Editorial simplification:")[1] ?? "";
+  const editorial = css.split("/* Effective visual contract:")[1] ?? "";
   assert.match(editorial, /--signal: #8d3c32|color: var\(--signal\)/);
   assert.match(editorial, /a:focus-visible, button:focus-visible/);
   assert.match(editorial, /\.ticker-track \{[^}]*animation: none/);

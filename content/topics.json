@@ -1,0 +1,173 @@
+[
+  {
+    "slug": "google-indexing-search-console",
+    "title": "Google Indexing and Search Console",
+    "description": "Diagnose discovery, crawling, indexing, reporting, robots, sitemaps, and realistic processing timelines using evidence from the exact URL and the wider site.",
+    "startHere": [
+      "why-google-isnt-indexing-your-page",
+      "google-search-console-url-inspection",
+      "google-search-console-page-indexing-report"
+    ],
+    "primaryPublications": [
+      "crawl-budget-when-it-matters",
+      "crawled-currently-not-indexed",
+      "crawling-vs-indexing-vs-ranking",
+      "discovered-currently-not-indexed",
+      "excluded-by-noindex",
+      "google-search-console-page-indexing-report",
+      "google-search-console-url-inspection",
+      "how-long-google-takes-to-index-page",
+      "indexed-though-blocked-by-robots-txt",
+      "internal-links-audit-by-template",
+      "internal-links-vs-xml-sitemaps",
+      "page-indexing-report-not-updating",
+      "site-search-not-complete-index-checker",
+      "sitemap-could-not-be-read",
+      "technical-seo-baseline",
+      "url-blocked-by-robots-txt",
+      "why-google-isnt-indexing-your-page",
+      "why-request-indexing-is-not-working"
+    ],
+    "relatedTools": [
+      "/tools/indexability-inspector"
+    ],
+    "displayOrder": 1
+  },
+  {
+    "slug": "http-errors-redirects",
+    "title": "HTTP Errors and Redirects",
+    "description": "Trace status codes and redirect paths from the first request to the final response, then repair the layer actually producing the failure.",
+    "startHere": [
+      "redirect-error-search-console",
+      "server-error-5xx",
+      "not-found-404"
+    ],
+    "primaryPublications": [
+      "blocked-access-forbidden-403",
+      "blocked-other-4xx",
+      "blocked-unauthorized-request-401",
+      "not-found-404",
+      "page-with-redirect",
+      "redirect-error-search-console",
+      "seo-migration-launch-checklist",
+      "server-error-5xx",
+      "soft-404"
+    ],
+    "relatedTools": [
+      "/tools/redirect-chain-visualizer"
+    ],
+    "displayOrder": 2
+  },
+  {
+    "slug": "canonicals-duplicate-urls",
+    "title": "Canonicals and Duplicate URLs",
+    "description": "Understand duplicate clusters, declared preferences, Google-selected representatives, and the signals that make canonical strategy coherent.",
+    "startHere": [
+      "google-chose-different-canonical",
+      "alternate-page-proper-canonical-tag",
+      "duplicate-without-user-selected-canonical"
+    ],
+    "primaryPublications": [
+      "alternate-page-proper-canonical-tag",
+      "canonical-tags-when-they-work",
+      "duplicate-without-user-selected-canonical",
+      "google-chose-different-canonical"
+    ],
+    "secondaryPublications": [
+      "shopify-canonical-urls-products-collections-variants",
+      "seo-migration-launch-checklist"
+    ],
+    "displayOrder": 3
+  },
+  {
+    "slug": "javascript-rendering",
+    "title": "JavaScript and Rendering",
+    "description": "Make important content, links, metadata, and paginated inventory survive crawling, rendering, and client-side application behavior.",
+    "startHere": [
+      "javascript-seo-crawling-rendering-indexing",
+      "rendered-html-missing-content",
+      "infinite-scroll-pagination-seo"
+    ],
+    "primaryPublications": [
+      "infinite-scroll-pagination-seo",
+      "javascript-seo-crawling-rendering-indexing",
+      "rendered-html-missing-content"
+    ],
+    "secondaryPublications": [
+      "nextjs-page-visible-browser-missing-google",
+      "soft-404"
+    ],
+    "displayOrder": 4
+  },
+  {
+    "slug": "platform-seo",
+    "title": "Platform SEO",
+    "description": "Apply the same technical principles inside WordPress, Shopify, Next.js, and Cloudflare without mistaking framework defaults for search guarantees.",
+    "startHere": [
+      "wordpress-site-accidentally-noindexed",
+      "shopify-canonical-urls-products-collections-variants",
+      "nextjs-page-visible-browser-missing-google",
+      "cloudflare-pages-workers-seo"
+    ],
+    "primaryPublications": [
+      "cloudflare-pages-workers-seo",
+      "nextjs-page-visible-browser-missing-google",
+      "shopify-canonical-urls-products-collections-variants",
+      "wordpress-site-accidentally-noindexed"
+    ],
+    "secondaryPublications": [
+      "excluded-by-noindex",
+      "google-chose-different-canonical",
+      "page-with-redirect",
+      "rendered-html-missing-content"
+    ],
+    "displayOrder": 5
+  },
+  {
+    "slug": "measurement-research",
+    "title": "SEO Measurement and Research",
+    "description": "Interpret Search Console, analytics, traffic studies, and controlled observations without turning incomplete data into confident folklore.",
+    "startHere": [
+      "search-console-is-not-analytics",
+      "google-indexing-time-study-methodology",
+      "google-indexing-time-study-baseline"
+    ],
+    "primaryPublications": [
+      "ai-overviews-traffic-claims",
+      "google-indexing-time-study-baseline",
+      "google-indexing-time-study-methodology",
+      "search-console-is-not-analytics",
+      "zero-click-search-study-notes"
+    ],
+    "secondaryPublications": [
+      "what-an-seo-report-should-answer",
+      "page-indexing-report-not-updating"
+    ],
+    "relatedRoutes": [
+      "/lab"
+    ],
+    "displayOrder": 6
+  },
+  {
+    "slug": "buying-evaluating-seo",
+    "title": "Buying and Evaluating SEO",
+    "description": "Evaluate audits, reports, guarantees, pricing, and providers by the evidence they expose and the decisions they help a business make.",
+    "startHere": [
+      "how-to-read-an-seo-audit",
+      "ranking-guarantees",
+      "seo-pricing-without-fairy-tales"
+    ],
+    "primaryPublications": [
+      "how-to-read-an-seo-audit",
+      "local-seo-provider-scorecard",
+      "ranking-guarantees",
+      "seo-pricing-without-fairy-tales",
+      "what-an-seo-report-should-answer"
+    ],
+    "secondaryPublications": [
+      "search-console-is-not-analytics",
+      "technical-seo-baseline"
+    ],
+    "displayOrder": 7
+  }
+]
