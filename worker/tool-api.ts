@@ -215,7 +215,6 @@ async function performTrace(
         signal: AbortSignal.timeout(remaining),
         headers: {
           Accept: "text/html,application/xhtml+xml,text/plain;q=0.8,*/*;q=0.2",
-          "User-Agent": "RankBuilderInspector/1.0 (+https://rankbuilderseo.com/tools/)",
         },
       });
     } catch (error) {
