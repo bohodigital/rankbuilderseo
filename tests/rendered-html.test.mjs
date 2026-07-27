@@ -397,16 +397,20 @@ test("publishes both tools with canonical WebApplication structured data", async
   assert.doesNotMatch(sitemapText, /\/api\/tools\//);
 });
 
-test("redirects slash-bearing tool variants once to slashless canonical routes", async () => {
+test("serves legacy slash-bearing tool variants with slashless canonicals", async () => {
   for (const canonical of [
     "/tools/indexability-inspector",
     "/tools/redirect-chain-visualizer",
   ]) {
     const response = await request(`${canonical}/`);
-    assert.equal(response.status, 301, canonical);
-    assert.equal(response.headers.get("location"), `https://rankbuilderseo.com${canonical}`, canonical);
-    const destination = await request(canonical);
-    assert.equal(destination.status, 200, canonical);
+    assert.equal(response.status, 200, canonical);
+    assert.equal(response.headers.get("location"), null, canonical);
+    const html = await response.text();
+    assert.deepEqual(
+      extractAll(html, /<link[^>]+rel="canonical"[^>]+href="([^"]+)"[^>]*>/gi),
+      [`https://rankbuilderseo.com${canonical}`],
+      canonical,
+    );
   }
 });
 

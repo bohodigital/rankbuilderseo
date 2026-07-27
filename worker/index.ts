@@ -69,11 +69,14 @@ const worker = {
       return redirectToCanonical(canonicalToolPath);
     }
 
-    if (canonicalToolPath !== url.pathname) {
-      return redirectToCanonical(canonicalToolPath);
-    }
+    // The site previously emitted permanent slashless -> slash redirects for
+    // tool pages. Serve the legacy slash-bearing path through the canonical
+    // route so browsers with that cached redirect can recover without a loop.
+    const appRequest = canonicalToolPath === url.pathname
+      ? request
+      : new Request(new URL(canonicalToolPath + url.search, request.url), request);
 
-    const toolResponse = await handleToolApi(request, env);
+    const toolResponse = await handleToolApi(appRequest, env);
     if (toolResponse) return applyResponsePolicies(request, toolResponse, {
       isPreviewDeployment: isPagesDeploymentHost,
     });
@@ -103,7 +106,7 @@ const worker = {
 
     return applyResponsePolicies(
       request,
-      await handler.fetch(request, env, ctx),
+      await handler.fetch(appRequest, env, ctx),
       {
         noindexHtml: isPagesDeploymentHost,
         isPreviewDeployment: isPagesDeploymentHost,
