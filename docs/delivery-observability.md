@@ -98,9 +98,16 @@ automation flag suppress analytics during controlled QA.
 
 ## CSP and security headers
 
-Content Security Policy remains Content-Security-Policy-Report-Only. There is no reporting collector in this release. Violations are inspected manually in browser console/network evidence during release audits. The policy includes form-action, frame-src, manifest-src, worker-src, and media-src boundaries, but it is not enforced.
+Content Security Policy is enforced with `Content-Security-Policy` on static Pages
+responses and Worker responses. The allowlist covers the application, inline
+Vinext hydration and structured data, first-party Umami, the bounded Google tag,
+and the image/connect destinations those analytics paths require. There is no
+reporting collector; violations are inspected manually in browser console and
+network evidence during release audits.
 
-Do not add Content-Security-Policy enforcement until production navigation, hydration, analytics, images, previews, error pages, and correction paths have completed a separately approved observation period without material violations. public/_headers and worker/response-policy.ts must remain in exact tested parity. No secrets belong in source, logs, analytics properties, or reports.
+`public/_headers` and `worker/response-policy.ts` must remain in exact tested
+parity. Any new third-party origin requires a separately reviewed policy change.
+No secrets belong in source, logs, analytics properties, or reports.
 
 ## External account owner actions
 
