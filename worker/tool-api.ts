@@ -124,7 +124,7 @@ export async function dohResolver(hostname: string, signal: AbortSignal): Promis
 }
 
 const productionDependencies: ToolFetchDependencies = {
-  fetcher: fetch,
+  fetcher: (input, init) => fetch(input, init),
   resolver: dohResolver,
   now: Date.now,
 };
