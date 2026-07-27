@@ -22,8 +22,8 @@ export default function LabPage() {
     <section className="section shell lab-assets">
       <div className="section-heading split-heading"><div><p className="eyebrow">Tools and indexing research</p><h2>Inspect the evidence.</h2></div><p>Use bounded public tools, then compare what they can observe with the registered indexing study and its explicit evidence gates.</p></div>
       <div className="lab-asset-grid">
-        <Link href="/tools/indexability-inspector/"><span>Public tool</span><h2>Indexability Inspector</h2><p>Check public status, robots, noindex, canonical annotations, and returned HTML signals.</p></Link>
-        <Link href="/tools/redirect-chain-visualizer/"><span>Public tool</span><h2>Redirect Chain Visualizer</h2><p>Trace every HTTP hop and expose loops, protocol changes, and broken destinations.</p></Link>
+        <Link href="/tools/indexability-inspector"><span>Public tool</span><h2>Indexability Inspector</h2><p>Check public status, robots, noindex, canonical annotations, and returned HTML signals.</p></Link>
+        <Link href="/tools/redirect-chain-visualizer"><span>Public tool</span><h2>Redirect Chain Visualizer</h2><p>Trace every HTTP hop and expose loops, protocol changes, and broken destinations.</p></Link>
         <Link href="/articles/google-indexing-time-study-methodology"><span>Research method</span><h2>Indexing Time Study Methodology</h2><p>See the registered event definitions, observation schedule, and reporting gates.</p></Link>
         <Link href="/articles/google-indexing-time-study-baseline"><span>Research baseline</span><h2>First Cohort Baseline</h2><p>Review the 31-URL cohort and why no duration estimate is available yet.</p></Link>
       </div>

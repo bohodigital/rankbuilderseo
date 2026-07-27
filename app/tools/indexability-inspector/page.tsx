@@ -5,7 +5,7 @@ import { sharedOpenGraph } from "../../metadata";
 import { SiteFooter, SiteHeader } from "../../site-chrome";
 import { InspectorClient } from "./inspector-client";
 
-const canonical = "https://rankbuilderseo.com/tools/indexability-inspector/";
+const canonical = "https://rankbuilderseo.com/tools/indexability-inspector";
 const description = "Inspect a public URL's HTTP response, redirect destination, robots.txt access, robots directives, canonical annotations, content type, and basic HTML signals without storing the submitted URL.";
 
 export const metadata: Metadata = {

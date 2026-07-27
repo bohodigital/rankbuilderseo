@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { serializeStructuredData, toolsCollectionStructuredData } from "../content/structured-data";
+import { toolRecords } from "../content/tool-records";
 import { sharedOpenGraph } from "../metadata";
 import { SiteFooter, SiteHeader } from "../site-chrome";
 
@@ -42,16 +43,11 @@ export default function ToolsPage() {
         <section className="section shell">
           <p className="eyebrow">Choose a tool</p>
           <div className="related-grid">
-            <Link href="/tools/indexability-inspector/">
-              <span>Public signal check</span>
-              <h2>Indexability Inspector</h2>
-              <p>Review status, robots access, directives, canonicals, and returned HTML signals.</p>
-            </Link>
-            <Link href="/tools/redirect-chain-visualizer/">
-              <span>Bounded redirect trace</span>
-              <h2>Redirect Chain Visualizer</h2>
-              <p>Follow public HTTP redirects and expose intermediate hops, loops, and failed destinations.</p>
-            </Link>
+            {toolRecords.map((tool) => <Link href={tool.href} key={tool.href}>
+              <span>{tool.label}</span>
+              <h2>{tool.name}</h2>
+              <p>{tool.description}</p>
+            </Link>)}
           </div>
         </section>
         <section className="section shell prose-page" id="privacy-and-security">

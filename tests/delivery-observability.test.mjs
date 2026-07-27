@@ -19,32 +19,32 @@ function globalStaticHeaders(source) {
   return headers;
 }
 
-test("static and Worker security headers stay in exact report-only parity", async () => {
+test("static and Worker security headers stay in exact enforced parity", async () => {
   const staticHeaders = globalStaticHeaders(await readFile(new URL("public/_headers", root), "utf8"));
   const { "Cache-Control": defaultCache, ...staticSecurityHeaders } = staticHeaders;
   assert.equal(defaultCache, cachePolicies.htmlAndRsc);
   assert.deepEqual(staticSecurityHeaders, securityHeaders);
-  assert.equal("Content-Security-Policy" in staticHeaders, false);
-  assert.match(staticHeaders["Content-Security-Policy-Report-Only"], /form-action 'self'/);
-  assert.match(staticHeaders["Content-Security-Policy-Report-Only"], /frame-src 'none'/);
-  assert.match(staticHeaders["Content-Security-Policy-Report-Only"], /manifest-src 'self'/);
+  assert.equal("Content-Security-Policy-Report-Only" in staticHeaders, false);
+  assert.match(staticHeaders["Content-Security-Policy"], /form-action 'self'/);
+  assert.match(staticHeaders["Content-Security-Policy"], /frame-src 'none'/);
+  assert.match(staticHeaders["Content-Security-Policy"], /manifest-src 'self'/);
   assert.match(
-    staticHeaders["Content-Security-Policy-Report-Only"],
+    staticHeaders["Content-Security-Policy"],
     /script-src[^;]*https:\/\/www\.googletagmanager\.com/,
   );
   assert.match(
-    staticHeaders["Content-Security-Policy-Report-Only"],
+    staticHeaders["Content-Security-Policy"],
     /connect-src[^;]*https:\/\/www\.google-analytics\.com[^;]*https:\/\/region1\.google-analytics\.com/,
   );
   assert.match(
-    staticHeaders["Content-Security-Policy-Report-Only"],
+    staticHeaders["Content-Security-Policy"],
     /img-src[^;]*https:\/\/www\.google-analytics\.com[^;]*https:\/\/region1\.google-analytics\.com/,
   );
   assert.doesNotMatch(
-    staticHeaders["Content-Security-Policy-Report-Only"],
+    staticHeaders["Content-Security-Policy"],
     /googleadservices|doubleclick|googlesyndication|\*\.google/i,
   );
-  assert.equal(/report-uri|report-to/.test(staticHeaders["Content-Security-Policy-Report-Only"]), false);
+  assert.equal(/report-uri|report-to/.test(staticHeaders["Content-Security-Policy"]), false);
 });
 
 test("cache policy distinguishes HTML, RSC, immutable assets, durable icons, discovery, and previews", () => {
@@ -60,7 +60,7 @@ test("cache policy distinguishes HTML, RSC, immutable assets, durable icons, dis
   assert.equal(cachePolicyForResponse(new Request("https://preview.rankbuilderseo.pages.dev/media/diagram.svg"), new Response("svg"), true), cachePolicies.preview);
 });
 
-test("preview HTML is no-store and noindex while CSP remains report-only", () => {
+test("preview HTML is no-store and noindex while CSP remains enforced", () => {
   const response = applyResponsePolicies(
     new Request("https://preview.rankbuilderseo.pages.dev/articles"),
     new Response("<!doctype html>", { headers: { "Content-Type": "text/html" } }),
@@ -68,8 +68,8 @@ test("preview HTML is no-store and noindex while CSP remains report-only", () =>
   );
   assert.equal(response.headers.get("Cache-Control"), cachePolicies.preview);
   assert.equal(response.headers.get("X-Robots-Tag"), "noindex");
-  assert.ok(response.headers.get("Content-Security-Policy-Report-Only"));
-  assert.equal(response.headers.has("Content-Security-Policy"), false);
+  assert.ok(response.headers.get("Content-Security-Policy"));
+  assert.equal(response.headers.has("Content-Security-Policy-Report-Only"), false);
 });
 
 test("Atom feed emits canonical escaped records with publication and revision dates", () => {

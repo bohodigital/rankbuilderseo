@@ -119,7 +119,7 @@ For an indexing diagnosis:
 
 Google describes URL Inspection as the tool for seeing indexed information about one URL, testing a live version, viewing rendered output, learning the selected canonical, and requesting indexing. [URL Inspection Tool](https://support.google.com/webmasters/answer/9012289?hl=en-FM)[@gsc-url-inspection]
 
-For a public, non-Google inspection of response status, directives, and declared canonical signals, use the [Indexability Inspector](/tools/indexability-inspector/).
+For a public, non-Google inspection of response status, directives, and declared canonical signals, use the [Indexability Inspector](/tools/indexability-inspector).
 
 ## Inspect the exact URL
 

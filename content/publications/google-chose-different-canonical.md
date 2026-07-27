@@ -233,7 +233,7 @@ Pointing canonicals to a broken or prohibited page invites Google to choose anot
 
 The matrix reveals disagreement that is easy to miss when inspecting one tag at a time.
 
-Use the [Indexability Inspector to compare the public canonical annotations and final response](/tools/indexability-inspector/).
+Use the [Indexability Inspector to compare the public canonical annotations and final response](/tools/indexability-inspector).
 
 | Situation | Why Google may choose differently | Appropriate response |
 | --- | --- | --- |

@@ -129,7 +129,7 @@ A crawler-specific directive can override a generic expectation for that crawler
 
 Inspect the final public HTML, not only a source template in the repository. A CMS, plugin, deployment environment, or JavaScript process may alter the output.
 
-Run the [Indexability Inspector to check the final HTML and X-Robots-Tag together](/tools/indexability-inspector/).
+Run the [Indexability Inspector to check the final HTML and X-Robots-Tag together](/tools/indexability-inspector).
 
 3. **Inspect HTTP response headers.**
 

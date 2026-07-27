@@ -60,12 +60,17 @@ const worker = {
       return redirectToCanonical(historicalGuideTarget);
     }
 
+    const canonicalToolPath = url.pathname.endsWith("/")
+      && toolPagePaths.has(url.pathname.slice(0, -1))
+      ? url.pathname.slice(0, -1)
+      : url.pathname;
+
     if (url.hostname === "www.rankbuilderseo.com" || url.hostname === productionPagesHost) {
-      return redirectToCanonical(url.pathname);
+      return redirectToCanonical(canonicalToolPath);
     }
 
-    if (toolPagePaths.has(url.pathname)) {
-      return redirectToCanonical(`${url.pathname}/`);
+    if (canonicalToolPath !== url.pathname) {
+      return redirectToCanonical(canonicalToolPath);
     }
 
     const toolResponse = await handleToolApi(request, env);
@@ -96,17 +101,9 @@ const worker = {
       });
     }
 
-    const appRequest = url.pathname.endsWith("/")
-      && toolPagePaths.has(url.pathname.slice(0, -1))
-      ? new Request(
-          new URL(`${url.pathname.slice(0, -1)}${url.search}`, request.url),
-          request,
-        )
-      : request;
-
     return applyResponsePolicies(
       request,
-      await handler.fetch(appRequest, env, ctx),
+      await handler.fetch(request, env, ctx),
       {
         noindexHtml: isPagesDeploymentHost,
         isPreviewDeployment: isPagesDeploymentHost,

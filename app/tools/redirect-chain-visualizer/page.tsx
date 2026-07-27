@@ -5,7 +5,7 @@ import { sharedOpenGraph } from "../../metadata";
 import { SiteFooter, SiteHeader } from "../../site-chrome";
 import { VisualizerClient } from "./visualizer-client";
 
-const canonical = "https://rankbuilderseo.com/tools/redirect-chain-visualizer/";
+const canonical = "https://rankbuilderseo.com/tools/redirect-chain-visualizer";
 const description = "Trace a public URL through each HTTP redirect, inspect status codes and Location headers, detect loops and protocol changes, and export the chain as text, CSV, or JSON.";
 
 export const metadata: Metadata = {

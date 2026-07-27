@@ -1,4 +1,4 @@
-const reportOnlyCsp = [
+const enforcedCsp = [
   "default-src 'self'",
   "base-uri 'self'",
   "object-src 'none'",
@@ -22,7 +22,7 @@ export const securityHeaders = {
   "X-XSS-Protection": "0",
   "Referrer-Policy": "strict-origin-when-cross-origin",
   "Permissions-Policy": "camera=(), microphone=(), geolocation=()",
-  "Content-Security-Policy-Report-Only": reportOnlyCsp,
+  "Content-Security-Policy": enforcedCsp,
 } as const;
 
 export const cachePolicies = {

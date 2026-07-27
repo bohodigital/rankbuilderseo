@@ -184,7 +184,7 @@ Google says `5xx` and `429` responses prompt temporary crawl slowdown. Already i
 
 If Google has delayed crawling after a capacity event, connect this investigation to [Discovered – Currently Not Indexed](/articles/discovered-currently-not-indexed). If the error occurs in a redirect chain, use the [Redirect Error playbook](/articles/redirect-error-search-console).
 
-[Trace the chain when a redirect reaches a failing gateway or origin](/tools/redirect-chain-visualizer/).
+[Trace the chain when a redirect reaches a failing gateway or origin](/tools/redirect-chain-visualizer).
 
 If tools disagree after recovery, compare their observation times. A cached edge response, a different region, or indexed data from the last failed crawl can coexist with a healthy current request. Keep the incident timeline and representative request identifiers until each delivery layer has shown stable behavior.
 

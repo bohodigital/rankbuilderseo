@@ -535,7 +535,7 @@ Google does not guarantee crawling, indexing, or serving even when a page follow
 
 **Final checklist**
 
-Run the [Indexability Inspector to check the public response, directives, and canonical signals](/tools/indexability-inspector/).
+Run the [Indexability Inspector to check the public response, directives, and canonical signals](/tools/indexability-inspector).
 
 Before you call an indexing problem unresolved, verify:
 

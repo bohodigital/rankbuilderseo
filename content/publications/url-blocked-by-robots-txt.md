@@ -190,7 +190,7 @@ If the goal is removal from search:
 
 Google explicitly states that `noindex` is ineffective when Google cannot access the page to read it. [Block Search indexing with noindex](https://developers.google.com/search/docs/crawling-indexing/block-indexing)[@google-noindex]
 
-Run the [Indexability Inspector for a bounded check of the final URL and Googlebot robots rule](/tools/indexability-inspector/).
+Run the [Indexability Inspector for a bounded check of the final URL and Googlebot robots rule](/tools/indexability-inspector).
 
 7. **Keep essential resources crawlable.**
 

@@ -1,7 +1,15 @@
 import { readFile, readdir } from "node:fs/promises";
+import { createHash } from "node:crypto";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 import { loadCompleteContentRegistry } from "../app/content/registry.ts";
+import {
+  buildSiteGraph,
+  canonicalPublicRouteSet,
+  internalRedirectMap,
+  validateApplicationRouteSources,
+} from "../app/content/site-graph.ts";
+import { toolRecords } from "../app/content/tool-records.ts";
 
 const root = new URL("../", import.meta.url);
 
@@ -20,6 +28,22 @@ async function publicationSources() {
     `content/publications/${file}`,
     await readFile(new URL(file, directory), "utf8"),
   ])));
+}
+
+async function applicationSources(directory = new URL("app/", root), prefix = "app/") {
+  const entries = await readdir(directory, { withFileTypes: true });
+  const sources = [];
+  for (const entry of entries.sort((left, right) => left.name.localeCompare(right.name, "en-US"))) {
+    if (entry.isDirectory()) {
+      sources.push(...await applicationSources(new URL(`${entry.name}/`, directory), `${prefix}${entry.name}/`));
+    } else if (entry.isFile() && /\.(?:ts|tsx)$/.test(entry.name)) {
+      sources.push({
+        path: `${prefix}${entry.name}`,
+        source: await readFile(new URL(entry.name, directory), "utf8"),
+      });
+    }
+  }
+  return sources;
 }
 
 function jpegDimensions(bytes, label) {
@@ -94,8 +118,41 @@ export function validateMediaBudgets(publications, byteSizes, media) {
   return warnings;
 }
 
+export function validateMediaDuplicateContracts(media, publications, contentHashes) {
+  const sourceUrls = new Map();
+  for (const record of media.filter((item) => item.status === "approved" && item.sourceUrl)) {
+    sourceUrls.set(record.sourceUrl, [...(sourceUrls.get(record.sourceUrl) ?? []), record]);
+  }
+  for (const [sourceUrl, records] of sourceUrls) {
+    if (records.length > 1 && !records.some((record) => record.reuseExemption)) {
+      throw new Error(`approved media reuse the same source-page URL without an explicit exemption: ${sourceUrl} (${records.map((record) => record.id).join(", ")})`);
+    }
+  }
+  for (const [hash, records] of contentHashes) {
+    if (records.length < 2) continue;
+    const exemptOwnedReuse = records.every((record) => record.rights === "owned")
+      && records.some((record) => record.reuseExemption);
+    if (!exemptOwnedReuse) {
+      throw new Error(`local raster files have the same content hash under different filenames: ${hash} (${records.map((record) => record.src).join(", ")})`);
+    }
+  }
+  const heroUses = new Map();
+  for (const publication of publications) {
+    if (!publication.heroImage) continue;
+    heroUses.set(publication.heroImage.src, [...(heroUses.get(publication.heroImage.src) ?? []), publication.slug]);
+  }
+  for (const [src, slugs] of heroUses) {
+    if (slugs.length < 2) continue;
+    const record = media.find((item) => item.src === src);
+    if (!record?.reuseExemption) {
+      throw new Error(`article hero is reused without an explicit exemption: ${src} (${slugs.join(", ")})`);
+    }
+  }
+}
+
 export async function validateMediaFiles(media, publications = []) {
   const byteSizes = new Map();
+  const contentHashes = new Map();
   for (const record of media) {
     const target = new URL(`public${record.src}`, root);
     const resolved = fileURLToPath(target);
@@ -115,7 +172,12 @@ export async function validateMediaFiles(media, publications = []) {
       throw new Error(`${record.src}: dimensions ${dimensions.width}x${dimensions.height} exceed ${mediaLimits.dimension}px`);
     }
     byteSizes.set(record.src, bytes.length);
+    if (record.mimeType !== "image/svg+xml") {
+      const hash = createHash("sha256").update(bytes).digest("hex");
+      contentHashes.set(hash, [...(contentHashes.get(hash) ?? []), record]);
+    }
   }
+  validateMediaDuplicateContracts(media, publications, contentHashes);
   return validateMediaBudgets(publications, byteSizes, media);
 }
 
@@ -138,17 +200,30 @@ export async function checkContent() {
     media: await readFile(new URL("content/media.json", root), "utf8"),
     glossary: await readFile(new URL("content/glossary.md", root), "utf8"),
     experiments: await readFile(new URL("content/experiments.md", root), "utf8"),
+    topics: await readFile(new URL("content/topics.json", root), "utf8"),
   };
   const registry = loadCompleteContentRegistry(sources);
   registry.warnings.push(...await validateMediaFiles(registry.media, registry.publications));
   await validateOpenGraphAsset();
-  return registry;
+  const routes = canonicalPublicRouteSet(registry.publications, registry.glossary, registry.topics, toolRecords);
+  const redirects = internalRedirectMap(registry.publications);
+  const applicationLinks = validateApplicationRouteSources(await applicationSources(), routes, redirects);
+  const graph = buildSiteGraph(
+    registry.publications,
+    registry.glossary,
+    registry.topics,
+    toolRecords,
+    applicationLinks,
+  );
+  return { ...registry, graph };
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   try {
     const result = await checkContent();
-    console.log(`Content check passed: ${result.publications.length} publications, ${result.glossary.length} glossary terms, ${result.experiments.length} experiments, ${result.media.length} media records.`);
+    console.log(`Content check passed: ${result.publications.length} publications, ${result.topics.length} topics, ${result.glossary.length} glossary terms, ${result.experiments.length} experiments, ${result.media.length} media records.`);
+    console.log(`Site graph passed: ${result.graph.report.nodeCount} public nodes, ${result.graph.report.edgeCount} edges, ${result.graph.report.connectedComponents.length} connected component, ${result.graph.report.orphans.length} orphans, ${result.graph.report.deadEnds.length} dead ends.`);
+    console.log(`Top-linked pages: ${result.graph.report.topLinkedPages.map(({ route, inbound }) => `${route} (${inbound})`).join(", ")}.`);
     for (const warning of result.warnings) console.warn(`Content warning: ${warning}`);
   } catch (error) {
     console.error(error instanceof Error ? error.message : error);
