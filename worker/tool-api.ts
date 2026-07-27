@@ -102,10 +102,9 @@ function isIpLiteral(hostname: string): boolean {
 
 export async function dohResolver(hostname: string, signal: AbortSignal): Promise<string[]> {
   const query = async (type: "A" | "AAAA") => {
-    const url = `https://cloudflare-dns.com/dns-query?name=${encodeURIComponent(hostname)}&type=${type}`;
+    const url = `https://dns.google/resolve?name=${encodeURIComponent(hostname)}&type=${type}&edns_client_subnet=0.0.0.0/0`;
     const response = await fetch(url, {
-      headers: { Accept: "application/dns-json" },
-      cache: "no-store",
+      headers: { Accept: "application/json" },
       signal,
     });
     if (!response.ok) throw boundaryError("fetch-failed");
@@ -138,7 +137,14 @@ async function validateResolvedTarget(url: URL, dependencies: ToolFetchDependenc
   }
   const remaining = Math.min(toolLimits.perHopMs, deadline - dependencies.now());
   if (remaining <= 0) throw boundaryError("timeout");
-  const addresses = await dependencies.resolver(hostname, AbortSignal.timeout(remaining));
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), remaining);
+  let addresses: string[];
+  try {
+    addresses = await dependencies.resolver(hostname, controller.signal);
+  } finally {
+    clearTimeout(timer);
+  }
   if (addresses.length === 0) throw boundaryError("fetch-failed");
   if (addresses.some(isProhibitedIp)) throw boundaryError("unsafe-destination");
 }
@@ -206,21 +212,28 @@ async function performTrace(
     if (remaining <= 0) throw boundaryError("timeout");
     const started = dependencies.now();
     let response: Response;
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), remaining);
     try {
       response = await dependencies.fetcher(current.href, {
         method: "GET",
         redirect: "manual",
-        credentials: "omit",
-        cache: "no-store",
-        signal: AbortSignal.timeout(remaining),
+        signal: controller.signal,
         headers: {
           Accept: "text/html,application/xhtml+xml,text/plain;q=0.8,*/*;q=0.2",
         },
       });
     } catch (error) {
       if (error instanceof ToolBoundaryError) throw error;
-      if (error instanceof DOMException && error.name === "TimeoutError") throw boundaryError("timeout");
+      if (
+        error instanceof DOMException
+        && (error.name === "AbortError" || error.name === "TimeoutError")
+      ) {
+        throw boundaryError("timeout");
+      }
       throw boundaryError("fetch-failed");
+    } finally {
+      clearTimeout(timer);
     }
     const elapsedMs = Math.max(0, dependencies.now() - started);
     const rawLocation = cleanRemoteText(response.headers.get("location"));
