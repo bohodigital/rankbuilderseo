@@ -172,11 +172,13 @@ test("renders the production homepage with metadata and analytics", async () => 
   assert.match(html, /<title>Rank Builder SEO/i);
   assert.match(html, /<link[^>]+rel="alternate"[^>]+type="application\/atom\+xml"[^>]+href="https:\/\/rankbuilderseo\.com\/feed\.xml"/i);
   assert.match(html, /Clear SEO answers/i);
-  assert.match(html, /analytics\.bohodigitalservices\.com\/script\.js/i);
-  assert.match(html, /data-website-id="297e47a1-fd92-42f1-a34d-5a7698e8a58f"/i);
   assert.match(html, /src="\/ga4-bootstrap\.js"/i);
-  assert.equal((html.match(/data-ga4-bootstrap="rankbuilder-v1"/gi) ?? []).length, 1);
-  assert.equal((html.match(/data-ga4-measurement-id="G-3VYXZ0H1P8"/gi) ?? []).length, 1);
+  assert.equal((html.match(/data-analytics-bootstrap="boho-v2"/gi) ?? []).length, 1);
+  assert.equal((html.match(/data-umami-website-id="297e47a1-fd92-42f1-a34d-5a7698e8a58f"/gi) ?? []).length, 1);
+  assert.equal((html.match(/data-umami-domains="rankbuilderseo.com,www.rankbuilderseo.com"/gi) ?? []).length, 1);
+  assert.equal((html.match(/data-ga-id="G-3VYXZ0H1P8"/gi) ?? []).length, 1);
+  assert.equal((html.match(/data-ga-public-hosts="rankbuilderseo.com,www.rankbuilderseo.com"/gi) ?? []).length, 1);
+  assert.doesNotMatch(html, /src="https:\/\/(?:www\.googletagmanager\.com|analytics\.bohodigitalservices\.com)/i);
   assert.doesNotMatch(html, /googletagmanager\.com\/gtm\.js/i);
   const layoutSource = await readFile(new URL("app/layout.tsx", root), "utf8");
   assert.equal(
