@@ -1,0 +1,5 @@
+parameter,business_purpose,changes_primary_content,stable_over_time,independent_search_intent,internally_linked,sitemap_inclusion,canonical_rule,redirect_rule,crawl_rule,index_rule,normalized_order,empty_state_behavior,owner
+utm_source,campaign attribution,no,no,no,no,no,canonical to clean URL,optional strip redirect,allow or avoid generating,no,after content parameters,serve clean equivalent URL,marketing
+page,pagination,yes,yes,yes,yes,case-specific,self-canonical for valid pages,redirect invalid defaults,allow,yes,after filters,404 impossible pages,engineering
+sort,presentation order,usually no,yes,usually no,case-specific,no,canonical to default order,none,case-specific,usually no,after pagination,serve valid sorted inventory,product
+sid,session state,no,no,no,no,no,canonical is insufficient,strip or reject,prevent generation,no,never persist,400 or clean redirect,engineering

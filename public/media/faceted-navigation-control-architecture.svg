@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">A bounded faceted-navigation system</title>
+  <desc id="desc">Flowchart from filter choice and normalized state to allowed, disallowed, or invalid URL outcomes.</desc>
+  <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#8d3c32"/></marker></defs>
+  <rect width="1200" height="630" fill="#f7f6f2"/>
+
+  <text font-weight="700" font-size="38px" font-family="Arial,sans-serif" fill="#17211f" x="48" y="56">A bounded faceted-navigation system</text>
+  <rect fill="#fffefa" stroke="#304a45" stroke-width="2" x="45" y="106" width="210" height="64" rx="5"/><text font-weight="700" font-size="20px" font-family="Arial,sans-serif" fill="#17211f" x="150" y="146" text-anchor="middle">User chooses filters</text>
+  <path fill="none" stroke="#8d3c32" stroke-width="3" d="M255 138H315"/>
+  <rect fill="#fffefa" stroke="#304a45" stroke-width="2" x="315" y="106" width="210" height="64" rx="5"/><text font-weight="700" font-size="20px" font-family="Arial,sans-serif" fill="#17211f" x="420" y="146" text-anchor="middle">Normalize state</text>
+  <path fill="none" stroke="#8d3c32" stroke-width="3" d="M525 138H585"/>
+  <polygon fill="#eadfd9" stroke="#8d3c32" stroke-width="2" points="735,92 865,138 735,184 605,138"/><text font-weight="700" font-size="20px" font-family="Arial,sans-serif" fill="#17211f" x="735" y="145" text-anchor="middle">Allowed combination?</text>
+  <path fill="none" stroke="#8d3c32" stroke-width="3" d="M865 138H950"/>
+  <text font-weight="700" font-size="18px" font-family="Courier New,monospace" fill="#8d3c32" x="890" y="124">Allowed</text>
+  <rect fill="#fffefa" stroke="#304a45" stroke-width="2" x="950" y="106" width="205" height="64" rx="5"/><text font-weight="700" font-size="20px" font-family="Arial,sans-serif" fill="#17211f" x="1052" y="146" text-anchor="middle">Stable URL</text>
+  <path fill="none" stroke="#8d3c32" stroke-width="3" d="M1052 170V223"/>
+  <rect fill="#fffefa" stroke="#304a45" stroke-width="2" x="900" y="223" width="305" height="58" rx="5"/><text font-weight="700" font-size="20px" font-family="Arial,sans-serif" fill="#17211f" x="1052" y="259" text-anchor="middle">Crawlable link</text>
+  <path fill="none" stroke="#8d3c32" stroke-width="3" d="M1052 281V334"/>
+  <rect fill="#fffefa" stroke="#304a45" stroke-width="2" x="850" y="334" width="405" height="64" rx="5"/><text font-weight="700" font-size="17px" font-family="Arial,sans-serif" fill="#17211f" x="1052" y="360" text-anchor="middle">Self-canonical or approved canonical</text><text font-weight="700" font-size="17px" font-family="Arial,sans-serif" fill="#17211f" x="1052" y="383" text-anchor="middle">→ Optional sitemap inclusion</text>
+  <path fill="none" stroke="#8d3c32" stroke-width="3" d="M735 184V250H580"/>
+  <text font-weight="700" font-size="18px" font-family="Courier New,monospace" fill="#8d3c32" x="610" y="235">Not allowed</text>
+  <rect fill="#fffefa" stroke="#304a45" stroke-width="2" x="315" y="218" width="265" height="64" rx="5"/><text font-weight="700" font-size="20px" font-family="Arial,sans-serif" fill="#17211f" x="447" y="258" text-anchor="middle">User-interface state only</text>
+  <path fill="none" stroke="#8d3c32" stroke-width="3" d="M447 282V335"/>
+  <rect fill="#fffefa" stroke="#304a45" stroke-width="2" x="285" y="335" width="325" height="64" rx="5"/><text font-weight="700" font-size="20px" font-family="Arial,sans-serif" fill="#17211f" x="447" y="361" text-anchor="middle">No indexable</text><text font-weight="700" font-size="20px" font-family="Arial,sans-serif" fill="#17211f" x="447" y="385" text-anchor="middle">URL inventory</text>
+  <path fill="none" stroke="#8d3c32" stroke-width="3" d="M680 173L535 458"/>
+  <text font-weight="700" font-size="18px" font-family="Courier New,monospace" fill="#8d3c32" x="540" y="432">Invalid</text>
+  <rect fill="#fffefa" stroke="#304a45" stroke-width="2" x="300" y="458" width="470" height="64" rx="5"/><text font-weight="700" font-size="20px" font-family="Arial,sans-serif" fill="#17211f" x="535" y="485" text-anchor="middle">Empty, duplicate, or impossible state</text><text font-weight="700" font-size="20px" font-family="Arial,sans-serif" fill="#17211f" x="535" y="509" text-anchor="middle">→ 404 at requested URL</text>
+  <rect x="48" y="557" width="1104" height="42" fill="#304a45"/><text x="600" y="584" text-anchor="middle" font-family="Georgia,serif" font-size="19" font-weight="700" fill="#fffefa">Create the bounded URL policy before generating the first crawlable filter link.</text>
+</svg>

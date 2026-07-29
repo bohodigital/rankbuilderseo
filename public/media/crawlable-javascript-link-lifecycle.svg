@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">A crawlable link survives every stage</title>
+  <desc id="desc">A successful lane from initial HTML through a server response, contrasted with a button or click-handler-only failure lane.</desc>
+  <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#8d3c32"/></marker></defs>
+  <rect width="1200" height="630" fill="#f7f6f2"/>
+
+  <text font-weight="700" font-size="38px" font-family="Arial,sans-serif" fill="#17211f" x="48" y="58">A crawlable link survives every stage</text>
+  <text font-weight="700" font-size="18px" font-family="Courier New,monospace" fill="#8d3c32" x="48" y="115">Dependable path</text>
+  <g>
+    <rect fill="#fffefa" stroke="#304a45" stroke-width="2" x="48" y="140" width="150" height="88" rx="5"/><text font-weight="700" font-size="18px" font-family="Arial,sans-serif" fill="#17211f" x="123" y="178" text-anchor="middle">Initial</text><text font-weight="700" font-size="18px" font-family="Arial,sans-serif" fill="#17211f" x="123" y="202" text-anchor="middle">HTML</text>
+    <path fill="none" stroke="#8d3c32" stroke-width="3" d="M198 184H230"/>
+    <rect fill="#304a45" x="230" y="140" width="160" height="88" rx="5"/><text font-weight="700" font-size="18px" font-family="Arial,sans-serif" fill="#fffefa" x="310" y="178" text-anchor="middle">Anchor with</text><text font-weight="700" font-size="18px" font-family="Arial,sans-serif" fill="#fffefa" x="310" y="202" text-anchor="middle">href</text>
+    <path fill="none" stroke="#8d3c32" stroke-width="3" d="M390 184H422"/>
+    <rect fill="#fffefa" stroke="#304a45" stroke-width="2" x="422" y="140" width="155" height="88" rx="5"/><text font-weight="700" font-size="18px" font-family="Arial,sans-serif" fill="#17211f" x="499" y="178" text-anchor="middle">Link</text><text font-weight="700" font-size="18px" font-family="Arial,sans-serif" fill="#17211f" x="499" y="202" text-anchor="middle">extraction</text>
+    <path fill="none" stroke="#8d3c32" stroke-width="3" d="M577 184H609"/>
+    <rect fill="#fffefa" stroke="#304a45" stroke-width="2" x="609" y="140" width="170" height="88" rx="5"/><text font-weight="700" font-size="18px" font-family="Arial,sans-serif" fill="#17211f" x="694" y="168" text-anchor="middle">Optional</text><text font-weight="700" font-size="18px" font-family="Arial,sans-serif" fill="#17211f" x="694" y="191" text-anchor="middle">JavaScript</text><text font-weight="700" font-size="18px" font-family="Arial,sans-serif" fill="#17211f" x="694" y="214" text-anchor="middle">enhancement</text>
+    <path fill="none" stroke="#8d3c32" stroke-width="3" d="M779 184H811"/>
+    <rect fill="#fffefa" stroke="#304a45" stroke-width="2" x="811" y="140" width="160" height="88" rx="5"/><text font-weight="700" font-size="18px" font-family="Arial,sans-serif" fill="#17211f" x="891" y="178" text-anchor="middle">Resolvable</text><text font-weight="700" font-size="18px" font-family="Arial,sans-serif" fill="#17211f" x="891" y="202" text-anchor="middle">destination</text>
+    <path fill="none" stroke="#8d3c32" stroke-width="3" d="M971 184H1003"/>
+    <rect fill="#304a45" x="1003" y="140" width="150" height="88" rx="5"/><text font-weight="700" font-size="18px" font-family="Arial,sans-serif" fill="#fffefa" x="1078" y="178" text-anchor="middle">Server</text><text font-weight="700" font-size="18px" font-family="Arial,sans-serif" fill="#fffefa" x="1078" y="202" text-anchor="middle">response</text>
+  </g>
+  <text font-weight="700" font-size="18px" font-family="Courier New,monospace" fill="#8d3c32" x="48" y="335">Failure lane</text>
+  <rect fill="#eadfd9" stroke="#8d3c32" stroke-width="2" x="48" y="365" width="430" height="98" rx="5"/>
+  <text font-weight="700" font-size="18px" font-family="Arial,sans-serif" fill="#17211f" x="263" y="407" text-anchor="middle">Button or click handler only</text>
+  <text font-weight="700" font-size="18px" font-family="Arial,sans-serif" fill="#17211f" x="263" y="437" text-anchor="middle">No dependable URL in the markup</text>
+  <path fill="none" stroke="#8d3c32" stroke-width="3" d="M478 414H655"/>
+  <rect fill="#eadfd9" stroke="#8d3c32" stroke-width="2" x="655" y="365" width="498" height="98" rx="5"/>
+  <text font-weight="700" font-size="18px" font-family="Arial,sans-serif" fill="#17211f" x="904" y="407" text-anchor="middle">No dependable URL extraction</text>
+  <text font-weight="700" font-size="18px" font-family="Arial,sans-serif" fill="#17211f" x="904" y="437" text-anchor="middle">Discovery depends on script execution</text>
+  <rect x="48" y="522" width="1105" height="56" fill="#eadfd9"/>
+  <text x="600" y="557" text-anchor="middle" font-family="Georgia,serif" font-size="21" font-weight="700" fill="#17211f">Enhancement may change behavior. It should not invent the destination.</text>
+</svg>

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">How filter choices multiply URL states</title>
+  <desc id="desc">Equations for theoretical single-select and multi-select facet state growth.</desc>
+  <rect width="1200" height="800" fill="#f7f6f2"/>
+
+  <text font-weight="700" font-size="42px" font-family="Arial,sans-serif" fill="#17211f" x="60" y="70">How filter choices multiply URL states</text>
+  <rect fill="#fffefa" stroke="#304a45" stroke-width="3" x="60" y="120" width="1080" height="235" rx="8"/>
+  <text font-weight="700" font-size="20px" font-family="Courier New,monospace" fill="#8d3c32" x="100" y="170">Single-select facets</text>
+  <text font-weight="700" font-size="56px" font-family="Georgia,serif" fill="#17211f" x="600" y="250" text-anchor="middle">Nₛᵢₙɢₗₑ = ∏ᵢ₌₁ᵏ (vᵢ + 1)</text>
+  <text font-weight="400" font-size="25px" font-family="Georgia,serif" fill="#535c57" x="600" y="310" text-anchor="middle">Each facet offers its values plus the option to select none.</text>
+  <rect fill="#fffefa" stroke="#304a45" stroke-width="3" x="60" y="390" width="1080" height="235" rx="8"/>
+  <text font-weight="700" font-size="20px" font-family="Courier New,monospace" fill="#8d3c32" x="100" y="440">Multi-select facets</text>
+  <text font-weight="700" font-size="56px" font-family="Georgia,serif" fill="#17211f" x="600" y="520" text-anchor="middle">Nₘᵤₗₜᵢ = 2^(Σᵢ₌₁ᵏ vᵢ)</text>
+  <text font-weight="400" font-size="25px" font-family="Georgia,serif" fill="#535c57" x="600" y="580" text-anchor="middle">Every value can be included or excluded independently.</text>
+  <rect x="60" y="666" width="1080" height="78" fill="#304a45" rx="5"/>
+  <text font-weight="700" font-size="25px" font-family="Arial,sans-serif" fill="#fffefa" x="600" y="714" text-anchor="middle">Theoretical states, not predicted crawl requests.</text>
+</svg>

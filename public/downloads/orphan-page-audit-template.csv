@@ -1,0 +1,4 @@
+url,cms_inventory,sitemap_inventory,internal_crawl,analytics_or_search_console,server_logs,external_discovery,current_status,canonical_target,intended_public_state,disposition,required_inbound_link,owner,notes
+https://www.example.com/guides/widget,true,true,false,true,true,false,200,https://www.example.com/guides/widget,indexable,link contextually,/guides/,editorial,Valid guide omitted by category template
+https://www.example.com/old-widget,true,false,false,true,true,true,301,https://www.example.com/guides/widget,redirect,retain redirect,,engineering,Historical URL
+https://www.example.com/account,false,false,false,false,true,false,200,https://www.example.com/account,private,authenticate and noindex,,engineering,Do not add public links
