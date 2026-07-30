@@ -70,7 +70,8 @@
     "blocked-access-forbidden-403",
     "indexed-though-blocked-by-robots-txt",
     "crawl-budget-when-it-matters",
-    "wordpress-site-accidentally-noindexed"
+    "wordpress-site-accidentally-noindexed",
+    "canonical-vs-redirect-vs-noindex"
   ]
 }
 ---
@@ -257,6 +258,8 @@ For one important URL, request indexing after the live test passes. For a large 
 - **Essential scripts are blocked.** Google fetches the HTML but cannot render the main content correctly.
 - **The report is treated as proof the page is absent from search.** A blocked URL can sometimes appear without a snippet.
 - **A stale cached or deployed file is tested.** The repository edit is correct, but production still serves the old rule.
+
+Robots.txt manages crawler access and is not a reliable substitute for noindex, canonicalization, authentication, or a redirect. Use the [URL control decision guide](/articles/canonical-vs-redirect-vs-noindex) to match the control to the intended outcome.
 
 ## Completion criteria
 

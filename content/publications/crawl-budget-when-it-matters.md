@@ -69,7 +69,10 @@
     "internal-links-vs-xml-sitemaps",
     "sitemap-could-not-be-read",
     "infinite-scroll-pagination-seo",
-    "technical-seo-baseline"
+    "technical-seo-baseline",
+    "faceted-navigation-seo",
+    "google-search-console-crawl-stats-report",
+    "seo-log-file-analysis-googlebot"
   ]
 }
 ---
@@ -210,6 +213,8 @@ For a site large enough to justify the work, combine:
 - Googlebot request distribution.
 
 Do not diagnose crawl budget from one screenshot or one excluded URL.
+
+When filtered combinations create the waste, use the [faceted-navigation architecture guide](/articles/faceted-navigation-seo). When the question concerns an observed request change, use the [Crawl Stats guide](/articles/google-search-console-crawl-stats-report) and verify exact requests through [log-file analysis](/articles/seo-log-file-analysis-googlebot).
 
 ## Conclusion
 

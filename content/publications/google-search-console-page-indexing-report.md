@@ -60,14 +60,14 @@
     "why-google-isnt-indexing-your-page",
     "discovered-currently-not-indexed",
     "crawled-currently-not-indexed",
-    "search-console-is-not-analytics",
     "page-with-redirect",
     "soft-404",
     "server-error-5xx",
     "blocked-other-4xx",
     "alternate-page-proper-canonical-tag",
     "sitemap-could-not-be-read",
-    "page-indexing-report-not-updating"
+    "page-indexing-report-not-updating",
+    "google-search-console-crawl-stats-report"
   ]
 }
 ---
@@ -89,6 +89,8 @@ Collect:
 The report is most useful when you compare it with an expected inventory. A high number of non-indexed URLs is not automatically bad. Filter pages, parameter variants, redirects, deleted URLs, duplicates, and deliberate `noindex` pages may all belong outside the index.
 
 Google describes the report as a sitewide view of pages it has tried to crawl and whether they were indexed. Google also recommends URL Inspection for the status of one specific page. [Has Google found all your pages?](https://support.google.com/webmasters/answer/10264824)[@gsc-found-pages]
+
+The Page Indexing report describes indexing states rather than request history. Use the [Crawl Stats guide](/articles/google-search-console-crawl-stats-report) when the question concerns Googlebot activity, host availability, response time, or crawl responses.
 
 ## Ordered process
 

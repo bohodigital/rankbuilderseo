@@ -68,7 +68,8 @@
     "discovered-currently-not-indexed",
     "crawl-budget-when-it-matters",
     "sitemap-could-not-be-read",
-    "internal-links-audit-by-template"
+    "internal-links-audit-by-template",
+    "crawlable-javascript-links"
   ]
 }
 ---
@@ -247,6 +248,8 @@ Watch for:
 - repeated empty pages;
 - unstable contents caused by relative cursors;
 - crawl concentration on parameters rather than items.
+
+A load-more interaction should preserve ordinary paginated destinations that render as real links. See [Crawlable JavaScript Links](/articles/crawlable-javascript-links) for the anchor and router contract.
 
 ## Failure cases
 

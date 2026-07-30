@@ -72,7 +72,9 @@
     "blocked-access-forbidden-403",
     "cloudflare-pages-workers-seo",
     "nextjs-page-visible-browser-missing-google",
-    "crawl-budget-when-it-matters"
+    "crawl-budget-when-it-matters",
+    "google-search-console-crawl-stats-report",
+    "seo-log-file-analysis-googlebot"
   ]
 }
 ---
@@ -169,6 +171,8 @@ Run uncached requests against representative templates, not only the homepage. V
 8. **Confirm crawling recovers gradually.**
 
 Google says `5xx` and `429` responses prompt temporary crawl slowdown. Already indexed URLs may be preserved initially but can be dropped if failures persist. Once stable `2xx` responses return, crawl rate increases gradually rather than snapping back instantly. [How HTTP status codes affect Google's crawlers](https://developers.google.com/crawling/docs/troubleshooting/http-status-codes)[@google-http-status-codes]
+
+Use the [Crawl Stats guide](/articles/google-search-console-crawl-stats-report) to determine whether errors rose during Google crawl activity, then use [SEO log-file analysis](/articles/seo-log-file-analysis-googlebot) to identify the affected request families and serving layer.
 
 ## Failure cases
 

@@ -62,7 +62,8 @@
     "server-error-5xx",
     "google-search-console-page-indexing-report",
     "why-google-isnt-indexing-your-page",
-    "cloudflare-pages-workers-seo"
+    "cloudflare-pages-workers-seo",
+    "seo-log-file-analysis-googlebot"
   ]
 }
 ---
@@ -201,3 +202,5 @@ The repair is complete when:
 - the destination passes a current live inspection.
 
 Google’s next report update may lag the live repair. Record the fix time, last crawl time, and exact source so that stale reporting is not mistaken for a new failure. The same evidence also supports the [migration checklist](/articles/seo-migration-launch-checklist), the [canonical review](/articles/google-chose-different-canonical), and the broader [indexing diagnostic flow](/articles/why-google-isnt-indexing-your-page).
+
+After diagnosing the redirect path, use [SEO log-file analysis](/articles/seo-log-file-analysis-googlebot) to determine which redirecting URLs remain requested and where the chain is being generated.

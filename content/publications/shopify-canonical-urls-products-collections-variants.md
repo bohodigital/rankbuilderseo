@@ -75,7 +75,9 @@
     "google-chose-different-canonical",
     "canonical-tags-when-they-work",
     "internal-links-vs-xml-sitemaps",
-    "sitemap-could-not-be-read"
+    "sitemap-could-not-be-read",
+    "url-parameters-seo",
+    "faceted-navigation-seo"
   ]
 }
 ---
@@ -178,6 +180,8 @@ Look for:
 - preview domains leaking into canonical URLs.
 
 A correct platform object can still be defeated by custom code.
+
+The platform-specific canonical output should still be evaluated against the underlying parameter purpose. Use [URL Parameters and SEO](/articles/url-parameters-seo) for general classification and [Faceted Navigation SEO](/articles/faceted-navigation-seo) for filter combinations.
 
 ## Examples
 

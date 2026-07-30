@@ -62,6 +62,14 @@ const articleSlugs = [
   "cloudflare-pages-workers-seo",
   "google-indexing-time-study-methodology",
   "google-indexing-time-study-baseline",
+  "canonical-vs-redirect-vs-noindex",
+  "url-parameters-seo",
+  "faceted-navigation-seo",
+  "crawlable-javascript-links",
+  "orphan-pages-seo",
+  "google-search-console-crawl-stats-report",
+  "seo-log-file-analysis-googlebot",
+  "xml-sitemap-lastmod",
 ];
 
 const expectedLegacyGuideRedirects = Object.freeze({

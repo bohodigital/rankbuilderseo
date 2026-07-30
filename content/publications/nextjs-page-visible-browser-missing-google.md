@@ -83,7 +83,8 @@
     "page-with-redirect",
     "excluded-by-noindex",
     "sitemap-could-not-be-read",
-    "cloudflare-pages-workers-seo"
+    "cloudflare-pages-workers-seo",
+    "crawlable-javascript-links"
   ]
 }
 ---
@@ -271,6 +272,8 @@ Use URL Inspection to compare:
 - canonical and robots;
 - last crawl;
 - current live state.
+
+Inspect the framework's final HTML rather than assuming its routing component produces a crawlable destination. Use [Crawlable JavaScript Links](/articles/crawlable-javascript-links) to test the rendered anchor contract.
 
 ## Failure cases
 

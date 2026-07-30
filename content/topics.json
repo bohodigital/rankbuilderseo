@@ -14,19 +14,23 @@
       "crawling-vs-indexing-vs-ranking",
       "discovered-currently-not-indexed",
       "excluded-by-noindex",
+      "faceted-navigation-seo",
+      "google-search-console-crawl-stats-report",
       "google-search-console-page-indexing-report",
       "google-search-console-url-inspection",
       "how-long-google-takes-to-index-page",
       "indexed-though-blocked-by-robots-txt",
       "internal-links-audit-by-template",
       "internal-links-vs-xml-sitemaps",
+      "orphan-pages-seo",
       "page-indexing-report-not-updating",
       "site-search-not-complete-index-checker",
       "sitemap-could-not-be-read",
       "technical-seo-baseline",
       "url-blocked-by-robots-txt",
       "why-google-isnt-indexing-your-page",
-      "why-request-indexing-is-not-working"
+      "why-request-indexing-is-not-working",
+      "xml-sitemap-lastmod"
     ],
     "relatedTools": [
       "/tools/indexability-inspector"
@@ -70,8 +74,10 @@
     "primaryPublications": [
       "alternate-page-proper-canonical-tag",
       "canonical-tags-when-they-work",
+      "canonical-vs-redirect-vs-noindex",
       "duplicate-without-user-selected-canonical",
-      "google-chose-different-canonical"
+      "google-chose-different-canonical",
+      "url-parameters-seo"
     ],
     "secondaryPublications": [
       "shopify-canonical-urls-products-collections-variants",
@@ -89,6 +95,7 @@
       "infinite-scroll-pagination-seo"
     ],
     "primaryPublications": [
+      "crawlable-javascript-links",
       "infinite-scroll-pagination-seo",
       "javascript-seo-crawling-rendering-indexing",
       "rendered-html-missing-content"
@@ -137,6 +144,7 @@
       "google-indexing-time-study-baseline",
       "google-indexing-time-study-methodology",
       "search-console-is-not-analytics",
+      "seo-log-file-analysis-googlebot",
       "zero-click-search-study-notes"
     ],
     "secondaryPublications": [

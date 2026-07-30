@@ -32,7 +32,8 @@
     "seo-migration-launch-checklist",
     "not-found-404",
     "internal-links-vs-xml-sitemaps",
-    "sitemap-could-not-be-read"
+    "sitemap-could-not-be-read",
+    "orphan-pages-seo"
   ]
 }
 ---
@@ -44,6 +45,8 @@ Cluster pages by the components that generate navigation, related content, bread
 ## Compare intended and observed paths
 
 Document which pages each template should make discoverable, then compare that intent to rendered links, crawl depth, orphan patterns, and anchor language.
+
+When the audit needs to identify URLs absent from every crawlable template, use the multi-inventory method in [Orphan Pages SEO](/articles/orphan-pages-seo).
 
 ## Ship one rule, verify many pages
 

@@ -70,7 +70,8 @@
     "page-with-redirect",
     "crawled-currently-not-indexed",
     "rendered-html-missing-content",
-    "nextjs-page-visible-browser-missing-google"
+    "nextjs-page-visible-browser-missing-google",
+    "faceted-navigation-seo"
   ]
 }
 ---
@@ -164,6 +165,8 @@ If the page is genuinely gone, follow the [Not Found 404 decision guide](/articl
 When a live test and ordinary browser disagree, compare the exact rendered main content, resource failures, response time, and cache state. The correct repair follows the resource’s intended state, not whichever tool produced the more convenient label.
 
 Preserve a failing example before the change and retest the same URL afterward. This distinguishes a repaired template from an unrelated page that happened to render correctly.
+
+Empty, duplicate, impossible, and nonexistent paginated filter states should not return generic successful pages. The [faceted-navigation guide](/articles/faceted-navigation-seo) explains how to return honest responses while constraining filter URL growth.
 
 ## Completion criteria
 

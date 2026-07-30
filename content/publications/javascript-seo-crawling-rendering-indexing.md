@@ -69,7 +69,8 @@
     "crawled-currently-not-indexed",
     "google-search-console-url-inspection",
     "soft-404",
-    "crawl-budget-when-it-matters"
+    "crawl-budget-when-it-matters",
+    "crawlable-javascript-links"
   ]
 }
 ---
@@ -181,6 +182,8 @@ Google warns that it may skip rendering when it encounters `noindex`, so adding 
 | Dynamic rendering | Bot-specific rendered version | Operational divergence and maintenance |
 
 Google now describes dynamic rendering as a workaround rather than a recommended long-term solution. It recommends server rendering, static rendering, or hydration when possible. [Dynamic rendering as a workaround](https://developers.google.com/search/docs/crawling-indexing/javascript/dynamic-rendering)[@google-dynamic-rendering]
+
+For internal discovery, inspect whether the final output contains anchors with resolvable `href` values rather than buttons or script-only events. See [Crawlable JavaScript Links](/articles/crawlable-javascript-links).
 
 ## Examples
 

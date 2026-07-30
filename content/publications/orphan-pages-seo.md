@@ -3,7 +3,7 @@
   "authoringContract": "canonical-v1",
   "category": "Technical SEO",
   "series": "Technical baseline",
-  "state": "review",
+  "state": "published",
   "citationMode": "inline-required",
   "author": "rank-builder-research-desk",
   "editor": "rank-builder-editorial-desk",
@@ -18,37 +18,37 @@
   "evidenceLevel": "Primary sources",
   "directAnswer": "An orphan page is a URL in the known site inventory that receives no crawlable internal link from another reachable page. Find candidates by comparing several inventories, then decide whether each page should be linked, merged, redirected, noindexed, removed, protected, or deliberately retained.",
   "takeaways": [
- "A crawler cannot directly report a page it never discovered.",
- "A sitemap-only URL may be discoverable while remaining disconnected from the internal site structure.",
- "Orphan detection requires multiple inventories and consistent URL normalization.",
- "Not every orphan candidate deserves a new internal link."
+    "A crawler cannot directly report a page it never discovered.",
+    "A sitemap-only URL may be discoverable while remaining disconnected from the internal site structure.",
+    "Orphan detection requires multiple inventories and consistent URL normalization.",
+    "Not every orphan candidate deserves a new internal link."
   ],
   "claimLimits": [
- "The absence of a URL from one crawler export does not prove that every crawler is unaware of it or that the page should be made indexable."
+    "The absence of a URL from one crawler export does not prove that every crawler is unaware of it or that the page should be made indexable."
   ],
   "citations": [
- {
-   "id": "b7-google-links-orphans",
-   "title": "SEO link best practices for Google",
-   "url": "https://developers.google.com/search/docs/crawling-indexing/links-crawlable",
-   "publisher": "Google",
-   "accessedAt": "2026-07-29"
- },
- {
-   "id": "b7-google-sitemaps-orphans",
-   "title": "Build and submit a sitemap",
-   "url": "https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap",
-   "publisher": "Google",
-   "accessedAt": "2026-07-29"
- }
+    {
+      "id": "b7-google-links-orphans",
+      "title": "SEO link best practices for Google",
+      "url": "https://developers.google.com/search/docs/crawling-indexing/links-crawlable",
+      "publisher": "Google",
+      "accessedAt": "2026-07-29"
+    },
+    {
+      "id": "b7-google-sitemaps-orphans",
+      "title": "Build and submit a sitemap",
+      "url": "https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap",
+      "publisher": "Google",
+      "accessedAt": "2026-07-29"
+    }
   ],
   "relatedContent": [
- "internal-links-vs-xml-sitemaps",
- "internal-links-audit-by-template",
- "discovered-currently-not-indexed",
- "site-search-not-complete-index-checker",
- "crawlable-javascript-links",
- "why-google-isnt-indexing-your-page"
+    "internal-links-vs-xml-sitemaps",
+    "internal-links-audit-by-template",
+    "discovered-currently-not-indexed",
+    "site-search-not-complete-index-checker",
+    "crawlable-javascript-links",
+    "why-google-isnt-indexing-your-page"
   ]
 }
 ---

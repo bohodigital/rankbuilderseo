@@ -3,7 +3,7 @@
   "authoringContract": "canonical-v1",
   "category": "Measurement",
   "series": "Measurement without theater",
-  "state": "review",
+  "state": "published",
   "citationMode": "inline-required",
   "author": "rank-builder-research-desk",
   "editor": "rank-builder-editorial-desk",
@@ -18,59 +18,59 @@
   "evidenceLevel": "Primary sources",
   "directAnswer": "Access logs can show that a request reached a recorded edge, proxy, server, or application layer and document the response recorded there. They cannot independently establish successful rendering, indexing, canonical selection, ranking, or search traffic.",
   "takeaways": [
- "A Googlebot-looking User-Agent string is not proof that a request came from Google.",
- "Edge, proxy, origin, web-server, and application logs may describe different stages of one request.",
- "Preserve raw evidence before URL normalization or crawler classification.",
- "Every log analysis must document missing fields, exclusions, verification methods, and retention limits."
+    "A Googlebot-looking User-Agent string is not proof that a request came from Google.",
+    "Edge, proxy, origin, web-server, and application logs may describe different stages of one request.",
+    "Preserve raw evidence before URL normalization or crawler classification.",
+    "Every log analysis must document missing fields, exclusions, verification methods, and retention limits."
   ],
   "claimLimits": [
- "A log record is evidence about the layer and fields that produced it; it is not a complete record of later search-system processing or user-visible search outcomes."
+    "A log record is evidence about the layer and fields that produced it; it is not a complete record of later search-system processing or user-visible search outcomes."
   ],
   "citations": [
- {
-   "id": "b7-google-verify-requests",
-   "title": "Verify requests from Google crawlers and fetchers",
-   "url": "https://developers.google.com/crawling/docs/crawlers-fetchers/verify-google-requests",
-   "publisher": "Google",
-   "accessedAt": "2026-07-29"
- },
- {
-   "id": "b7-google-crawler-categories",
-   "title": "Overview of Google crawlers and fetchers",
-   "url": "https://developers.google.com/crawling/docs/crawlers-fetchers/overview-google-crawlers",
-   "publisher": "Google",
-   "accessedAt": "2026-07-29"
- },
- {
-   "id": "b7-apache-access-logs",
-   "title": "Log Files - Apache HTTP Server Version 2.4",
-   "url": "https://httpd.apache.org/docs/2.4/logs.html",
-   "publisher": "Apache Software Foundation",
-   "accessedAt": "2026-07-29"
- },
- {
-   "id": "b7-nginx-access-logs",
-   "title": "Module ngx_http_log_module",
-   "url": "https://nginx.org/en/docs/http/ngx_http_log_module.html",
-   "publisher": "NGINX",
-   "accessedAt": "2026-07-29"
- },
- {
-   "id": "b7-cloudflare-http-logs",
-   "title": "HTTP requests dataset",
-   "url": "https://developers.cloudflare.com/logs/logpush/logpush-job/datasets/zone/http_requests/",
-   "publisher": "Cloudflare",
-   "accessedAt": "2026-07-29"
- }
+    {
+      "id": "b7-google-verify-requests",
+      "title": "Verify requests from Google crawlers and fetchers",
+      "url": "https://developers.google.com/crawling/docs/crawlers-fetchers/verify-google-requests",
+      "publisher": "Google",
+      "accessedAt": "2026-07-29"
+    },
+    {
+      "id": "b7-google-crawler-categories",
+      "title": "Overview of Google crawlers and fetchers",
+      "url": "https://developers.google.com/crawling/docs/crawlers-fetchers/overview-google-crawlers",
+      "publisher": "Google",
+      "accessedAt": "2026-07-29"
+    },
+    {
+      "id": "b7-apache-access-logs",
+      "title": "Log Files - Apache HTTP Server Version 2.4",
+      "url": "https://httpd.apache.org/docs/2.4/logs.html",
+      "publisher": "Apache Software Foundation",
+      "accessedAt": "2026-07-29"
+    },
+    {
+      "id": "b7-nginx-access-logs",
+      "title": "Module ngx_http_log_module",
+      "url": "https://nginx.org/en/docs/http/ngx_http_log_module.html",
+      "publisher": "NGINX",
+      "accessedAt": "2026-07-29"
+    },
+    {
+      "id": "b7-cloudflare-http-logs",
+      "title": "HTTP requests dataset",
+      "url": "https://developers.cloudflare.com/logs/logpush/logpush-job/datasets/zone/http_requests/",
+      "publisher": "Cloudflare",
+      "accessedAt": "2026-07-29"
+    }
   ],
   "relatedContent": [
- "google-search-console-url-inspection",
- "crawl-budget-when-it-matters",
- "server-error-5xx",
- "redirect-error-search-console",
- "google-search-console-crawl-stats-report",
- "faceted-navigation-seo",
- "search-console-is-not-analytics"
+    "google-search-console-url-inspection",
+    "crawl-budget-when-it-matters",
+    "server-error-5xx",
+    "redirect-error-search-console",
+    "google-search-console-crawl-stats-report",
+    "faceted-navigation-seo",
+    "search-console-is-not-analytics"
   ]
 }
 ---

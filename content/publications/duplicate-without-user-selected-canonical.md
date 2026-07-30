@@ -32,7 +32,8 @@
     "google-search-console-page-indexing-report",
     "why-google-isnt-indexing-your-page",
     "crawled-currently-not-indexed",
-    "shopify-canonical-urls-products-collections-variants"
+    "shopify-canonical-urls-products-collections-variants",
+    "url-parameters-seo"
   ],
   "citations": [
     {
@@ -105,6 +106,8 @@ Search Console distinguishes three related situations:
 | Duplicate without user-selected canonical | No clear preference | Google selected one |
 
 Use URL Inspection to record the Google-selected canonical for the inspected URL. The live test cannot predict the selected canonical because canonicalization occurs during indexing. [URL Inspection Tool](https://support.google.com/webmasters/answer/9012289?hl=en-FM)[@gsc-url-inspection]
+
+When duplicates are produced by query strings, document whether each parameter controls identity, filtering, sorting, pagination, tracking, presentation, or session state. Use the [URL parameter classification guide](/articles/url-parameters-seo) to establish one preferred behavior.
 
 ## Examples
 

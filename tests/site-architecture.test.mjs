@@ -46,6 +46,24 @@ test("application route validation rejects slashes, redirects, missing pages, an
   );
 });
 
+test("registered static downloads bypass page-graph edges while unknown downloads fail closed", () => {
+  const routes = new Set(["/", "/articles"]);
+  const redirects = new Map();
+  assert.equal(
+    canonicalInternalRoute(
+      "https://rankbuilderseo.com/downloads/url-parameter-audit-template.csv",
+      routes,
+      redirects,
+      "fixture",
+    ),
+    undefined,
+  );
+  assert.throws(
+    () => canonicalInternalRoute("/downloads/missing-template.csv", routes, redirects, "fixture"),
+    /internal download has no registered static asset/i,
+  );
+});
+
 test("media duplicate contracts require bounded explicit exemptions", () => {
   const base = {
     id: "one",

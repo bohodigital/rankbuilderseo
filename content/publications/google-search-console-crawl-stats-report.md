@@ -3,7 +3,7 @@
   "authoringContract": "canonical-v1",
   "category": "Technical SEO",
   "series": "Technical baseline",
-  "state": "review",
+  "state": "published",
   "citationMode": "inline-required",
   "author": "rank-builder-research-desk",
   "editor": "rank-builder-editorial-desk",
@@ -18,38 +18,38 @@
   "evidenceLevel": "Primary sources",
   "directAnswer": "The Crawl Stats report summarizes Google's requests, download volume, response time, host availability, response types, resource types, crawl purpose, and crawler types. It does not establish indexing, canonical selection, ranking, clicks, or conversions.",
   "takeaways": [
- "Crawl Stats reports request activity rather than search-performance outcomes.",
- "The report counts requested URLs rather than assigning requests to canonical URLs.",
- "Discovery and refresh describe crawl purpose, not whether a page entered or remained in the index.",
- "Server logs are required when exact request-by-request evidence matters."
+    "Crawl Stats reports request activity rather than search-performance outcomes.",
+    "The report counts requested URLs rather than assigning requests to canonical URLs.",
+    "Discovery and refresh describe crawl purpose, not whether a page entered or remained in the index.",
+    "Server logs are required when exact request-by-request evidence matters."
   ],
   "claimLimits": [
- "Search Console provides summarized and sampled reporting with known coverage differences, so its totals and examples should not be treated as a complete request ledger."
+    "Search Console provides summarized and sampled reporting with known coverage differences, so its totals and examples should not be treated as a complete request ledger."
   ],
   "citations": [
- {
-   "id": "b7-gsc-crawl-stats",
-   "title": "Crawl Stats report",
-   "url": "https://support.google.com/webmasters/answer/9679690?hl=en",
-   "publisher": "Google",
-   "accessedAt": "2026-07-29"
- },
- {
-   "id": "b7-google-crawl-budget-stats",
-   "title": "Crawl budget management",
-   "url": "https://developers.google.com/crawling/docs/crawl-budget",
-   "publisher": "Google",
-   "accessedAt": "2026-07-29"
- }
+    {
+      "id": "b7-gsc-crawl-stats",
+      "title": "Crawl Stats report",
+      "url": "https://support.google.com/webmasters/answer/9679690?hl=en",
+      "publisher": "Google",
+      "accessedAt": "2026-07-29"
+    },
+    {
+      "id": "b7-google-crawl-budget-stats",
+      "title": "Crawl budget management",
+      "url": "https://developers.google.com/crawling/docs/crawl-budget",
+      "publisher": "Google",
+      "accessedAt": "2026-07-29"
+    }
   ],
   "relatedContent": [
- "crawl-budget-when-it-matters",
- "server-error-5xx",
- "redirect-error-search-console",
- "google-search-console-url-inspection",
- "page-indexing-report-not-updating",
- "seo-log-file-analysis-googlebot",
- "faceted-navigation-seo"
+    "crawl-budget-when-it-matters",
+    "server-error-5xx",
+    "redirect-error-search-console",
+    "google-search-console-url-inspection",
+    "page-indexing-report-not-updating",
+    "seo-log-file-analysis-googlebot",
+    "faceted-navigation-seo"
   ]
 }
 ---

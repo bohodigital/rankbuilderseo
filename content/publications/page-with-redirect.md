@@ -63,7 +63,8 @@
     "why-google-isnt-indexing-your-page",
     "not-found-404",
     "cloudflare-pages-workers-seo",
-    "nextjs-page-visible-browser-missing-google"
+    "nextjs-page-visible-browser-missing-google",
+    "canonical-vs-redirect-vs-noindex"
   ]
 }
 ---
@@ -148,3 +149,5 @@ Use the [Redirect Error playbook](/articles/redirect-error-search-console) when 
 - The redirect remains available for old external links where appropriate.
 
 Once those conditions hold, “Page with redirect” can remain an expected report status. The destination’s indexing outcome belongs to the broader [indexing diagnostic flow](/articles/why-google-isnt-indexing-your-page) and the [Page Indexing report](/articles/google-search-console-page-indexing-report).
+
+A redirect is appropriate only when the source URL should yield to another destination. Compare that outcome with canonicals, noindex, robots.txt, authentication, and not-found responses in the [URL control decision guide](/articles/canonical-vs-redirect-vs-noindex).

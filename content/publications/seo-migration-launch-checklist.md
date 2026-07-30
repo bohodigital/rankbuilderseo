@@ -32,7 +32,8 @@
     "internal-links-audit-by-template",
     "page-with-redirect",
     "redirect-error-search-console",
-    "not-found-404"
+    "not-found-404",
+    "canonical-vs-redirect-vs-noindex"
   ]
 }
 ---
@@ -48,6 +49,8 @@ Freeze an inventory of indexable URLs, traffic-bearing landing pages, backlinks,
 - Verify production DNS and certificates
 
 - Name the rollback owner
+
+For every old route, explicitly choose whether it should redirect, remain accessible as a canonicalized duplicate, return not found, or retain a separate indexable identity. The [URL control decision guide](/articles/canonical-vs-redirect-vs-noindex) provides the decision framework.
 
 ## At launch
 

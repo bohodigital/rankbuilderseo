@@ -62,7 +62,8 @@
     "google-search-console-url-inspection",
     "alternate-page-proper-canonical-tag",
     "duplicate-without-user-selected-canonical",
-    "shopify-canonical-urls-products-collections-variants"
+    "shopify-canonical-urls-products-collections-variants",
+    "url-parameters-seo"
   ]
 }
 ---
@@ -129,6 +130,8 @@ Examples:
 - The selected URL contains the complete content while the inspected URL is partial.
 
 Do not fight a reasonable canonical choice merely because the CMS emitted a different tag.
+
+Parameter variants frequently create conflicting canonical signals when the site links, maps, and canonicalizes different URL forms. Classify the parameter family with [URL Parameters and SEO](/articles/url-parameters-seo) before changing individual canonicals.
 
 ## Examples
 

@@ -34,7 +34,8 @@
     "search-console-is-not-analytics",
     "crawled-currently-not-indexed",
     "google-indexing-time-study-methodology",
-    "google-indexing-time-study-baseline"
+    "google-indexing-time-study-baseline",
+    "xml-sitemap-lastmod"
   ],
   "citations": [
     {
@@ -262,6 +263,8 @@ This separates repair completion from reporting completion.
 **The report is blamed for a real live problem.** `noindex`, redirects, or server errors still exist.
 **Repeated requests create no new evidence.** The same page is submitted again without a change.
 **Performance data is mistaken for complete index inventory.** Search visibility and coverage are related but separate.
+
+A sitemap timestamp should describe a meaningful page revision rather than an attempt to force reporting updates. See [XML Sitemap lastmod](/articles/xml-sitemap-lastmod).
 
 ## Completion criteria
 

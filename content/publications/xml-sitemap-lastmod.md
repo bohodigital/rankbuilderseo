@@ -3,7 +3,7 @@
   "authoringContract": "canonical-v1",
   "category": "Technical SEO",
   "series": "Technical baseline",
-  "state": "review",
+  "state": "published",
   "citationMode": "inline-required",
   "author": "rank-builder-research-desk",
   "editor": "rank-builder-editorial-desk",

@@ -41,7 +41,10 @@
     "google-chose-different-canonical",
     "alternate-page-proper-canonical-tag",
     "duplicate-without-user-selected-canonical",
-    "shopify-canonical-urls-products-collections-variants"
+    "shopify-canonical-urls-products-collections-variants",
+    "canonical-vs-redirect-vs-noindex",
+    "url-parameters-seo",
+    "faceted-navigation-seo"
   ]
 }
 ---
@@ -67,3 +70,5 @@ The durable fix is usually consistent URL behavior across the whole site.
 ## When not to reach for it
 
 Do not use canonicals to hide public pages, repair soft-404 behavior, or replace access controls. Each of those problems has a more direct mechanism.
+
+When the question is whether the URL should remain accessible at all, use the [canonical, redirect, noindex, and robots.txt decision guide](/articles/canonical-vs-redirect-vs-noindex) before selecting a canonical by habit.

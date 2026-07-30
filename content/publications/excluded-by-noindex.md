@@ -62,7 +62,8 @@
     "technical-seo-baseline",
     "wordpress-site-accidentally-noindexed",
     "nextjs-page-visible-browser-missing-google",
-    "cloudflare-pages-workers-seo"
+    "cloudflare-pages-workers-seo",
+    "canonical-vs-redirect-vs-noindex"
   ]
 }
 ---
@@ -240,6 +241,8 @@ Do not submit hundreds of manual requests. The underlying fix and crawlable site
 - **A generated file is edited directly.** The next build restores the problem.
 - **A sitewide setting is changed to fix one page.** Thousands of unwanted pages become indexable.
 - **A successful live test is treated as guaranteed indexing.** Google still evaluates canonicalization, duplication, quality, and other conditions.
+
+Use `noindex` when the page must remain accessible but should not appear in search. If the page is duplicated, moved, private, or gone, choose the more direct mechanism in the [URL control decision guide](/articles/canonical-vs-redirect-vs-noindex).
 
 ## Completion criteria
 

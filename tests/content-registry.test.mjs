@@ -30,7 +30,7 @@ function loadPublicationRegistry(sources) {
   return loadPublicationRegistryRaw(sources, {
     registries: controlledRegistries,
     media: mediaRegistry,
-    now: new Date("2026-07-26T00:00:00Z"),
+    now: new Date("2026-07-29T00:00:00Z"),
   });
 }
 
@@ -41,13 +41,12 @@ const protectedParity = [
   {"slug":"technical-seo-baseline","title":"The technical SEO baseline before you touch content","h1":"The technical SEO baseline before you touch content","description":"Confirm that the site can be crawled, understood, measured, and repaired before chasing keywords.","published":"July 10, 2026","primaryCopySha256":"5d3b5f57cab7111a3df2e568d1ba493faff9cc643c115ffd218ee7c186d0cfb3"},
   {"slug":"seo-pricing-without-fairy-tales","title":"SEO pricing without the decorative averages","h1":"SEO pricing without the decorative averages","description":"Most pricing questions are scope questions wearing a dollar sign. Ask what actually happens after the invoice.","published":"July 9, 2026","primaryCopySha256":"f48da4e77172f40de28e2fdfcfbedf2dc0b66650aa7242cee8222dbb6cb9694c"},
   {"slug":"ranking-guarantees","title":"Ranking guarantees are a contract-reading exercise","h1":"Ranking guarantees are a contract-reading exercise","description":"The promise is only as useful as its query set, geography, device context, exclusions, and remedy.","published":"July 8, 2026","primaryCopySha256":"52d470bb2f8bb45b0fae011a3596ddd2832f37a856c5db18a9d0611f09077c01"},
-  {"slug":"search-console-is-not-analytics","title":"Search Console is not Analytics—and that is useful","h1":"Search Console is not Analytics—and that is useful","description":"One shows how Google Search saw and surfaced your pages. The other records configured behavior after visits.","published":"July 7, 2026","primaryCopySha256":"4b26f8505f78e82833447a4d1920213cedfc55bcce850dc727f08ce7727e14fe"},
-  {"slug":"canonical-tags-when-they-work","title":"Canonical tags: what they solve, what they merely suggest","h1":"Canonical tags: what they solve, what they merely suggest","description":"A canonical is a consolidation signal, not a cleanup crew. Use it for duplicates, not as a substitute for URL discipline.","published":"July 6, 2026","primaryCopySha256":"a6a213ee452b4add8e44bae787c746c2b277b2fb68283858ac9bbce6be3db8af"},
-  {"slug":"seo-migration-launch-checklist","title":"The no-drama SEO migration launch checklist","h1":"The no-drama SEO migration launch checklist","description":"A compact launch sequence for protecting valuable URLs, signals, measurement, and rollback options during a site move.","published":"July 5, 2026","primaryCopySha256":"785ddb2bc7498dd1df75db8c243821b38d0f53808599f320e70cbfd9a02f510e"},
+  {"slug":"canonical-tags-when-they-work","title":"Canonical tags: what they solve, what they merely suggest","h1":"Canonical tags: what they solve, what they merely suggest","description":"A canonical is a consolidation signal, not a cleanup crew. Use it for duplicates, not as a substitute for URL discipline.","published":"July 6, 2026","primaryCopySha256":"2ac00d664d2aeeaa2e8bdbda4631bd3729bd116d82ef2466e898c2d0bc0cd5e8"},
+  {"slug":"seo-migration-launch-checklist","title":"The no-drama SEO migration launch checklist","h1":"The no-drama SEO migration launch checklist","description":"A compact launch sequence for protecting valuable URLs, signals, measurement, and rollback options during a site move.","published":"July 5, 2026","primaryCopySha256":"7059234e55615fd5509d8e72be8d82b36043055679d5c797650e0159dbfb15d4"},
   {"slug":"what-an-seo-report-should-answer","title":"Seven questions every SEO report should answer","h1":"Seven questions every SEO report should answer","description":"Reporting should reduce uncertainty and change decisions. If it only inventories activity, it is a receipt for busyness.","published":"July 4, 2026","primaryCopySha256":"49bb519fa8ee23a2aaed88a62e5fbb892a05a0d5fdacc2ecf781c8f6ca2b8a16"},
   {"slug":"ai-overviews-traffic-claims","title":"AI Overviews traffic claims: read the denominator","h1":"AI Overviews traffic claims: read the denominator","description":"Big percentage claims can hide tiny samples, unstable features, mismatched query sets, or traffic that was never commercially useful.","published":"July 3, 2026","primaryCopySha256":"04deed661b3ddb6762b96e6e0d994e81eba3347d98da793c48f56da32954307d"},
   {"slug":"local-seo-provider-scorecard","title":"A local SEO provider scorecard you can actually use","h1":"A local SEO provider scorecard you can actually use","description":"Evaluate access, operating discipline, local evidence, reporting, and ownership before charisma gets a vote.","published":"July 2, 2026","primaryCopySha256":"73e5b37db91280d4e96c30bc5d01e84635655d1770b46ad752f5bd056d90c9d7"},
-  {"slug":"internal-links-audit-by-template","title":"Audit internal links by template, not one URL at a time","h1":"Audit internal links by template, not one URL at a time","description":"The scalable unit of technical SEO is often the template. Find repeated link behavior before editing isolated pages.","published":"July 1, 2026","primaryCopySha256":"e474dd16159ac967b1613c77967f8464b36c39acc5b5a2514352709737a2bbde"},
+  {"slug":"internal-links-audit-by-template","title":"Audit internal links by template, not one URL at a time","h1":"Audit internal links by template, not one URL at a time","description":"The scalable unit of technical SEO is often the template. Find repeated link behavior before editing isolated pages.","published":"July 1, 2026","primaryCopySha256":"194c7154cca2c3465443e4f57defcad50247227c437e575e4d1658263877761b"},
   {"slug":"zero-click-search-study-notes","title":"Zero-click studies: four numbers that change the story","h1":"Zero-click studies: four numbers that change the story","description":"A data note on devices, query samples, result features, and the difference between fewer clicks and less opportunity.","published":"July 1, 2026","primaryCopySha256":"1c840fe5e02523074b45adc3d254eb43bffad756996b1c96847aac158966e91f"}
 ];
 const batch01Parity = [
@@ -59,7 +58,7 @@ const batch01Parity = [
     published: "July 22, 2026",
     route: "/articles/why-google-isnt-indexing-your-page",
     citationIds: ["google-how-search-works", "google-technical-requirements", "gsc-url-inspection", "gsc-inspect-troubleshoot", "gsc-page-indexing", "gsc-missing-page", "google-noindex", "google-canonicalization-overview", "google-links", "google-crawl-budget", "google-canonical-methods", "google-sitemap"],
-    primaryCopySha256: "b7d061456c57c01c62bc17e67dd56b91e04c3e5e5045e6522609e4608f5ae9f7",
+    primaryCopySha256: "2dae8a135ec2d0be0978b49208a3033e196dad86cd1628ff55d50073a8052d2e",
     sourceRecordsSha256: "4ba963861f66687a4ca5335f4178b4f57eb45136d86a5cad6dce90e15cf954bc",
   },
   {
@@ -123,7 +122,7 @@ function source(overrides = {}) {
 
 test("loads the canonical Markdown registry with complete typed metadata", async () => {
   const publications = loadPublicationRegistry(await publicationSources());
-  assert.equal(publications.length, 49);
+  assert.equal(publications.length, 57);
   assert.equal(new Set(publications.map(({ slug }) => slug)).size, publications.length);
   for (const publication of publications) {
     assert.ok(publication.author.name);
@@ -188,7 +187,7 @@ test("rejects unknown identities, invalid dates, invalid citation URLs, and inco
 test("generates only the authoritative article route family", async () => {
   const publications = loadPublicationRegistry(await publicationSources());
   const routes = publicationRoutePaths(publications);
-  assert.equal(routes.length, 49);
+  assert.equal(routes.length, 57);
   for (const route of [
     "/articles/why-google-isnt-indexing-your-page",
     "/articles/crawling-vs-indexing-vs-ranking",

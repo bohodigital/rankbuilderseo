@@ -50,6 +50,15 @@ const fixedPublicRoutes = [
   "/topics",
 ];
 const globalNavigationRoutes = ["/topics", "/articles", "/tools", "/glossary", "/lab", "/method", "/about", "/privacy"];
+const staticDownloadRoutes = new Set([
+  "/downloads/crawl-evidence-report-template.md",
+  "/downloads/crawl-stats-investigation-template.csv",
+  "/downloads/google-request-verification-checklist.md",
+  "/downloads/googlebot-log-analysis-template.csv",
+  "/downloads/googlebot-log-field-dictionary.md",
+  "/downloads/orphan-page-audit-template.csv",
+  "/downloads/url-parameter-audit-template.csv",
+]);
 
 function fail(label: string, message: string): never {
   throw new Error(`${label}: ${message}`);
@@ -101,6 +110,10 @@ export function canonicalInternalRoute(
   }
   if (!route.startsWith("/")) return undefined;
   const url = new URL(route, "https://rankbuilderseo.com");
+  if (url.pathname.startsWith("/downloads/")) {
+    if (!staticDownloadRoutes.has(url.pathname)) fail(label, `internal download has no registered static asset: ${href}`);
+    return undefined;
+  }
   if (
     url.pathname.startsWith("/media/")
     || url.pathname.startsWith("/assets/")

@@ -129,7 +129,7 @@
     "google-chose-different-canonical",
     "how-long-google-takes-to-index-page",
     "google-indexing-time-study-methodology",
-    "google-indexing-time-study-baseline"
+    "orphan-pages-seo"
   ]
 }
 ---
@@ -405,6 +405,8 @@ Investigate four categories.
 **A. The report is behind the URL’s current state**
 
 The Page Indexing report and the per-URL indexed result may reflect an earlier crawl. Compare the last crawl date with your latest changes and run a live test.
+
+If the URL exists in the CMS or sitemap but receives no crawlable internal link, test it as an orphan candidate with the [orphan-page audit playbook](/articles/orphan-pages-seo).
 
 ## Boundaries
 

@@ -62,7 +62,8 @@
     "crawled-currently-not-indexed",
     "server-error-5xx",
     "excluded-by-noindex",
-    "nextjs-page-visible-browser-missing-google"
+    "nextjs-page-visible-browser-missing-google",
+    "crawlable-javascript-links"
   ]
 }
 ---
@@ -251,6 +252,8 @@ A successful live test is evidence that the current page is renderable. It is no
 **Every error is fixed at once.** The team cannot identify which dependency caused the missing content.
 
 **A successful live test is treated as indexed proof.** Canonicalization and selection remain separate.
+
+Rendered content can exist while its navigation remains uncrawlable. Verify link markup separately with [Crawlable JavaScript Links](/articles/crawlable-javascript-links).
 
 ## Completion criteria
 

@@ -34,7 +34,9 @@
     "technical-seo-baseline",
     "site-search-not-complete-index-checker",
     "infinite-scroll-pagination-seo",
-    "crawl-budget-when-it-matters"
+    "crawl-budget-when-it-matters",
+    "orphan-pages-seo",
+    "xml-sitemap-lastmod"
   ],
   "citations": [
     {
@@ -229,6 +231,8 @@ No.
 
 A sitemap can accelerate discovery in some situations, but Google does not promise an indexing deadline or increased ranking. The file tells Google which canonical URLs the site considers important.
 
+A sitemap-only URL may be discoverable while remaining structurally disconnected from the site. Use the [orphan-page audit playbook](/articles/orphan-pages-seo) to compare crawl, CMS, sitemap, analytics, Search Console, log, and external inventories.
+
 ## Conclusion
 
 The claim that a sitemap makes internal links unnecessary is false.
@@ -262,3 +266,5 @@ technically accessible;
 useful enough to merit indexing.
 
 When those conditions hold, internal links and XML sitemaps reinforce one another rather than compete.
+
+When sitemap modification dates are generated automatically, use the [XML sitemap lastmod guide](/articles/xml-sitemap-lastmod) to distinguish meaningful page revisions from ordinary build time.

@@ -33,7 +33,8 @@
     "discovered-currently-not-indexed",
     "server-error-5xx",
     "nextjs-page-visible-browser-missing-google",
-    "infinite-scroll-pagination-seo"
+    "infinite-scroll-pagination-seo",
+    "xml-sitemap-lastmod"
   ],
   "citations": [
     {
@@ -302,3 +303,5 @@ The sitemap repair is complete when:
 - Search Console reports success or a later bounded check confirms the corrected file is awaiting processing rather than still failing.
 
 After success, monitor the Page Indexing report for the listed URLs. Do not treat the sitemap’s success status as proof that every page entered the index.
+
+Once the sitemap can be fetched and parsed, verify that its modification dates remain meaningful with the [XML sitemap lastmod guide](/articles/xml-sitemap-lastmod).
