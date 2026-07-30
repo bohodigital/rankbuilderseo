@@ -676,8 +676,11 @@ test("emits the Cloudflare Pages deployment artifacts", async () => {
   ]);
 
   const wrangler = await readFile(new URL("wrangler.jsonc", root), "utf8");
+  const viteConfig = await readFile(new URL("vite.config.ts", root), "utf8");
   assert.match(wrangler, /"name":\s*"rankbuilderseo"/);
   assert.match(wrangler, /"pages_build_output_dir":\s*"\.\/dist\/client"/);
+  assert.equal(wrangler.match(/"nodejs_compat"/g)?.length, 1);
+  assert.doesNotMatch(viteConfig, /compatibility_flags:\s*\[[^\]]*"nodejs_compat"/s);
 });
 
 test("emits scoped Pages X-Robots-Tag detach rules for static preview assets", async () => {
