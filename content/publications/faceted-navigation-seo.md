@@ -71,7 +71,7 @@
 
 ## Definition
 
-![Flowchart for controlling faceted navigation URLs from filter selection through normalization and response generation](/media/faceted-navigation-control-architecture.svg "A controlled faceted-navigation system decides which filter states can become crawlable URLs before it generates links.")
+![Flowchart for controlling faceted navigation URLs from filter selection through normalization and response generation](/media/faceted-navigation-control-architecture.png "A controlled faceted-navigation system decides which filter states can become crawlable URLs before it generates links.")
 
 Faceted navigation lets users narrow an inventory by selecting attributes such as category, brand, size, color, material, price, availability, location, rating, or date.
 
@@ -99,7 +99,7 @@ The solution is not “block all filters” or “index every combination.” It
 
 **Measure the theoretical state space**
 
-![Equations showing how single-select and multi-select facets multiply possible URL states](/media/faceted-navigation-url-growth.svg "Filter combinations can create enormous theoretical URL inventories before sorting, pagination, and parameter-order variants are added.")
+![Equations showing how single-select and multi-select facets multiply possible URL states](/media/faceted-navigation-url-growth.png "Filter combinations can create enormous theoretical URL inventories before sorting, pagination, and parameter-order variants are added.")
 
 Suppose facet `i` has `v_i` possible values.
 

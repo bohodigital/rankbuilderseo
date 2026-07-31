@@ -77,7 +77,7 @@
 
 ## Definition
 
-![Decision tree comparing redirects, canonicals, noindex, robots.txt, authentication, and 404 or 410 responses](/media/canonical-control-decision-tree.svg "Choose a URL control by deciding whether the original URL should remain accessible, searchable, and crawlable.")
+![Decision tree comparing redirects, canonicals, noindex, robots.txt, authentication, and 404 or 410 responses](/media/canonical-control-decision-tree.png "Choose a URL control by deciding whether the original URL should remain accessible, searchable, and crawlable.")
 
 A page can be duplicated, moved, hidden from search, blocked from crawling, protected from unauthorized users, or removed entirely. Those are different states. They require different controls.
 

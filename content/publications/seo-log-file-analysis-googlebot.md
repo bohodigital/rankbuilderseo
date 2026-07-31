@@ -77,7 +77,7 @@
 
 ## Preconditions
 
-![Pipeline from raw crawler request logs through verification, URL normalization, classification, aggregation, and diagnosis](/media/seo-log-analysis-pipeline.svg "A defensible crawl analysis preserves the raw source, verifies the requester, normalizes URLs, and records its limitations.")
+![Pipeline from raw crawler request logs through verification, URL normalization, classification, aggregation, and diagnosis](/media/seo-log-analysis-pipeline.png "A defensible crawl analysis preserves the raw source, verifies the requester, normalizes URLs, and records its limitations.")
 
 A log analysis begins by defining the question and the trust boundary.
 

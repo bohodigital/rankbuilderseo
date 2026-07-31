@@ -55,7 +55,7 @@
 
 ## Preconditions
 
-![Overlapping CMS, sitemap, analytics, log, external, and crawler inventories used to find orphan-page candidates](/media/orphan-page-inventory-overlap.svg "Orphan candidates appear when URLs known to one inventory are absent from the crawlable internal-link inventory.")
+![Overlapping CMS, sitemap, analytics, log, external, and crawler inventories used to find orphan-page candidates](/media/orphan-page-inventory-overlap.png "Orphan candidates appear when URLs known to one inventory are absent from the crawlable internal-link inventory.")
 
 An orphan-page audit requires more than a site crawl.
 
@@ -167,7 +167,7 @@ Assign one category:
 
 6. **Select the disposition.**
 
-![Decision tree for linking, merging, redirecting, noindexing, removing, or retaining an orphan page](/media/orphan-page-disposition-tree.svg "An orphan candidate needs classification before anyone adds another sitewide link.")
+   ![Decision tree for linking, merging, redirecting, noindexing, removing, or retaining an orphan page](/media/orphan-page-disposition-tree.png "An orphan candidate needs classification before anyone adds another sitewide link.")
 
 Apply:
 

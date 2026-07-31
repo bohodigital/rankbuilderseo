@@ -55,7 +55,7 @@
 
 ## Definition
 
-![Flowchart showing a crawlable anchor link surviving HTML extraction, JavaScript enhancement, and destination requests](/media/crawlable-javascript-link-lifecycle.svg "A dependable internal link exposes a resolvable destination before JavaScript enhancement is required.")
+![Flowchart showing a crawlable anchor link surviving HTML extraction, JavaScript enhancement, and destination requests](/media/crawlable-javascript-link-lifecycle.png "A dependable internal link exposes a resolvable destination before JavaScript enhancement is required.")
 
 A clickable interface element is not automatically a web link.
 

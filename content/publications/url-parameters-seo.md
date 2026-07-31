@@ -62,7 +62,7 @@
 
 ## Definition
 
-![Matrix classifying URL parameters by stability, content effect, crawl policy, and index policy](/media/url-parameter-classification-matrix.svg "Parameter purpose and stability should be classified before canonical, crawl, or index controls are selected.")
+![Matrix classifying URL parameters by stability, content effect, crawl policy, and index policy](/media/url-parameter-classification-matrix.png "Parameter purpose and stability should be classified before canonical, crawl, or index controls are selected.")
 
 A query parameter is a key-value instruction appended to a URL after a question mark.
 

@@ -47,7 +47,7 @@
 
 ## Definition
 
-![Decision tree for preserving, updating, or omitting an XML sitemap lastmod value](/media/xml-sitemap-lastmod-decision-tree.svg "A trustworthy lastmod value describes a meaningful page change rather than the latest site build.")
+![Decision tree for preserving, updating, or omitting an XML sitemap lastmod value](/media/xml-sitemap-lastmod-decision-tree.png "A trustworthy lastmod value describes a meaningful page change rather than the latest site build.")
 
 The optional XML sitemap `<lastmod>` element describes the date or timestamp of the last significant modification to the page identified by `<loc>`.
 

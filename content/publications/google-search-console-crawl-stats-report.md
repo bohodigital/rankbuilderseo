@@ -56,7 +56,7 @@
 
 ## Preconditions
 
-![Map of Crawl Stats metrics including requests, download size, response time, host status, response codes, file types, purpose, and crawler type](/media/crawl-stats-metric-map.svg "The Crawl Stats report summarizes crawler activity and serving conditions, not search performance outcomes.")
+![Map of Crawl Stats metrics including requests, download size, response time, host status, response codes, file types, purpose, and crawler type](/media/crawl-stats-metric-map.png "The Crawl Stats report summarizes crawler activity and serving conditions, not search performance outcomes.")
 
 Use the Crawl Stats report when the question concerns Google crawling history or serving conditions.
 
@@ -197,7 +197,7 @@ Reasons include:
 
 ## Failure cases
 
-![Matrix connecting Crawl Stats observations to possible causes, confirming evidence, and invalid conclusions](/media/crawl-stats-diagnostic-matrix.svg "A Crawl Stats observation becomes useful only after it is connected to evidence that can distinguish competing explanations.")
+![Matrix connecting Crawl Stats observations to possible causes, confirming evidence, and invalid conclusions](/media/crawl-stats-diagnostic-matrix.png "A Crawl Stats observation becomes useful only after it is connected to evidence that can distinguish competing explanations.")
 
 Do not interpret every decline as a penalty.
 
