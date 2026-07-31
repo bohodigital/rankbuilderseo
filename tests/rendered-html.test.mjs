@@ -70,6 +70,14 @@ const articleSlugs = [
   "google-search-console-crawl-stats-report",
   "seo-log-file-analysis-googlebot",
   "xml-sitemap-lastmod",
+  "domain-migration-seo",
+  "change-url-without-losing-seo",
+  "http-to-https-seo-migration",
+  "www-vs-non-www-seo",
+  "trailing-slash-seo",
+  "staging-site-indexed-google",
+  "redirect-mapping-site-migration",
+  "post-migration-seo-monitoring",
 ];
 
 const expectedLegacyGuideRedirects = Object.freeze({
