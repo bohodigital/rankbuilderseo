@@ -58,17 +58,13 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         />
         <script
           defer
-          src="https://analytics.bohodigitalservices.com/script.js"
-          data-website-id="297e47a1-fd92-42f1-a34d-5a7698e8a58f"
-          data-domains="rankbuilderseo.com,www.rankbuilderseo.com"
-          data-do-not-track="true"
-          data-exclude-search="true"
-        />
-        <script
-          defer
           src="/ga4-bootstrap.js"
-          data-ga4-bootstrap="rankbuilder-v1"
-          data-ga4-measurement-id="G-3VYXZ0H1P8"
+          data-analytics-bootstrap="boho-v2"
+          data-umami-script-url="https://analytics.bohodigitalservices.com/script.js"
+          data-umami-website-id="297e47a1-fd92-42f1-a34d-5a7698e8a58f"
+          data-umami-domains="rankbuilderseo.com,www.rankbuilderseo.com"
+          data-ga-id="G-3VYXZ0H1P8"
+          data-ga-public-hosts="rankbuilderseo.com,www.rankbuilderseo.com"
         />
       </head>
       <body>{children}</body>
