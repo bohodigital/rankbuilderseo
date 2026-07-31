@@ -31,7 +31,9 @@
       "why-google-isnt-indexing-your-page",
       "why-request-indexing-is-not-working",
       "xml-sitemap-lastmod",
-      "staging-site-indexed-google"
+      "staging-site-indexed-google",
+      "sitemap-in-robots-txt",
+      "xml-sitemap-size-limits"
     ],
     "relatedTools": [
       "/tools/indexability-inspector"
