@@ -33,7 +33,9 @@
       "xml-sitemap-lastmod",
       "staging-site-indexed-google",
       "sitemap-in-robots-txt",
-      "xml-sitemap-size-limits"
+      "xml-sitemap-size-limits",
+      "breadcrumb-structured-data",
+      "structured-data-valid-no-rich-result"
     ],
     "relatedTools": [
       "/tools/indexability-inspector"
@@ -129,7 +131,10 @@
       "cloudflare-pages-workers-seo",
       "nextjs-page-visible-browser-missing-google",
       "shopify-canonical-urls-products-collections-variants",
-      "wordpress-site-accidentally-noindexed"
+      "wordpress-site-accidentally-noindexed",
+      "json-ld-vs-microdata-rdfa",
+      "organization-structured-data",
+      "product-structured-data-snippets-merchant-listings"
     ],
     "secondaryPublications": [
       "excluded-by-noindex",
