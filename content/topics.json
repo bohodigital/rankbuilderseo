@@ -38,7 +38,10 @@
       "structured-data-valid-no-rich-result",
       "google-indexing-api-scope-limitations",
       "robots-txt-vs-noindex-x-robots-tag",
-      "search-console-removals-tool-temporary-permanent"
+      "search-console-removals-tool-temporary-permanent",
+      "search-console-domain-vs-url-prefix-property",
+      "search-console-site-verification-methods",
+      "search-console-users-permissions-owners"
     ],
     "relatedTools": [
       "/tools/indexability-inspector"
@@ -165,7 +168,9 @@
       "search-console-is-not-analytics",
       "seo-log-file-analysis-googlebot",
       "zero-click-search-study-notes",
-      "post-migration-seo-monitoring"
+      "post-migration-seo-monitoring",
+      "search-console-bulk-data-export-bigquery",
+      "search-console-performance-data-limits"
     ],
     "secondaryPublications": [
       "what-an-seo-report-should-answer",
