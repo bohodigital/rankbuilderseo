@@ -35,7 +35,10 @@
       "sitemap-in-robots-txt",
       "xml-sitemap-size-limits",
       "breadcrumb-structured-data",
-      "structured-data-valid-no-rich-result"
+      "structured-data-valid-no-rich-result",
+      "google-indexing-api-scope-limitations",
+      "robots-txt-vs-noindex-x-robots-tag",
+      "search-console-removals-tool-temporary-permanent"
     ],
     "relatedTools": [
       "/tools/indexability-inspector"
@@ -134,7 +137,9 @@
       "wordpress-site-accidentally-noindexed",
       "json-ld-vs-microdata-rdfa",
       "organization-structured-data",
-      "product-structured-data-snippets-merchant-listings"
+      "product-structured-data-snippets-merchant-listings",
+      "googlebot-crawl-delay-crawl-rate",
+      "verify-googlebot-requests-dns-ip-ranges"
     ],
     "secondaryPublications": [
       "excluded-by-noindex",
