@@ -142,7 +142,12 @@
       "organization-structured-data",
       "product-structured-data-snippets-merchant-listings",
       "googlebot-crawl-delay-crawl-rate",
-      "verify-googlebot-requests-dns-ip-ranges"
+      "verify-googlebot-requests-dns-ip-ranges",
+      "favicon-not-showing-google-search",
+      "google-search-site-name",
+      "google-sitelinks-how-they-work",
+      "google-title-link-rewrites",
+      "meta-description-not-used"
     ],
     "secondaryPublications": [
       "excluded-by-noindex",
