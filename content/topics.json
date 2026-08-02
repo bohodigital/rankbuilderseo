@@ -42,7 +42,8 @@
       "search-console-domain-vs-url-prefix-property",
       "search-console-site-verification-methods",
       "search-console-users-permissions-owners",
-      "locale-adaptive-pages-seo"
+      "locale-adaptive-pages-seo",
+      "search-console-change-of-address-tool"
     ],
     "relatedTools": [
       "/tools/indexability-inspector"
@@ -71,7 +72,10 @@
       "change-url-without-losing-seo",
       "domain-migration-seo",
       "http-to-https-seo-migration",
-      "redirect-mapping-site-migration"
+      "redirect-mapping-site-migration",
+      "domain-migration-seo-playbook",
+      "url-migration-redirect-mapping",
+      "website-maintenance-503-seo"
     ],
     "relatedTools": [
       "/tools/redirect-chain-visualizer"
@@ -117,7 +121,11 @@
       "crawlable-javascript-links",
       "infinite-scroll-pagination-seo",
       "javascript-seo-crawling-rendering-indexing",
-      "rendered-html-missing-content"
+      "rendered-html-missing-content",
+      "dynamic-rendering-deprecated",
+      "javascript-seo-rendering-pipeline",
+      "javascript-structured-data",
+      "lazy-loading-seo"
     ],
     "secondaryPublications": [
       "nextjs-page-visible-browser-missing-google",
@@ -152,7 +160,8 @@
       "meta-description-not-used",
       "hreflang-implementation-guide",
       "hreflang-x-default",
-      "international-seo-url-structure"
+      "international-seo-url-structure",
+      "hosting-cdn-migration-seo"
     ],
     "secondaryPublications": [
       "excluded-by-noindex",
