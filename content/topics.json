@@ -41,7 +41,8 @@
       "search-console-removals-tool-temporary-permanent",
       "search-console-domain-vs-url-prefix-property",
       "search-console-site-verification-methods",
-      "search-console-users-permissions-owners"
+      "search-console-users-permissions-owners",
+      "locale-adaptive-pages-seo"
     ],
     "relatedTools": [
       "/tools/indexability-inspector"
@@ -94,7 +95,8 @@
       "google-chose-different-canonical",
       "url-parameters-seo",
       "trailing-slash-seo",
-      "www-vs-non-www-seo"
+      "www-vs-non-www-seo",
+      "multilingual-canonical-tags"
     ],
     "secondaryPublications": [
       "shopify-canonical-urls-products-collections-variants",
@@ -147,7 +149,10 @@
       "google-search-site-name",
       "google-sitelinks-how-they-work",
       "google-title-link-rewrites",
-      "meta-description-not-used"
+      "meta-description-not-used",
+      "hreflang-implementation-guide",
+      "hreflang-x-default",
+      "international-seo-url-structure"
     ],
     "secondaryPublications": [
       "excluded-by-noindex",
