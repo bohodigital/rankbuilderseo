@@ -77,7 +77,8 @@
       "domain-migration-seo-playbook",
       "url-migration-redirect-mapping",
       "website-maintenance-503-seo",
-      "redirect-loop-debugging-playbook"
+      "redirect-loop-debugging-playbook",
+      "http-304-not-modified-seo"
     ],
     "relatedTools": [
       "/tools/redirect-chain-visualizer"
@@ -168,7 +169,8 @@
       "hreflang-x-default",
       "international-seo-url-structure",
       "hosting-cdn-migration-seo",
-      "cloudflare-cache-rules-seo"
+      "cloudflare-cache-rules-seo",
+      "vary-header-seo-dynamic-serving"
     ],
     "secondaryPublications": [
       "excluded-by-noindex",
@@ -197,7 +199,11 @@
       "post-migration-seo-monitoring",
       "search-console-bulk-data-export-bigquery",
       "search-console-performance-data-limits",
-      "search-console-average-position-not-fixed-rank"
+      "search-console-average-position-not-fixed-rank",
+      "ai-generated-content-search-spam-claim-check",
+      "search-console-16-month-data-retention",
+      "search-console-generative-ai-performance-report",
+      "search-console-regex-filters-re2"
     ],
     "secondaryPublications": [
       "what-an-seo-report-should-answer",
@@ -224,7 +230,11 @@
       "seo-pricing-without-fairy-tales",
       "what-an-seo-report-should-answer",
       "compare-seo-proposals",
-      "seo-case-study-verification-checklist"
+      "seo-case-study-verification-checklist",
+      "routine-disavow-files-backlink-hygiene",
+      "seo-proposal-scope-checklist",
+      "seo-strategy-vs-implementation-cost",
+      "seo-vendor-offboarding-playbook"
     ],
     "secondaryPublications": [
       "search-console-is-not-analytics",
