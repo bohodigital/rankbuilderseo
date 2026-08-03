@@ -43,7 +43,8 @@
       "search-console-site-verification-methods",
       "search-console-users-permissions-owners",
       "locale-adaptive-pages-seo",
-      "search-console-change-of-address-tool"
+      "search-console-change-of-address-tool",
+      "sitemap-submission-does-not-force-indexing"
     ],
     "relatedTools": [
       "/tools/indexability-inspector"
@@ -75,7 +76,8 @@
       "redirect-mapping-site-migration",
       "domain-migration-seo-playbook",
       "url-migration-redirect-mapping",
-      "website-maintenance-503-seo"
+      "website-maintenance-503-seo",
+      "redirect-loop-debugging-playbook"
     ],
     "relatedTools": [
       "/tools/redirect-chain-visualizer"
@@ -100,7 +102,9 @@
       "url-parameters-seo",
       "trailing-slash-seo",
       "www-vs-non-www-seo",
-      "multilingual-canonical-tags"
+      "multilingual-canonical-tags",
+      "canonical-tags-vs-301-redirects",
+      "canonicalization-qa-checklist"
     ],
     "secondaryPublications": [
       "shopify-canonical-urls-products-collections-variants",
@@ -125,7 +129,9 @@
       "dynamic-rendering-deprecated",
       "javascript-seo-rendering-pipeline",
       "javascript-structured-data",
-      "lazy-loading-seo"
+      "lazy-loading-seo",
+      "googlebot-rendering-queue-documentation-note",
+      "server-side-static-client-side-rendering-seo"
     ],
     "secondaryPublications": [
       "nextjs-page-visible-browser-missing-google",
@@ -161,7 +167,8 @@
       "hreflang-implementation-guide",
       "hreflang-x-default",
       "international-seo-url-structure",
-      "hosting-cdn-migration-seo"
+      "hosting-cdn-migration-seo",
+      "cloudflare-cache-rules-seo"
     ],
     "secondaryPublications": [
       "excluded-by-noindex",
@@ -189,7 +196,8 @@
       "zero-click-search-study-notes",
       "post-migration-seo-monitoring",
       "search-console-bulk-data-export-bigquery",
-      "search-console-performance-data-limits"
+      "search-console-performance-data-limits",
+      "search-console-average-position-not-fixed-rank"
     ],
     "secondaryPublications": [
       "what-an-seo-report-should-answer",
@@ -214,7 +222,9 @@
       "local-seo-provider-scorecard",
       "ranking-guarantees",
       "seo-pricing-without-fairy-tales",
-      "what-an-seo-report-should-answer"
+      "what-an-seo-report-should-answer",
+      "compare-seo-proposals",
+      "seo-case-study-verification-checklist"
     ],
     "secondaryPublications": [
       "search-console-is-not-analytics",
