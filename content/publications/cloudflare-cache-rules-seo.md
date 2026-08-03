@@ -14,8 +14,8 @@
   "author": "rank-builder-research-desk",
   "editor": "rank-builder-editorial-desk",
   "publishedAt": "2026-08-02",
-  "revisedAt": "2026-08-02",
-  "revisionNote": "Citation IDs were namespaced for the global RankBuilder registry.",
+  "revisedAt": "2026-08-03",
+  "revisionNote": "Added HTTP 103 Early Hints as related reading. The prior global citation-ID normalization remains unchanged.",
   "directAnswer": "Cloudflare caching becomes an SEO problem when the edge serves a different status, header set, redirect, canonical, robots rule, or page body than the origin owner intended. Treat cache configuration as a response-control system: document eligibility, cache keys, rule order, TTLs, bypasses, and purge methods, then verify the final response from more than one location.",
   "takeaways": [
     "Cloudflare does not cache ordinary HTML by default, but Cache Rules can make HTML eligible.",
@@ -68,7 +68,7 @@
     "redirect-loop-debugging-playbook",
     "cloudflare-pages-workers-seo",
     "hosting-cdn-migration-seo",
-    "website-maintenance-503-seo"
+    "http-103-early-hints-seo"
   ]
 }
 ---

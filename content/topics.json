@@ -78,7 +78,8 @@
       "url-migration-redirect-mapping",
       "website-maintenance-503-seo",
       "redirect-loop-debugging-playbook",
-      "http-304-not-modified-seo"
+      "http-304-not-modified-seo",
+      "http-103-early-hints-seo"
     ],
     "relatedTools": [
       "/tools/redirect-chain-visualizer"
@@ -170,7 +171,8 @@
       "international-seo-url-structure",
       "hosting-cdn-migration-seo",
       "cloudflare-cache-rules-seo",
-      "vary-header-seo-dynamic-serving"
+      "vary-header-seo-dynamic-serving",
+      "ai-mode-vs-ai-overviews"
     ],
     "secondaryPublications": [
       "excluded-by-noindex",

@@ -14,7 +14,8 @@
   "author": "rank-builder-research-desk",
   "editor": "rank-builder-editorial-desk",
   "publishedAt": "2026-08-02",
-  "revisedAt": "2026-08-02",
+  "revisedAt": "2026-08-03",
+  "revisionNote": "Added AI Mode vs. AI Overviews as related reading to support the incoming-link requirement for the new comparison article.",
   "directAnswer": "Google introduced dedicated Search Console Generative AI performance reports on June 3, 2026, beginning with a subset of sites. The view isolates supported visibility data, while that activity remains included in broader Performance reporting.",
   "takeaways": [
     "The dedicated report began rolling out to a subset of properties in June 2026.",
@@ -67,7 +68,8 @@
   "relatedContent": [
     "ai-generated-content-search-spam-claim-check",
     "search-console-16-month-data-retention",
-    "ai-overviews-traffic-claims"
+    "ai-overviews-traffic-claims",
+    "ai-mode-vs-ai-overviews"
   ]
 }
 ---
