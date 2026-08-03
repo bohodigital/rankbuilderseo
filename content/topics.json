@@ -44,7 +44,8 @@
       "search-console-users-permissions-owners",
       "locale-adaptive-pages-seo",
       "search-console-change-of-address-tool",
-      "sitemap-submission-does-not-force-indexing"
+      "sitemap-submission-does-not-force-indexing",
+      "translated-results-google-search-data-note"
     ],
     "relatedTools": [
       "/tools/indexability-inspector"
@@ -133,7 +134,8 @@
       "javascript-structured-data",
       "lazy-loading-seo",
       "googlebot-rendering-queue-documentation-note",
-      "server-side-static-client-side-rendering-seo"
+      "server-side-static-client-side-rendering-seo",
+      "content-security-policy-seo-checklist"
     ],
     "secondaryPublications": [
       "nextjs-page-visible-browser-missing-google",
@@ -172,7 +174,10 @@
       "hosting-cdn-migration-seo",
       "cloudflare-cache-rules-seo",
       "vary-header-seo-dynamic-serving",
-      "ai-mode-vs-ai-overviews"
+      "ai-mode-vs-ai-overviews",
+      "expired-jobposting-markup-seo-claim-check",
+      "google-news-transparency-checklist",
+      "review-gating-local-seo-data-note"
     ],
     "secondaryPublications": [
       "excluded-by-noindex",
@@ -206,7 +211,8 @@
       "search-console-16-month-data-retention",
       "search-console-generative-ai-performance-report",
       "search-console-regex-filters-re2",
-      "search-console-api-export-workflow"
+      "search-console-api-export-workflow",
+      "survivorship-bias-seo-reporting"
     ],
     "secondaryPublications": [
       "what-an-seo-report-should-answer",
@@ -238,7 +244,11 @@
       "seo-proposal-scope-checklist",
       "seo-strategy-vs-implementation-cost",
       "seo-vendor-offboarding-playbook",
-      "seo-agency-domain-registrar-access"
+      "seo-agency-domain-registrar-access",
+      "seo-12-month-contract-claim-check",
+      "seo-advisory-vs-implementation-managed-service",
+      "seo-proposal-bid-normalization-playbook",
+      "seo-vendor-security-due-diligence-playbook"
     ],
     "secondaryPublications": [
       "search-console-is-not-analytics",
