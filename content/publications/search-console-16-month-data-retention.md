@@ -14,7 +14,8 @@
   "author": "rank-builder-research-desk",
   "editor": "rank-builder-editorial-desk",
   "publishedAt": "2026-08-02",
-  "revisedAt": "2026-08-02",
+  "revisedAt": "2026-08-03",
+  "revisionNote": "Added the Search Console API export workflow as related implementation guidance.",
   "directAnswer": "Search Console’s Performance reporting offers a rolling 16 months of data. Organizations that need longer comparisons should begin scheduled exports before data ages out, preserving raw extracts separately from transformed reporting tables.",
   "takeaways": [
     "The rolling 16-month window eventually removes old comparison periods.",
@@ -67,7 +68,8 @@
   "relatedContent": [
     "search-console-regex-filters-re2",
     "search-console-generative-ai-performance-report",
-    "search-console-bulk-data-export-bigquery"
+    "search-console-bulk-data-export-bigquery",
+    "search-console-api-export-workflow"
   ]
 }
 ---

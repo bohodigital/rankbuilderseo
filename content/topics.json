@@ -205,7 +205,8 @@
       "ai-generated-content-search-spam-claim-check",
       "search-console-16-month-data-retention",
       "search-console-generative-ai-performance-report",
-      "search-console-regex-filters-re2"
+      "search-console-regex-filters-re2",
+      "search-console-api-export-workflow"
     ],
     "secondaryPublications": [
       "what-an-seo-report-should-answer",
@@ -236,7 +237,8 @@
       "routine-disavow-files-backlink-hygiene",
       "seo-proposal-scope-checklist",
       "seo-strategy-vs-implementation-cost",
-      "seo-vendor-offboarding-playbook"
+      "seo-vendor-offboarding-playbook",
+      "seo-agency-domain-registrar-access"
     ],
     "secondaryPublications": [
       "search-console-is-not-analytics",
