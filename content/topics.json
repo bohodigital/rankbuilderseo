@@ -45,7 +45,10 @@
       "locale-adaptive-pages-seo",
       "search-console-change-of-address-tool",
       "sitemap-submission-does-not-force-indexing",
-      "translated-results-google-search-data-note"
+      "translated-results-google-search-data-note",
+      "discover-ranking-systems-claim-check",
+      "hacked-spam-cleanup-playbook",
+      "infinite-calendar-urls-crawl-trap"
     ],
     "relatedTools": [
       "/tools/indexability-inspector"
@@ -80,7 +83,9 @@
       "website-maintenance-503-seo",
       "redirect-loop-debugging-playbook",
       "http-304-not-modified-seo",
-      "http-103-early-hints-seo"
+      "http-103-early-hints-seo",
+      "http-429-vs-503-googlebot-data-note",
+      "http3-google-ranking-claim-check"
     ],
     "relatedTools": [
       "/tools/redirect-chain-visualizer"
@@ -212,7 +217,10 @@
       "search-console-generative-ai-performance-report",
       "search-console-regex-filters-re2",
       "search-console-api-export-workflow",
-      "survivorship-bias-seo-reporting"
+      "survivorship-bias-seo-reporting",
+      "ai-overviews-ai-mode-search-console-audit",
+      "ga4-cross-domain-organic-conversion-checklist",
+      "ga4-known-bot-filtering-data-note"
     ],
     "secondaryPublications": [
       "what-an-seo-report-should-answer",
@@ -248,7 +256,9 @@
       "seo-12-month-contract-claim-check",
       "seo-advisory-vs-implementation-managed-service",
       "seo-proposal-bid-normalization-playbook",
-      "seo-vendor-security-due-diligence-playbook"
+      "seo-vendor-security-due-diligence-playbook",
+      "revenue-share-seo-pricing-attribution",
+      "seo-vendor-ai-use-disclosure-checklist"
     ],
     "secondaryPublications": [
       "search-console-is-not-analytics",
