@@ -81,7 +81,7 @@ export function SiteFooter() {
       <div className="shell footer-top">
         <div>
           <Link className="footer-brand" href="/" prefetch={false} aria-label="Rank Builder SEO home">
-            <img src="/brand-mark.svg" alt="" aria-hidden="true" />
+            <img src="/favicon.svg" alt="" aria-hidden="true" />
             <span><strong>Rank Builder</strong><small>SEO</small></span>
           </Link>
           <h2>Useful SEO answers, on repeat.</h2>

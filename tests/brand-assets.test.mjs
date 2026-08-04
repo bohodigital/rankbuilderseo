@@ -46,5 +46,5 @@ test("dual-color RB identity is wired to site chrome, crawlers, and device icon 
   }
   assert.match(structuredData, /logo: `\$\{origin\}\/icon-512\.png`/);
   assert.match(siteChrome, /src="\/brand-mark-light\.svg"/);
-  assert.match(siteChrome, /src="\/brand-mark\.svg"/);
+  assert.match(siteChrome, /className="footer-brand"[\s\S]*src="\/favicon\.svg"/);
 });
