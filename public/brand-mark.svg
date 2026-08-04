@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 360" role="img" aria-labelledby="title">
+  <title id="title">Rank Builder SEO mark</title>
+  <g fill="#ff5147">
+    <path d="M0 294h40v60H0z"/>
+    <path d="M54 248h40v106H54z"/>
+    <path d="M108 192h40v162h-40z"/>
+    <path d="M108 0h112c72 0 114 36 114 97 0 43-24 74-65 89l84 168h-81l-72-126h-30v126h-62V0zm62 56v89h44c36 0 55-16 55-45 0-29-19-44-55-44h-44z"/>
+  </g>
+  <path fill="#f7f6f2" fill-rule="evenodd" d="M213 0h52c62 0 100 30 100 82 0 35-19 61-49 73 39 11 60 40 60 80 0 59-42 91-111 91h-48l-36-63h78c35 0 53-14 53-40 0-26-18-40-53-40h-44v-52h39c31 0 47-13 47-38 0-25-16-37-47-37h-41V0z"/>
+</svg>
