@@ -7,11 +7,12 @@
   },
   "scripts": {
     "dev": "vinext dev",
-    "prebuild": "npm run content:check",
+    "prebuild": "npm run content:runtime && npm run content:check",
     "build": "vinext build",
-    "build:pages": "npm run content:check && vinext build && node scripts/prepare-pages.mjs",
+    "build:pages": "npm run content:runtime && npm run content:check && vinext build && node scripts/prepare-pages.mjs",
     "audit:requests": "node scripts/audit-request-budget.mjs",
     "content:check": "node --experimental-strip-types scripts/content-check.mjs",
+    "content:runtime": "node --experimental-strip-types scripts/generate-runtime-content.mjs",
     "content:new": "node --experimental-strip-types scripts/content-new.mjs",
     "content:links": "node --experimental-strip-types scripts/check-source-links.mjs",
     "release:links": "node --experimental-strip-types scripts/release-source-review.mjs",
@@ -19,8 +20,9 @@
     "start": "vinext start",
     "test": "npm run build:pages && node --test tests/*.test.mjs",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next",
+    "pretypecheck": "npm run content:runtime",
     "typecheck": "tsc --noEmit --incremental false",
-    "verify": "npm run content:check && npm run typecheck && npm run lint && npm test && npm run build"
+    "verify": "npm run content:runtime && npm run content:check && npm run typecheck && npm run lint && npm test && npm run build"
   },
   "dependencies": {
     "next": "16.2.6",

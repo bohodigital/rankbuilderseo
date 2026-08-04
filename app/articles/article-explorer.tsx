@@ -2,14 +2,15 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import type { Publication, Topic } from "../content/registry";
+import type { PublicationSummary } from "../content/publications";
+import type { Topic } from "../content/registry";
 
 export function ArticleExplorer({
   articles,
   topics,
   topicAssignments,
 }: {
-  articles: Publication[];
+  articles: PublicationSummary[];
   topics: Topic[];
   topicAssignments: Record<string, string>;
 }) {

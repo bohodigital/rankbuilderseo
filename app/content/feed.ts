@@ -1,4 +1,4 @@
-import type { Publication } from "./registry";
+import type { PublicationSummary } from "./publications";
 
 const origin = "https://rankbuilderseo.com";
 const feedUrl = origin + "/feed.xml";
@@ -16,7 +16,7 @@ function atomDate(value: string): string {
   return value + "T00:00:00Z";
 }
 
-export function buildAtomFeed(publications: readonly Publication[]): string {
+export function buildAtomFeed(publications: readonly PublicationSummary[]): string {
   const updated = publications.reduce(
     (latest, publication) => publication.revisedAt > latest ? publication.revisedAt : latest,
     "1970-01-01",

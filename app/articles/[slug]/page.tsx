@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
-import { publicationBySlug, publicationRouteBySlug, routePublications } from "../../content/publications";
-import type { Publication } from "../../content/registry";
+import { loadPublicationBySlug, publicationBySlug, publicationRouteBySlug, routePublications, type PublicationSummary } from "../../content/publications";
 import { formatPublicationDate } from "../../content/registry";
 import { articleStructuredData, serializeStructuredData } from "../../content/structured-data";
 import { stableEntries } from "../../content/stable-keys";
@@ -62,11 +61,12 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
   const route = publicationRouteBySlug.get(slug);
   if (!route) notFound();
   if (route.exposure.route === "redirect") redirect(route.exposure.redirectTo!);
-  const publication = route.publication;
+  const publication = await loadPublicationBySlug(slug);
+  if (!publication) notFound();
   const topic = topicByPublicationSlug.get(publication.slug);
   const related = publication.relatedContent
     .map((relatedSlug) => publicationBySlug.get(relatedSlug))
-    .filter((item): item is Publication => Boolean(item));
+    .filter((item): item is PublicationSummary => Boolean(item));
   const relatedHeading = related.length > 0 && related.every((item) => item.series === publication.series)
     ? "Continue this series"
     : "Related reading";

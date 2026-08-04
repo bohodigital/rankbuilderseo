@@ -1,7 +1,7 @@
 import source from "../../content/topics.json?raw";
 import { glossaryBySlug } from "./glossary";
-import { publicationBySlug, publicationRegistry } from "./publications";
-import { documentLinkTargets, parseTopicRegistrySource, type GlossaryEntry, type Publication } from "./registry";
+import { publicationBySlug, publicationRegistry, type PublicationSummary } from "./publications";
+import { parseTopicRegistrySource, type GlossaryEntry } from "./registry";
 
 const contentBuildTime = import.meta.env.RANK_BUILDER_CONTENT_BUILD_TIME;
 const contentBuildNow = new Date(contentBuildTime);
@@ -15,8 +15,8 @@ export const topicByPublicationSlug = new Map(
   topics.flatMap((topic) => topic.primaryPublications.map((publicationSlug) => [publicationSlug, topic] as const)),
 );
 
-export function topicPublications(slugs: readonly string[]): Publication[] {
-  return slugs.map((slug) => publicationBySlug.get(slug)).filter((item): item is Publication => Boolean(item));
+export function topicPublications(slugs: readonly string[]): PublicationSummary[] {
+  return slugs.map((slug) => publicationBySlug.get(slug)).filter((item): item is PublicationSummary => Boolean(item));
 }
 
 export function topicGlossaryEntries(topicSlug: string): GlossaryEntry[] {
@@ -24,10 +24,7 @@ export function topicGlossaryEntries(topicSlug: string): GlossaryEntry[] {
   if (!topic) return [];
   const explicit = new Set(topic.relatedGlossary);
   for (const publication of topicPublications([...topic.primaryPublications, ...topic.secondaryPublications])) {
-    for (const href of documentLinkTargets(publication.document)) {
-      const slug = href.match(/^\/glossary\/([a-z0-9-]+)(?:#.*)?$/)?.[1];
-      if (slug) explicit.add(slug);
-    }
+    for (const slug of publication.glossaryLinks) explicit.add(slug);
   }
   return [...explicit]
     .map((slug) => glossaryBySlug.get(slug))

@@ -511,11 +511,11 @@ export function loadPublicationRegistry(sources: Record<string, string>, options
   return publications.sort((left, right) => right.publishedAt.localeCompare(left.publishedAt) || left.slug.localeCompare(right.slug));
 }
 
-export function publicationsForSurface(
-  publications: readonly Publication[],
+export function publicationsForSurface<T extends LifecycleRecord>(
+  publications: readonly T[],
   surface: "route" | "feed" | "sitemap" | "related" | "index",
   at = new Date(),
-): Publication[] {
+): T[] {
   return publications.filter((publication) => {
     const exposure = publicationExposure(publication, at);
     if (surface === "route") return exposure.route !== "hidden";
@@ -564,7 +564,7 @@ function optionalDate(value: unknown, label: string): string | undefined {
   return value === undefined ? undefined : isoDate(value, label);
 }
 
-export function parseExperimentRegistrySource(source: string, publications: readonly Publication[]): Experiment[] {
+export function parseExperimentRegistrySource(source: string, publications: readonly Pick<Publication, "slug">[]): Experiment[] {
   const { metadata } = parseFrontMatter(source, "content/experiments.md");
   if (!Array.isArray(metadata.experiments)) fail("content/experiments.md.experiments", "must be an array");
   const publicationSlugs = new Set(publications.map(({ slug }) => slug));
@@ -694,7 +694,7 @@ function optionalRouteList(value: unknown, label: string, allowed: ReadonlySet<s
 
 export function parseTopicRegistrySource(
   source: string,
-  publications: readonly Publication[],
+  publications: readonly (LifecycleRecord & Pick<Publication, "slug">)[],
   glossary: readonly GlossaryEntry[],
   at = new Date(),
 ): Topic[] {

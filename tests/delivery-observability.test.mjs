@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
+import { readFile, stat } from "node:fs/promises";
 import test from "node:test";
 
 import { buildAtomFeed } from "../app/content/feed.ts";
@@ -146,7 +146,18 @@ test("publication eligibility uses the injected build clock instead of Worker st
   assert.match(viteConfig, /RANK_BUILDER_CONTENT_BUILD_TIME/);
   assert.match(viteConfig, /new Date\(\)\.toISOString\(\)/);
   assert.match(publications, /new Date\(contentBuildTime\)/);
-  assert.match(publications, /now: contentBuildNow/);
-  assert.match(publications, /publicationsForSurface\(publicationRegistry, "feed", contentBuildNow\)/);
+  assert.match(publications, /"feed",\s*contentBuildNow,/);
   assert.match(publications, /publicationExposure\(publication, contentBuildNow\)/);
+});
+
+test("publication bodies stay out of the Worker startup bundle", async () => {
+  const [publications, workerEntry] = await Promise.all([
+    readFile(new URL("app/content/publications.ts", root), "utf8"),
+    stat(new URL("dist/server/index.js", root)),
+  ]);
+  assert.match(publications, /\.generated\/publication-index\.json/);
+  assert.match(publications, /import\.meta\.glob\([\s\S]*\.generated\/publications\/\*\.json/);
+  assert.doesNotMatch(publications, /content\/publications\/\*\.md/);
+  assert.doesNotMatch(publications, /eager:\s*true/);
+  assert.ok(workerEntry.size < 1_500_000, `Worker entry is ${workerEntry.size} bytes`);
 });

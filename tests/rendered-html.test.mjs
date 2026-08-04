@@ -15,70 +15,12 @@ const batch01Articles = [
   { slug: "google-search-console-url-inspection", title: "How to Use Google Search Console URL Inspection to Diagnose Indexing", route: "/articles/google-search-console-url-inspection" },
 ];
 
-const articleSlugs = [
-  "how-to-read-an-seo-audit",
-  "technical-seo-baseline",
-  "seo-pricing-without-fairy-tales",
-  "ranking-guarantees",
-  "search-console-is-not-analytics",
-  "canonical-tags-when-they-work",
-  "seo-migration-launch-checklist",
-  "what-an-seo-report-should-answer",
-  "ai-overviews-traffic-claims",
-  "local-seo-provider-scorecard",
-  "internal-links-audit-by-template",
-  "zero-click-search-study-notes",
-  ...batch01Articles.map(({ slug }) => slug),
-  "crawled-currently-not-indexed",
-  "discovered-currently-not-indexed",
-  "excluded-by-noindex",
-  "google-chose-different-canonical",
-  "google-search-console-page-indexing-report",
-  "how-long-google-takes-to-index-page",
-  "url-blocked-by-robots-txt",
-  "page-with-redirect",
-  "redirect-error-search-console",
-  "soft-404",
-  "not-found-404",
-  "server-error-5xx",
-  "blocked-unauthorized-request-401",
-  "blocked-access-forbidden-403",
-  "blocked-other-4xx",
-  "alternate-page-proper-canonical-tag",
-  "duplicate-without-user-selected-canonical",
-  "indexed-though-blocked-by-robots-txt",
-  "sitemap-could-not-be-read",
-  "why-request-indexing-is-not-working",
-  "page-indexing-report-not-updating",
-  "internal-links-vs-xml-sitemaps",
-  "site-search-not-complete-index-checker",
-  "javascript-seo-crawling-rendering-indexing",
-  "rendered-html-missing-content",
-  "infinite-scroll-pagination-seo",
-  "crawl-budget-when-it-matters",
-  "wordpress-site-accidentally-noindexed",
-  "shopify-canonical-urls-products-collections-variants",
-  "nextjs-page-visible-browser-missing-google",
-  "cloudflare-pages-workers-seo",
-  "google-indexing-time-study-methodology",
-  "google-indexing-time-study-baseline",
-  "canonical-vs-redirect-vs-noindex",
-  "url-parameters-seo",
-  "faceted-navigation-seo",
-  "crawlable-javascript-links",
-  "orphan-pages-seo",
-  "google-search-console-crawl-stats-report",
-  "seo-log-file-analysis-googlebot",
-  "xml-sitemap-lastmod",
-  "domain-migration-seo",
-  "change-url-without-losing-seo",
-  "http-to-https-seo-migration",
-  "www-vs-non-www-seo",
-  "trailing-slash-seo",
-  "staging-site-indexed-google",
-  "redirect-mapping-site-migration",
-  "post-migration-seo-monitoring",
-];
+const publicationIndex = JSON.parse(
+  await readFile(new URL(".generated/publication-index.json", root), "utf8"),
+);
+const articleSlugs = publicationIndex
+  .filter(({ state }) => state === "published")
+  .map(({ slug }) => slug);
 
 const expectedLegacyGuideRedirects = Object.freeze({
   "ai-overviews-traffic-claims": "/articles/ai-overviews-traffic-claims",
@@ -206,6 +148,18 @@ test("renders the production homepage with metadata and analytics", async () => 
     1,
   );
   assert.doesNotMatch(html, /codex-preview|Your site is taking shape|<meta[^>]+name="robots"[^>]+content="[^"]*noindex/i);
+});
+
+test("keeps archive and article responses within Worker-safe content budgets", async () => {
+  const archive = await request("/articles");
+  assert.equal(archive.status, 200);
+  const archiveBody = await archive.text();
+  assert.ok(Buffer.byteLength(archiveBody) < 500_000);
+
+  const article = await request("/articles/ai-mode-vs-ai-overviews");
+  assert.equal(article.status, 200);
+  const articleBody = await article.text();
+  assert.ok(Buffer.byteLength(articleBody) < 200_000);
 });
 
 test("redirects www to the apex while preserving the request path", async () => {

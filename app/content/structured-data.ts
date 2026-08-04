@@ -1,3 +1,4 @@
+import type { PublicationSummary } from "./publications";
 import type { GlossaryEntry, Publication, Topic } from "./registry";
 
 const origin = "https://rankbuilderseo.com";
@@ -65,7 +66,7 @@ export function toolsCollectionStructuredData(): JsonRecord {
   };
 }
 
-export function topicStructuredData(topic: Topic, publications: readonly Publication[]): JsonRecord {
+export function topicStructuredData(topic: Topic, publications: readonly PublicationSummary[]): JsonRecord {
   const url = `${origin}/topics/${topic.slug}`;
   return {
     "@context": "https://schema.org",
