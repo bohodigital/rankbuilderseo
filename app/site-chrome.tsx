@@ -42,8 +42,8 @@ export function SiteHeader() {
       <a className="skip-link" href="#main-content">Skip to content</a>
       <div className="shell header-inner">
         <Link className="wordmark" href="/" prefetch={false}>
-          <span className="wordmark-box">RB</span>
-          <span>Rank Builder<br />SEO</span>
+          <img className="wordmark-mark" src="/brand-mark-light.svg" alt="" aria-hidden="true" />
+          <span className="wordmark-type"><span>Rank Builder</span><span>SEO</span></span>
         </Link>
         <button
           className="menu-toggle"
@@ -80,7 +80,10 @@ export function SiteFooter() {
     <footer className="site-footer">
       <div className="shell footer-top">
         <div>
-          <p className="footer-kicker">Rank Builder SEO</p>
+          <Link className="footer-brand" href="/" prefetch={false} aria-label="Rank Builder SEO home">
+            <img src="/brand-mark.svg" alt="" aria-hidden="true" />
+            <span><strong>Rank Builder</strong><small>SEO</small></span>
+          </Link>
           <h2>Useful SEO answers, on repeat.</h2>
         </div>
         <div className="footer-nav">

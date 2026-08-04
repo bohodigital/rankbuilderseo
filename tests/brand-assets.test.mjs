@@ -12,16 +12,18 @@ function pngDimensions(buffer) {
   };
 }
 
-test("dual-color RB identity is wired to every crawler and device icon size", async () => {
-  const [favicon, mark, png32, apple, png192, png512, layout, structuredData] = await Promise.all([
+test("dual-color RB identity is wired to site chrome, crawlers, and device icon sizes", async () => {
+  const [favicon, mark, lightMark, png32, apple, png192, png512, layout, structuredData, siteChrome] = await Promise.all([
     readFile(new URL("public/favicon.svg", root), "utf8"),
     readFile(new URL("public/brand-mark.svg", root), "utf8"),
+    readFile(new URL("public/brand-mark-light.svg", root), "utf8"),
     readFile(new URL("public/favicon-32x32.png", root)),
     readFile(new URL("public/apple-touch-icon.png", root)),
     readFile(new URL("public/icon-192.png", root)),
     readFile(new URL("public/icon-512.png", root)),
     readFile(new URL("app/layout.tsx", root), "utf8"),
     readFile(new URL("app/content/structured-data.ts", root), "utf8"),
+    readFile(new URL("app/site-chrome.tsx", root), "utf8"),
   ]);
 
   for (const source of [favicon, mark]) {
@@ -29,6 +31,10 @@ test("dual-color RB identity is wired to every crawler and device icon size", as
     assert.match(source, /#f7f6f2/i);
     assert.match(source, /Rank Builder SEO/i);
   }
+
+  assert.match(lightMark, /#ff5147/i);
+  assert.match(lightMark, /#17211f/i);
+  assert.match(lightMark, /Rank Builder SEO/i);
 
   assert.deepEqual(pngDimensions(png32), { width: 32, height: 32 });
   assert.deepEqual(pngDimensions(apple), { width: 180, height: 180 });
@@ -39,4 +45,6 @@ test("dual-color RB identity is wired to every crawler and device icon size", as
     assert.ok(layout.includes(`/${asset}`), asset);
   }
   assert.match(structuredData, /logo: `\$\{origin\}\/icon-512\.png`/);
+  assert.match(siteChrome, /src="\/brand-mark-light\.svg"/);
+  assert.match(siteChrome, /src="\/brand-mark\.svg"/);
 });
