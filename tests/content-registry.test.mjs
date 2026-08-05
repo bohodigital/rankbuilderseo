@@ -10,6 +10,7 @@ import {
   parseMediaRegistry,
   parseExperimentRegistrySource,
   parseGlossaryRegistrySource as parseGlossaryRegistrySourceRaw,
+  publicationExposure,
   publicationRoutePaths,
 } from "../app/content/registry.ts";
 import {
@@ -188,8 +189,10 @@ test("rejects unknown identities, invalid dates, invalid citation URLs, and inco
 
 test("generates only the authoritative article route family", async () => {
   const publications = loadPublicationRegistry(await publicationSources());
-  const routes = publicationRoutePaths(publications);
-  assert.equal(routes.length, publications.length);
+  const now = new Date();
+  const routes = publicationRoutePaths(publications, now);
+  const routablePublications = publications.filter((publication) => publicationExposure(publication, now).route !== "hidden");
+  assert.equal(routes.length, routablePublications.length);
   for (const route of [
     "/articles/why-google-isnt-indexing-your-page",
     "/articles/crawling-vs-indexing-vs-ranking",
