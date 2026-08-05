@@ -343,6 +343,10 @@ test("non-draft canonical records reject placeholders in every publication surfa
     () => loadOne({ metadata: base, body: reviewReadyBody("Explainer").replace("definition1", "placeholder") }),
     /body.*template marker/i,
   );
+  assert.doesNotThrow(
+    () => loadOne({ metadata: base, body: reviewReadyBody("Explainer").replace("definition1", "review evidence") }),
+    "ordinary editorial prose may discuss review evidence without being mistaken for a scaffold takeaway",
+  );
 
   const approvedPlaceholderMedia = [{
     id: "review-figure", src: "/media/review-figure.svg", alt: "A deliberate diagram", caption: "Placeholder figure caption",

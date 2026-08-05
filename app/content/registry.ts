@@ -232,11 +232,12 @@ const templateMarkerPatterns: Array<{ label: string; pattern: RegExp }> = [
   { label: "draft format label", pattern: /\bdraft (?:explainer|playbook|claim check|data note|checklist)\b/i },
   { label: "placeholder", pattern: /\bplaceholder\b/i },
   { label: "authoring-example", pattern: /authoring-example/i },
-  { label: "template takeaway", pattern: /\b(?:validate inputs|keep output bounded|review evidence|first durable takeaway|second durable takeaway|third durable takeaway)\b/i },
   { label: "template claim limit", pattern: /state what this article cannot establish/i },
   { label: "template caption", pattern: /example of a controlled editorial figure/i },
   { label: "template revision note", pattern: /authoring and revision notes|before moving this draft/i },
 ];
+
+const templateTakeawayPattern = /\b(?:validate inputs|keep output bounded|review evidence|first durable takeaway|second durable takeaway|third durable takeaway)\b/i;
 
 function templateMarker(value: string): string | undefined {
   return templateMarkerPatterns.find(({ pattern }) => pattern.test(value))?.label;
@@ -266,6 +267,9 @@ function validateNoTemplateMarkers(publication: Publication, media: readonly Med
     }
   }
   for (const [field, value] of values) {
+    if (field.startsWith("takeaways[") && templateTakeawayPattern.test(value)) {
+      fail(publication.sourceFile, `${field} contains prohibited template marker: template takeaway`);
+    }
     const marker = templateMarker(value);
     if (marker) fail(publication.sourceFile, `${field} contains prohibited template marker: ${marker}`);
   }
