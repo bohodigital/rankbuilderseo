@@ -9,7 +9,7 @@
   "series": "Buying SEO",
   "audience": "Owners and procurement teams",
   "evidenceLevel": "Primary sources",
-  "state": "draft",
+  "state": "published",
   "citationMode": "inline-required",
   "author": "rank-builder-research-desk",
   "editor": "rank-builder-editorial-desk",
@@ -44,7 +44,8 @@
   "relatedContent": [
     "seo-proposal-scope-checklist",
     "how-to-read-an-seo-audit",
-    "what-an-seo-report-should-answer"
+    "what-an-seo-report-should-answer",
+    "search-console-regex-filters-re2-partial-match"
   ]
 }
 ---
@@ -110,6 +111,8 @@ Without a baseline, disagreements become archaeology.
 
 ## Mechanism
 
+Define acceptance before work begins, test the public result against objective criteria, and separate delivery, deployment, verification, and business outcomes.
+
 **Make criteria observable.**
 
 Good acceptance criteria are testable.
@@ -161,6 +164,10 @@ Capture:
 
 A correct local test does not prove production.
 
+## Examples
+
+Objective criteria can cover audits, content, redirects, migrations, analytics, structured data, technical fixes, and vendor handoff.
+
 **Handoff is part of acceptance.**
 
 Require:
@@ -177,8 +184,6 @@ Require:
 - rollback instructions.
 
 A technically correct system that only the departing vendor can operate is not fully accepted.
-
-## Examples
 
 **Distinguish defects from outcomes.**
 

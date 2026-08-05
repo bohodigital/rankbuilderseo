@@ -48,7 +48,10 @@
       "translated-results-google-search-data-note",
       "discover-ranking-systems-claim-check",
       "hacked-spam-cleanup-playbook",
-      "infinite-calendar-urls-crawl-trap"
+      "infinite-calendar-urls-crawl-trap",
+      "search-console-crawl-stats-every-googlebot-request",
+      "search-console-regex-filters-re2-partial-match",
+      "search-console-domain-property-dns-verification-checklist"
     ],
     "relatedTools": [
       "/tools/indexability-inspector"
@@ -85,7 +88,10 @@
       "http-304-not-modified-seo",
       "http-103-early-hints-seo",
       "http-429-vs-503-googlebot-data-note",
-      "http3-google-ranking-claim-check"
+      "http3-google-ranking-claim-check",
+      "http-423-locked-seo",
+      "http-424-failed-dependency-playbook",
+      "http-511-network-authentication-required"
     ],
     "relatedTools": [
       "/tools/redirect-chain-visualizer"
@@ -112,7 +118,10 @@
       "www-vs-non-www-seo",
       "multilingual-canonical-tags",
       "canonical-tags-vs-301-redirects",
-      "canonicalization-qa-checklist"
+      "canonicalization-qa-checklist",
+      "userinfo-url-canonical-security",
+      "unicode-normalization-url-paths-nfc-nfd",
+      "trailing-dot-hostname-canonical-url"
     ],
     "secondaryPublications": [
       "shopify-canonical-urls-products-collections-variants",
@@ -140,7 +149,9 @@
       "lazy-loading-seo",
       "googlebot-rendering-queue-documentation-note",
       "server-side-static-client-side-rendering-seo",
-      "content-security-policy-seo-checklist"
+      "content-security-policy-seo-checklist",
+      "import-maps-seo-playbook",
+      "display-contents-google-indexing"
     ],
     "secondaryPublications": [
       "nextjs-page-visible-browser-missing-google",
@@ -182,7 +193,10 @@
       "ai-mode-vs-ai-overviews",
       "expired-jobposting-markup-seo-claim-check",
       "google-news-transparency-checklist",
-      "review-gating-local-seo-data-note"
+      "review-gating-local-seo-data-note",
+      "fastapi-seo-html-responses-root-path",
+      "spring-boot-seo-release-checklist",
+      "aspnet-core-seo-routing-forwarded-headers"
     ],
     "secondaryPublications": [
       "excluded-by-noindex",
@@ -220,7 +234,10 @@
       "survivorship-bias-seo-reporting",
       "ai-overviews-ai-mode-search-console-audit",
       "ga4-cross-domain-organic-conversion-checklist",
-      "ga4-known-bot-filtering-data-note"
+      "ga4-known-bot-filtering-data-note",
+      "ga4-calculated-metrics-playbook",
+      "ga4-bigquery-google-signals-data",
+      "ga4-data-deletion-request-timeline"
     ],
     "secondaryPublications": [
       "what-an-seo-report-should-answer",
@@ -268,7 +285,40 @@
       "was-leadclick-media-legit",
       "is-cox-media-group-active-listening-legit",
       "is-mindsift-legit",
-      "is-1010-digital-works-legit"
+      "is-1010-digital-works-legit",
+      "shopify-collaborator-access-seo-agency",
+      "seo-deliverable-acceptance-criteria",
+      "seo-vendor-change-request-playbook",
+      "is-webfx-legit-for-seo",
+      "is-thrive-internet-marketing-agency-legit-for-seo",
+      "is-the-hoth-legit-for-seo",
+      "is-scorpion-legit-for-seo",
+      "is-smartsites-legit-for-seo",
+      "is-victorious-legit-for-seo",
+      "is-ignite-visibility-legit-for-seo",
+      "is-straight-north-legit-for-seo",
+      "is-highervisibility-legit-for-seo",
+      "is-outerbox-legit-for-seo",
+      "is-coalition-technologies-legit-for-seo",
+      "is-np-digital-legit-for-seo",
+      "is-intero-digital-legit-for-seo",
+      "is-searchbloom-legit-for-seo",
+      "is-seo-brand-legit-for-seo",
+      "is-boostability-legit-for-seo",
+      "is-1seo-digital-agency-legit-for-seo",
+      "is-sure-oak-legit-for-seo",
+      "is-linkgraph-legit-for-seo",
+      "is-fatjoe-legit-for-seo",
+      "seo-companies-to-avoid",
+      "premium-home-service-legit-fake-local-listings",
+      "mediaalpha-legit-ftc-lead-generation",
+      "response-tree-legit-ftc-robocall-leads",
+      "itmedia-solutions-legit-ftc-lead-generation",
+      "sitejabber-legit-reputation-marketing-ftc-order",
+      "lendedu-legit-paid-rankings-fake-reviews",
+      "publishing-com-legit-ftc-final-order",
+      "air-ai-legit-ftc-settlement",
+      "ecom-genie-legit-ftc-automation-store-case"
     ],
     "secondaryPublications": [
       "search-console-is-not-analytics",

@@ -9,7 +9,7 @@
   "series": "Claim checks",
   "audience": "Owners and procurement teams",
   "evidenceLevel": "Documented practice",
-  "state": "review",
+  "state": "published",
   "citationMode": "inline-required",
   "author": "rank-builder-research-desk",
   "editor": "rank-builder-editorial-desk",
@@ -51,7 +51,8 @@
     "seo-case-study-verification-checklist",
     "seo-vendor-offboarding-playbook",
     "seo-vendor-security-due-diligence-playbook",
-    "ranking-guarantees"
+    "ranking-guarantees",
+    "is-boostability-legit-for-seo"
   ]
 }
 ---

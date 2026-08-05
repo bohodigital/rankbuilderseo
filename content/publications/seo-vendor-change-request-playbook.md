@@ -9,7 +9,7 @@
   "series": "Buying SEO",
   "audience": "Owners and procurement teams",
   "evidenceLevel": "Primary sources",
-  "state": "draft",
+  "state": "published",
   "citationMode": "inline-required",
   "author": "rank-builder-research-desk",
   "editor": "rank-builder-editorial-desk",
@@ -44,7 +44,8 @@
   "relatedContent": [
     "seo-vendor-offboarding-playbook",
     "seo-proposal-scope-checklist",
-    "seo-strategy-vs-implementation-cost"
+    "seo-strategy-vs-implementation-cost",
+    "search-console-domain-property-dns-verification-checklist"
   ]
 }
 ---
@@ -342,3 +343,15 @@ Do not let “emergency” become the permanent route around governance.
 **Evidence limits.**
 
 This is operational procurement guidance, not legal advice. Contract interpretation, change-order enforceability, and payment rights depend on the agreement and governing law.
+
+**How to verify this guidance.**
+
+This article is intended for Business owners, agencies, procurement teams, and project leads. Its evidence basis is NIST configuration-control principles adapted transparently to SEO delivery. Use this playbook whenever a vendor proposes extra work, a migration changes direction, a client adds requirements, or an incident forces a controlled exception.
+
+For a practical verification exercise, use this model: Baseline, request, impact, approval, implementation, validation, and acceptance appear as gated stages. A scope change becomes real only after its cost, risk, approval, and acceptance evidence are recorded.
+
+The package verification record states: NIST configuration-control principles were checked on 2026-08-05. Google migration validation guidance was checked for search-facing change examples. The playbook is identified as a scaled operational adaptation. Contract and payment conclusions are excluded.
+
+Related verification paths: Review alongside deliverable acceptance criteria. Review alongside the minimum SEO change record. Review alongside incident and vendor continuity playbooks.
+
+The duplication and search-intent review found: No SEO vendor change-request playbook appeared in the reviewed archive or prior package ledger. Existing buyer coverage addresses contracts, acceptance, incidents, continuity, access, and offboarding without a controlled scope-change workflow.

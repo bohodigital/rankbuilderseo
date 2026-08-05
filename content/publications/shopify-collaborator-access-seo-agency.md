@@ -9,7 +9,7 @@
   "series": "Buying SEO",
   "audience": "Owners and procurement teams",
   "evidenceLevel": "Primary sources",
-  "state": "review",
+  "state": "published",
   "citationMode": "inline-required",
   "author": "rank-builder-research-desk",
   "editor": "rank-builder-editorial-desk",
@@ -51,7 +51,8 @@
   "relatedContent": [
     "seo-vendor-security-due-diligence-playbook",
     "seo-vendor-offboarding-playbook",
-    "seo-agency-domain-registrar-access"
+    "seo-agency-domain-registrar-access",
+    "search-console-crawl-stats-every-googlebot-request"
   ]
 }
 ---

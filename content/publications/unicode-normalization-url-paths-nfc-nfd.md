@@ -9,7 +9,7 @@
   "series": "Technical baseline",
   "audience": "Developers and migration leads",
   "evidenceLevel": "Primary sources",
-  "state": "review",
+  "state": "published",
   "citationMode": "inline-required",
   "author": "rank-builder-research-desk",
   "editor": "rank-builder-editorial-desk",
@@ -58,7 +58,8 @@
   "relatedContent": [
     "url-parameters-seo",
     "trailing-slash-seo",
-    "www-vs-non-www-seo"
+    "www-vs-non-www-seo",
+    "display-contents-google-indexing"
   ]
 }
 ---

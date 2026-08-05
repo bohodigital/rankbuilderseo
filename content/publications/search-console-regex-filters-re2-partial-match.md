@@ -9,7 +9,7 @@
   "series": "Measurement without theater",
   "audience": "Analysts and marketing leads",
   "evidenceLevel": "Primary sources",
-  "state": "draft",
+  "state": "published",
   "citationMode": "inline-required",
   "author": "rank-builder-research-desk",
   "editor": "rank-builder-editorial-desk",
@@ -37,7 +37,8 @@
   "relatedContent": [
     "search-console-regex-filters-re2",
     "search-console-performance-data-limits",
-    "search-console-bulk-data-export-bigquery"
+    "search-console-bulk-data-export-bigquery",
+    "http-424-failed-dependency-playbook"
   ]
 }
 ---

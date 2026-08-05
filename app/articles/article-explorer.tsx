@@ -2,16 +2,29 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import type { PublicationSummary } from "../content/publications";
-import type { Topic } from "../content/registry";
+
+export type ArticleArchiveItem = {
+  slug: string;
+  title: string;
+  description: string;
+  format: string;
+  category: string;
+  series: string;
+  readTime: string;
+};
+
+export type ArticleTopicOption = {
+  slug: string;
+  title: string;
+};
 
 export function ArticleExplorer({
   articles,
   topics,
   topicAssignments,
 }: {
-  articles: PublicationSummary[];
-  topics: Topic[];
+  articles: ArticleArchiveItem[];
+  topics: ArticleTopicOption[];
   topicAssignments: Record<string, string>;
 }) {
   const [query, setQuery] = useState("");

@@ -9,7 +9,7 @@
   "series": "Technical baseline",
   "audience": "Owners and marketing leads",
   "evidenceLevel": "Primary sources",
-  "state": "review",
+  "state": "published",
   "citationMode": "inline-required",
   "author": "rank-builder-research-desk",
   "editor": "rank-builder-editorial-desk",
@@ -44,7 +44,8 @@
   "relatedContent": [
     "search-console-domain-vs-url-prefix-property",
     "search-console-site-verification-methods",
-    "seo-agency-domain-registrar-access"
+    "seo-agency-domain-registrar-access",
+    "http-511-network-authentication-required"
   ]
 }
 ---

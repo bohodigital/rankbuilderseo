@@ -9,7 +9,7 @@
   "series": "Claim checks",
   "audience": "Developers and technical marketers",
   "evidenceLevel": "Primary sources",
-  "state": "draft",
+  "state": "published",
   "citationMode": "inline-required",
   "author": "rank-builder-research-desk",
   "editor": "rank-builder-editorial-desk",
@@ -44,7 +44,8 @@
   "relatedContent": [
     "blocked-unauthorized-request-401",
     "blocked-access-forbidden-403",
-    "blocked-other-4xx"
+    "blocked-other-4xx",
+    "trailing-dot-hostname-canonical-url"
   ]
 }
 ---
@@ -241,3 +242,15 @@ Unsupported:
 **Evidence limits.**
 
 Network products can implement captive portals without 511, and operating systems have their own detection workflows. Google publishes broad 4xx handling rather than a status-specific 511 rule.
+
+**How to verify this guidance.**
+
+This article is intended for Developers, network operators, security teams, and technical SEOs. Its evidence basis is RFC 6585, browser documentation, and Google crawler guidance. Treat 511 as an intercepting-network response, avoid returning it from application authentication, verify the responding host, protect credentials, and restore ordinary public page access.
+
+For a practical verification exercise, use this model: Client request is intercepted by guest Wi-Fi, receives 511, authenticates to the network, then reaches the original website normally. The network gate sits between the client and origin; 511 is not the site's membership login.
+
+The package verification record states: RFC 6585 511 semantics, cache prohibition, and security considerations were checked on 2026-08-05. MDN and Google broad 4xx guidance were checked. Local interception is not represented as global site removal. Certificate warnings are not bypassed.
+
+Related verification paths: Review alongside 401 versus 403 authentication coverage. Review alongside CDN and proxy response attribution. Review alongside public monitoring and crawler verification.
+
+The duplication and search-intent review found: No HTTP 511 claim check appeared in the reviewed archive or prior package ledger. Existing access-status coverage addresses 401, 403, 407, 451, and application authentication rather than captive-network authentication.

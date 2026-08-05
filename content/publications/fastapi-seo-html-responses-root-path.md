@@ -9,7 +9,7 @@
   "series": "Technical baseline",
   "audience": "Developers and technical marketers",
   "evidenceLevel": "Primary sources",
-  "state": "review",
+  "state": "published",
   "citationMode": "inline-required",
   "author": "rank-builder-research-desk",
   "editor": "rank-builder-editorial-desk",
@@ -58,7 +58,8 @@
   "relatedContent": [
     "server-side-static-client-side-rendering-seo",
     "rendered-html-missing-content",
-    "cloudflare-pages-workers-seo"
+    "cloudflare-pages-workers-seo",
+    "ga4-calculated-metrics-playbook"
   ]
 }
 ---

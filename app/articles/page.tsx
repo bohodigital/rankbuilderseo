@@ -3,7 +3,11 @@ import { publications } from "../content/publications";
 import { sharedOpenGraph } from "../metadata";
 import { SiteFooter, SiteHeader } from "../site-chrome";
 import { topicByPublicationSlug, topics } from "../content/topics";
-import { ArticleExplorer } from "./article-explorer";
+import {
+  ArticleExplorer,
+  type ArticleArchiveItem,
+  type ArticleTopicOption,
+} from "./article-explorer";
 
 export const metadata: Metadata = {
   title: "SEO articles",
@@ -20,6 +24,19 @@ export const metadata: Metadata = {
 
 export default function ArticlesPage() {
   const categories = new Set(publications.map((article) => article.category)).size;
+  const archiveArticles: ArticleArchiveItem[] = publications.map((article) => ({
+    slug: article.slug,
+    title: article.title,
+    description: article.description,
+    format: article.format,
+    category: article.category,
+    series: article.series,
+    readTime: article.readTime,
+  }));
+  const topicOptions: ArticleTopicOption[] = topics.map((topic) => ({
+    slug: topic.slug,
+    title: topic.title,
+  }));
   const topicAssignments = Object.fromEntries(publications.map((article) => [
     article.slug,
     topicByPublicationSlug.get(article.slug)?.slug ?? "",
@@ -36,6 +53,6 @@ export default function ArticlesPage() {
         <div><dt>Template</dt><dd>01</dd></div>
       </dl>
     </section>
-    <section className="section shell"><ArticleExplorer articles={publications} topics={topics} topicAssignments={topicAssignments} /></section>
+    <section className="section shell"><ArticleExplorer articles={archiveArticles} topics={topicOptions} topicAssignments={topicAssignments} /></section>
   </main><SiteFooter /></>;
 }

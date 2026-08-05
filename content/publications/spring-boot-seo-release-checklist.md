@@ -9,7 +9,7 @@
   "series": "Technical baseline",
   "audience": "Developers and migration leads",
   "evidenceLevel": "Primary sources",
-  "state": "review",
+  "state": "published",
   "citationMode": "inline-required",
   "author": "rank-builder-research-desk",
   "editor": "rank-builder-editorial-desk",
@@ -44,7 +44,8 @@
   "relatedContent": [
     "server-side-static-client-side-rendering-seo",
     "website-maintenance-503-seo",
-    "rendered-html-missing-content"
+    "rendered-html-missing-content",
+    "ga4-bigquery-google-signals-data"
   ]
 }
 ---

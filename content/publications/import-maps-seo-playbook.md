@@ -9,7 +9,7 @@
   "series": "Technical baseline",
   "audience": "Developers and technical marketers",
   "evidenceLevel": "Primary sources",
-  "state": "draft",
+  "state": "published",
   "citationMode": "inline-required",
   "author": "rank-builder-research-desk",
   "editor": "rank-builder-editorial-desk",
@@ -51,7 +51,8 @@
   "relatedContent": [
     "crawlable-javascript-links",
     "javascript-seo-rendering-pipeline",
-    "rendered-html-missing-content"
+    "rendered-html-missing-content",
+    "spring-boot-seo-release-checklist"
   ]
 }
 ---
@@ -255,3 +256,15 @@ A console error that affects only one lazy route can remain invisible to homepag
 **Evidence limits.**
 
 Import-map support and integrity features continue to evolve. The feature changes module resolution, not search eligibility. Search behavior depends on the final document and its failure modes.
+
+**How to verify this guidance.**
+
+This article is intended for Developers, performance teams, and technical SEOs. Its evidence basis is Current HTML and MDN documentation plus Google JavaScript guidance. Keep primary content and metadata independent from optional modules, declare maps before dependent modules, test unsupported browsers and failed imports, and version the map with the deployment.
+
+For a practical verification exercise, use this model: Import map resolves bare specifiers into versioned module URLs before the module graph loads, with failure branches for JSON, CORS, and cache mismatch. Import maps redirect module names, not document URLs; a failed map should not erase the page.
+
+The package verification record states: Current import-map ordering, prefix matching, scopes, integrity, and worker limits were checked on 2026-08-05. Google JavaScript rendering guidance was checked. No ranking benefit is attributed to import maps. Browser support remains a release test.
+
+Related verification paths: Review alongside modulepreload coverage. Review alongside JavaScript rendering diagnostics. Review alongside CSP and subresource-integrity guidance.
+
+The duplication and search-intent review found: No import-map SEO playbook appeared in the reviewed archive or prior package ledger. The topic is distinct from modulepreload, speculation rules, service workers, and general module loading.

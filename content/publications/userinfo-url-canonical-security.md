@@ -9,7 +9,7 @@
   "series": "Technical baseline",
   "audience": "Developers and technical marketers",
   "evidenceLevel": "Primary sources",
-  "state": "review",
+  "state": "published",
   "citationMode": "inline-required",
   "author": "rank-builder-research-desk",
   "editor": "rank-builder-editorial-desk",
@@ -44,7 +44,8 @@
   "relatedContent": [
     "www-vs-non-www-seo",
     "canonical-tags-when-they-work",
-    "seo-vendor-security-due-diligence-playbook"
+    "seo-vendor-security-due-diligence-playbook",
+    "import-maps-seo-playbook"
   ]
 }
 ---

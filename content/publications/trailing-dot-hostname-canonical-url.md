@@ -9,7 +9,7 @@
   "series": "Technical baseline",
   "audience": "Developers and migration leads",
   "evidenceLevel": "Primary sources",
-  "state": "review",
+  "state": "published",
   "citationMode": "inline-required",
   "author": "rank-builder-research-desk",
   "editor": "rank-builder-editorial-desk",
@@ -51,7 +51,8 @@
   "relatedContent": [
     "www-vs-non-www-seo",
     "trailing-slash-seo",
-    "canonical-tags-when-they-work"
+    "canonical-tags-when-they-work",
+    "fastapi-seo-html-responses-root-path"
   ]
 }
 ---

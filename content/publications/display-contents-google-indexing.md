@@ -9,7 +9,7 @@
   "series": "Claim checks",
   "audience": "Technical SEOs and developers",
   "evidenceLevel": "Primary sources",
-  "state": "draft",
+  "state": "published",
   "citationMode": "inline-required",
   "author": "rank-builder-research-desk",
   "editor": "rank-builder-editorial-desk",
@@ -51,7 +51,8 @@
   "relatedContent": [
     "rendered-html-missing-content",
     "javascript-seo-rendering-pipeline",
-    "crawlable-javascript-links"
+    "crawlable-javascript-links",
+    "aspnet-core-seo-routing-forwarded-headers"
   ]
 }
 ---
@@ -267,3 +268,15 @@ Test:
 **Evidence limits.**
 
 CSS defines box generation. Browser accessibility behavior can vary. Google does not document a feature-specific indexing or ranking treatment for `display: contents`.
+
+**Visual verification model.**
+
+Compare the DOM tree with the box tree: a semantic parent remains in the DOM while its box disappears and child boxes remain in layout. The useful mental model is that `display: contents` changes box generation, not the existence of child content. A diagram used for this check should show how the parent, descendants, semantics, and rendered boxes differ before and after the declaration is applied.
+
+**Verification record.**
+
+CSS Display and MDN behavior was checked on 2026-08-05. Accessibility implementation warnings were preserved. Google JavaScript rendering guidance was checked. No feature-specific ranking claim is made.
+
+**Duplication and search-intent record.**
+
+No `display: contents` claim check appeared in the reviewed archive or prior package ledger. Existing CSS coverage focuses on generated content, content visibility, hidden states, and rendering cost.

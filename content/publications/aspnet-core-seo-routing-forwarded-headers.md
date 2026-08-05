@@ -9,7 +9,7 @@
   "series": "Technical baseline",
   "audience": "Developers and technical marketers",
   "evidenceLevel": "Primary sources",
-  "state": "review",
+  "state": "published",
   "citationMode": "inline-required",
   "author": "rank-builder-research-desk",
   "editor": "rank-builder-editorial-desk",
@@ -65,7 +65,8 @@
   "relatedContent": [
     "server-side-static-client-side-rendering-seo",
     "rendered-html-missing-content",
-    "website-maintenance-503-seo"
+    "website-maintenance-503-seo",
+    "ga4-data-deletion-request-timeline"
   ]
 }
 ---

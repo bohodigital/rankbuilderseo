@@ -9,7 +9,7 @@
   "series": "Technical baseline",
   "audience": "Developers and technical marketers",
   "evidenceLevel": "Primary sources",
-  "state": "draft",
+  "state": "published",
   "citationMode": "inline-required",
   "author": "rank-builder-research-desk",
   "editor": "rank-builder-editorial-desk",
@@ -44,7 +44,8 @@
   "relatedContent": [
     "blocked-other-4xx",
     "server-error-5xx",
-    "website-maintenance-503-seo"
+    "website-maintenance-503-seo",
+    "userinfo-url-canonical-security"
   ]
 }
 ---
@@ -168,3 +169,15 @@ Segment expected editing conflicts from public GET failures.
 **Evidence limits.**
 
 RFC 4918 defines WebDAV lock semantics. Non-WebDAV applications can adopt 423, but their lock contracts are application-specific. Google publishes broad 4xx behavior rather than a 423-specific indexing rule.
+
+**How to verify this guidance.**
+
+This article is intended for Developers, CMS operators, infrastructure teams, and technical SEOs. Its evidence basis is RFC 4918 and current Google crawler documentation. Use 423 when a valid lock prevents an operation, include machine-readable lock context where supported, and keep public HTML GETs on ordinary successful or truthful error responses.
+
+For a practical verification exercise, use this model: Editor acquires a lock, another edit receives 423, then the lock expires or transfers and the update succeeds. A 423 describes an operation blocked by a lock, not a missing resource.
+
+The package verification record states: RFC 4918 423 semantics and lock-condition examples were checked on 2026-08-05. Google’s current broad 4xx crawler handling was checked. 423 is not presented as a universal maintenance status. Application-specific lock metadata remains bounded.
+
+Related verification paths: Review alongside HTTP 409 conflict coverage. Review alongside HTTP 412 precondition coverage. Review alongside publishing-lock and change-control guidance.
+
+The duplication and search-intent review found: No HTTP 423 article appeared in the reviewed archive or prior package ledger. The subject is distinct from 409 conflicts, 412 preconditions, 428 required preconditions, and 431 header errors.

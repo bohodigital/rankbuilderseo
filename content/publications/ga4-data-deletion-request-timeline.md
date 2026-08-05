@@ -9,7 +9,7 @@
   "series": "Reading the research",
   "audience": "Analysts and marketing leads",
   "evidenceLevel": "Primary sources",
-  "state": "review",
+  "state": "published",
   "citationMode": "inline-required",
   "author": "rank-builder-research-desk",
   "editor": "rank-builder-editorial-desk",
@@ -44,7 +44,8 @@
   "relatedContent": [
     "ga4-cross-domain-organic-conversion-checklist",
     "search-console-16-month-data-retention",
-    "search-console-api-export-workflow"
+    "search-console-api-export-workflow",
+    "seo-vendor-change-request-playbook"
   ]
 }
 ---

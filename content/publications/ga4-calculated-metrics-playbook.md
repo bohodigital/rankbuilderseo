@@ -9,7 +9,7 @@
   "series": "Measurement without theater",
   "audience": "Analysts and marketing leads",
   "evidenceLevel": "Primary sources",
-  "state": "draft",
+  "state": "published",
   "citationMode": "inline-required",
   "author": "rank-builder-research-desk",
   "editor": "rank-builder-editorial-desk",
@@ -44,7 +44,8 @@
   "relatedContent": [
     "ga4-known-bot-filtering-data-note",
     "ga4-cross-domain-organic-conversion-checklist",
-    "survivorship-bias-seo-reporting"
+    "survivorship-bias-seo-reporting",
+    "shopify-collaborator-access-seo-agency"
   ]
 }
 ---
@@ -224,3 +225,15 @@ DEPENDENCIES:
 **Evidence limits.**
 
 Calculated metrics derive values from GA4 reporting metrics. They do not create missing events, correct broken collection, remove privacy thresholds, or guarantee reconciliation with a warehouse or CRM.
+
+**How to verify this guidance.**
+
+This article is intended for Analytics administrators, SEO analysts, finance teams, and data engineers. Its evidence basis is Current first-party Google Analytics documentation. Use this playbook to define the question, validate component metrics, test zero denominators, preserve the API name, document formula changes, and reconcile the result outside GA4.
+
+For a practical verification exercise, use this model: Numerator and denominator flow through scope, unit, zero handling, API name, and change control into one metric. The formula is only the middle of the metric definition; scope and change history determine whether it remains interpretable.
+
+The package verification record states: GA4 calculated metric features, editability, API-name immutability, formula rules, and property limits were checked on 2026-08-05. No unsupported formula nesting is recommended. Historical interpretation is bounded to available component data. BigQuery reconciliation is definition-dependent.
+
+Related verification paths: Review alongside GA4 custom-metric registration guidance. Review alongside GA4 reports-versus-BigQuery reconciliation. Review alongside the analytics change-record template.
+
+The duplication and search-intent review found: No dedicated calculated-metrics governance playbook appeared in the reviewed archive or prior package ledger. Existing GA4 coverage addresses custom dimensions, sampling, retention, imports, and reporting surfaces.

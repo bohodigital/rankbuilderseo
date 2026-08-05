@@ -9,7 +9,7 @@
   "series": "Claim checks",
   "audience": "Analysts and marketing leads",
   "evidenceLevel": "Primary sources",
-  "state": "draft",
+  "state": "published",
   "citationMode": "inline-required",
   "author": "rank-builder-research-desk",
   "editor": "rank-builder-editorial-desk",
@@ -51,7 +51,8 @@
   "relatedContent": [
     "search-console-bulk-data-export-bigquery",
     "ga4-cross-domain-organic-conversion-checklist",
-    "search-console-is-not-analytics"
+    "search-console-is-not-analytics",
+    "seo-deliverable-acceptance-criteria"
   ]
 }
 ---
@@ -212,3 +213,15 @@ It is a powerful raw-event warehouse, not an exact replica of the GA4 interfaceâ
 **Evidence limits.**
 
 Google can change product behavior and export schemas. The proprietary details of Signals identity processing are not fully exposed. Comparisons must preserve the exact property, date, identity, consent, and query definitions.
+
+**How to verify this guidance.**
+
+This article is intended for Analytics administrators, SEO analysts, and data engineers. Its evidence basis is Current first-party Google Analytics documentation. Use BigQuery as a raw-event analysis surface, not a replica of blended GA4 identity. Label device-based and modeled differences before comparing users, sessions, and demographics.
+
+For a practical verification exercise, use this model: GA4 interface combines available identity, Signals, and modeling while BigQuery receives exported event rows and pseudonymous identifiers. The interface and warehouse can count different units because Google Signals is not exported to BigQuery.
+
+The package verification record states: Googleâ€™s current statement that Signals data is not exported to BigQuery was checked on 2026-08-05. BigQuery export and Google Signals documentation was checked. User counts are labeled by identifier rather than presumed human identity. No proprietary identity rule is invented.
+
+Related verification paths: Review alongside GA4 reporting identity coverage. Review alongside User-ID QA. Review alongside reports-versus-BigQuery reconciliation.
+
+The duplication and search-intent review found: No dedicated Google-Signals export claim check appeared in the reviewed archive or prior package ledger. Existing BigQuery articles focus on table lifecycle, intraday data, attribution, and reconciliation.

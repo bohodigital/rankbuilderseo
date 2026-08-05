@@ -9,7 +9,7 @@
   "series": "Claim checks",
   "audience": "Technical SEOs and developers",
   "evidenceLevel": "Primary sources",
-  "state": "draft",
+  "state": "published",
   "citationMode": "inline-required",
   "author": "rank-builder-research-desk",
   "editor": "rank-builder-editorial-desk",
@@ -37,7 +37,8 @@
   "relatedContent": [
     "google-search-console-crawl-stats-report",
     "seo-log-file-analysis-googlebot",
-    "verify-googlebot-requests-dns-ip-ranges"
+    "verify-googlebot-requests-dns-ip-ranges",
+    "http-423-locked-seo"
   ]
 }
 ---
@@ -159,3 +160,15 @@ Crawl Stats is a first-party trend and diagnostic report. It is not a complete r
 **Evidence limits.**
 
 Google does not publish every reason a request can be omitted. Server logs also do not automatically prove that a request came from verified Google infrastructure.
+
+**How to verify this guidance.**
+
+This article is intended for Technical SEOs, infrastructure teams, and large-site operators. Its evidence basis is Current first-party Search Console documentation. Use Crawl Stats for trends, response classes, hosts, file types, purpose, and Googlebot type. Use server and CDN logs for request-level evidence.
+
+For a practical verification exercise, use this model: Google crawl activity feeds a bounded Search Console report and separate CDN, proxy, and origin logs, with different omissions labeled. Crawl Stats explains patterns; logs provide request-level evidence when they are complete and verified.
+
+The package verification record states: Current Crawl Stats property scope, actual-URL counting, redirect counting, coverage limitation, and example-sampling language was checked on 2026-08-05. No exact completeness percentage is invented. Log limitations and bot verification remain explicit.
+
+Related verification paths: Review alongside verified-Googlebot guidance. Review alongside crawl-budget diagnostics. Review alongside server-log reconciliation.
+
+The duplication and search-intent review found: No dedicated “every request” Crawl Stats claim check appeared in the reviewed archive. Existing coverage addresses report navigation rather than completeness and log reconciliation.
