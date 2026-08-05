@@ -62,7 +62,8 @@
     "seo-vendor-security-due-diligence-playbook",
     "ranking-guarantees",
     "is-1010-digital-works-legit",
-    "was-point-break-media-legit-seo"
+    "was-point-break-media-legit-seo",
+    "is-hibu-legit-for-seo"
   ]
 }
 ---

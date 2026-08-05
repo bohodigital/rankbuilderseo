@@ -9,12 +9,13 @@
   "series": "Claim checks",
   "audience": "Owners and procurement teams",
   "evidenceLevel": "Primary sources",
-  "state": "review",
+  "state": "published",
   "citationMode": "inline-required",
   "author": "rank-builder-research-desk",
   "editor": "rank-builder-editorial-desk",
   "publishedAt": "2026-08-05",
   "revisedAt": "2026-08-05",
+  "revisionNote": "Updated the current BBB complaint snapshot and completed editorial review for publication.",
   "directAnswer": "Hibu is a real, established digital-marketing company, but its own minimum-term and phone-cancellation rules plus a substantial public complaint record justify unusually strict contract and account-ownership controls.",
   "takeaways": [
     "multi-product minimum terms;",
@@ -53,7 +54,12 @@
       "accessedAt": "2026-08-05"
     }
   ],
-  "correctionHistory": [],
+  "correctionHistory": [
+    {
+      "date": "2026-08-05",
+      "summary": "Updated the BBB complaint snapshot from 109 to 110 complaints in the last three years."
+    }
+  ],
   "relatedContent": [
     "local-seo-provider-scorecard",
     "seo-pricing-without-fairy-tales",
@@ -124,7 +130,7 @@ These are not hidden merely because they are unfavorable. They are published con
 
 **What the complaint record shows.**
 
-The Better Business Bureau complaint page reviewed for Hibu displayed 109 complaints and categorized many as order, service, product, billing, and sales issues. Recent complainants alleged disputes involving:
+The Better Business Bureau complaint page reviewed for Hibu displayed 110 complaints in the last three years, including 39 closed in the last 12 months, and categorized many as order, service, product, billing, and sales issues. Recent complainants alleged disputes involving:
 
 - unfinished or inaccurate websites;
 - AI-generated errors;
