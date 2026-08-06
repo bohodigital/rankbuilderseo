@@ -51,7 +51,10 @@
       "infinite-calendar-urls-crawl-trap",
       "search-console-crawl-stats-every-googlebot-request",
       "search-console-regex-filters-re2-partial-match",
-      "search-console-domain-property-dns-verification-checklist"
+      "search-console-domain-property-dns-verification-checklist",
+      "search-console-ai-performance-report",
+      "google-review-snippet-update-2026",
+      "search-console-platform-properties"
     ],
     "relatedTools": [
       "/tools/indexability-inspector"
@@ -151,7 +154,8 @@
       "server-side-static-client-side-rendering-seo",
       "content-security-policy-seo-checklist",
       "import-maps-seo-playbook",
-      "display-contents-google-indexing"
+      "display-contents-google-indexing",
+      "back-button-hijacking-seo-google-spam-policy"
     ],
     "secondaryPublications": [
       "nextjs-page-visible-browser-missing-google",
@@ -237,7 +241,13 @@
       "ga4-known-bot-filtering-data-note",
       "ga4-calculated-metrics-playbook",
       "ga4-bigquery-google-signals-data",
-      "ga4-data-deletion-request-timeline"
+      "ga4-data-deletion-request-timeline",
+      "ai-mode-seo-2026",
+      "may-2026-google-core-update-recovery",
+      "june-2026-google-spam-update",
+      "google-discover-seo-2026",
+      "geo-vs-seo-2026",
+      "ai-mode-ads-vs-seo"
     ],
     "secondaryPublications": [
       "what-an-seo-report-should-answer",
@@ -328,7 +338,17 @@
       "digital-altitude-legit-six-figures-ftc-refunds",
       "mobe-legit-online-business-education-ftc-case",
       "lurn-legit-ftc-orders-earnings-claims-refunds",
-      "content-at-scale-ai-legit-ftc-detection-order"
+      "content-at-scale-ai-legit-ftc-detection-order",
+      "companies-caught-faking-reviews-rankings-online-trust",
+      "rytr-legit-ftc-order-set-aside",
+      "fashion-nova-legit-ftc-negative-reviews",
+      "roomster-legit-fake-reviews-listings-ftc",
+      "sunday-riley-legit-fake-employee-reviews",
+      "roca-labs-legit-gag-clauses-ftc-refunds",
+      "cure-encapsulations-legit-fake-amazon-reviews",
+      "sellers-playbook-legit-amazon-ftc",
+      "zurixx-legit-real-estate-coaching-ftc-refunds",
+      "ragingbull-com-legit-ftc-earnings-cancellation"
     ],
     "secondaryPublications": [
       "search-console-is-not-analytics",
