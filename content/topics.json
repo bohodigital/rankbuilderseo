@@ -54,7 +54,12 @@
       "search-console-domain-property-dns-verification-checklist",
       "search-console-ai-performance-report",
       "google-review-snippet-update-2026",
-      "search-console-platform-properties"
+      "search-console-platform-properties",
+      "google-preferred-sources-seo",
+      "opt-out-google-ai-overviews-ai-mode",
+      "google-extended-ai-overviews",
+      "nosnippet-max-snippet-ai-overviews",
+      "google-preferred-image-og-image-schema"
     ],
     "relatedTools": [
       "/tools/indexability-inspector"
@@ -124,7 +129,8 @@
       "canonicalization-qa-checklist",
       "userinfo-url-canonical-security",
       "unicode-normalization-url-paths-nfc-nfd",
-      "trailing-dot-hostname-canonical-url"
+      "trailing-dot-hostname-canonical-url",
+      "google-canonical-re-evaluation-two-weeks"
     ],
     "secondaryPublications": [
       "shopify-canonical-urls-products-collections-variants",
@@ -200,7 +206,14 @@
       "review-gating-local-seo-data-note",
       "fastapi-seo-html-responses-root-path",
       "spring-boot-seo-release-checklist",
-      "aspnet-core-seo-routing-forwarded-headers"
+      "aspnet-core-seo-routing-forwarded-headers",
+      "indexnow-ai-search",
+      "chatgpt-search-seo-2026",
+      "chatgpt-shopping-seo-2026",
+      "chatgpt-product-feeds-acp",
+      "oai-adsbot-chatgpt-landing-page",
+      "ai-max-shopping-feed-optimization",
+      "universal-commerce-protocol-google-ai-mode"
     ],
     "secondaryPublications": [
       "excluded-by-noindex",
@@ -247,7 +260,13 @@
       "june-2026-google-spam-update",
       "google-discover-seo-2026",
       "geo-vs-seo-2026",
-      "ai-mode-ads-vs-seo"
+      "ai-mode-ads-vs-seo",
+      "google-highly-cited-badge-seo",
+      "google-subscription-labels-ai-mode",
+      "ai-overviews-ctr-2026",
+      "google-zero-click-searches-2026",
+      "bing-webmaster-tools-ai-performance",
+      "dynamic-search-ads-ai-max-2027"
     ],
     "secondaryPublications": [
       "what-an-seo-report-should-answer",
@@ -348,7 +367,8 @@
       "cure-encapsulations-legit-fake-amazon-reviews",
       "sellers-playbook-legit-amazon-ftc",
       "zurixx-legit-real-estate-coaching-ftc-refunds",
-      "ragingbull-com-legit-ftc-earnings-cancellation"
+      "ragingbull-com-legit-ftc-earnings-cancellation",
+      "google-approved-seo-tools"
     ],
     "secondaryPublications": [
       "search-console-is-not-analytics",
