@@ -59,7 +59,9 @@
       "opt-out-google-ai-overviews-ai-mode",
       "google-extended-ai-overviews",
       "nosnippet-max-snippet-ai-overviews",
-      "google-preferred-image-og-image-schema"
+      "google-preferred-image-og-image-schema",
+      "faq-schema-2026-google-rich-results-removed",
+      "ai-mode-source-links-seo"
     ],
     "relatedTools": [
       "/tools/indexability-inspector"
@@ -161,7 +163,8 @@
       "content-security-policy-seo-checklist",
       "import-maps-seo-playbook",
       "display-contents-google-indexing",
-      "back-button-hijacking-seo-google-spam-policy"
+      "back-button-hijacking-seo-google-spam-policy",
+      "google-lens-seo-2026"
     ],
     "secondaryPublications": [
       "nextjs-page-visible-browser-missing-google",
@@ -213,7 +216,11 @@
       "chatgpt-product-feeds-acp",
       "oai-adsbot-chatgpt-landing-page",
       "ai-max-shopping-feed-optimization",
-      "universal-commerce-protocol-google-ai-mode"
+      "universal-commerce-protocol-google-ai-mode",
+      "google-ai-mode-connected-apps-seo",
+      "search-live-seo-2026",
+      "ai-mode-booking-seo",
+      "google-business-agent-seo"
     ],
     "secondaryPublications": [
       "excluded-by-noindex",
@@ -266,7 +273,15 @@
       "ai-overviews-ctr-2026",
       "google-zero-click-searches-2026",
       "bing-webmaster-tools-ai-performance",
-      "dynamic-search-ads-ai-max-2027"
+      "dynamic-search-ads-ai-max-2027",
+      "ai-mode-keyword-research-2026",
+      "ai-mode-personalization-seo",
+      "search-console-query-groups-keyword-research",
+      "search-console-annotations-guide",
+      "merchant-center-ai-performance-insights",
+      "google-deep-search-seo",
+      "llms-txt-google-rankings",
+      "search-console-data-anomalies-2026"
     ],
     "secondaryPublications": [
       "what-an-seo-report-should-answer",
@@ -368,7 +383,12 @@
       "sellers-playbook-legit-amazon-ftc",
       "zurixx-legit-real-estate-coaching-ftc-refunds",
       "ragingbull-com-legit-ftc-earnings-cancellation",
-      "google-approved-seo-tools"
+      "google-approved-seo-tools",
+      "google-ai-ad-labels-2026",
+      "google-business-agent-for-leads",
+      "does-google-penalize-ai-content-2026",
+      "site-reputation-abuse-seo-2026",
+      "scaled-content-abuse-2026"
     ],
     "secondaryPublications": [
       "search-console-is-not-analytics",
