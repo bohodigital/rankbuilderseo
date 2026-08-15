@@ -21,6 +21,7 @@ import {
 import { inspectSource, normalizedSourceTitle, resolvePublicTarget, runSourceLinkCheck } from "../scripts/check-source-links.mjs";
 import { mediaDimensions, mediaLimits, validateMediaBudgets, validateMediaFiles } from "../scripts/content-check.mjs";
 import { scaffoldPublication } from "../scripts/content-new.mjs";
+import { validatePublicationBodies } from "../scripts/validate-publication-markdown.mjs";
 import { semanticSignature, stableEntries } from "../app/content/stable-keys.ts";
 
 const root = new URL("../", import.meta.url);
@@ -175,6 +176,33 @@ N_{\\text{customers}} = \\frac{C}{G}
   assert.throws(() => parseSafeMarkdown("## Unsafe\n\n\\(\\href{https://example.com}{run}\\)"), /unsupported math command/i);
   assert.throws(() => parseSafeMarkdown("## Unsafe\n\n\\(\\frac{C}{G}\\)".replace("}", "")), /unbalanced braces/i);
   assert.throws(() => parseSafeMarkdown("## Unsafe\n\n\\(C"), /unclosed inline math/i);
+});
+
+test("the publication precheck validates every exact body without returning article text", () => {
+  const result = validatePublicationBodies([
+    {
+      publication_id: "PUB-20260815T000000Z-ABCDEF123456",
+      body_markdown: "## Evidence\n\nA bounded paragraph.\n\n### Detail\n\n- [x] Checked detail.",
+    },
+    {
+      publication_id: "PUB-20260815T000001Z-ABCDEF123457",
+      body_markdown: "## Budget\n\n\\[\nN_{\\text{customers}} = \\frac{C}{G}\n\\]",
+    },
+  ]);
+  assert.deepEqual(result, {
+    ok: true,
+    validated: [
+      "PUB-20260815T000000Z-ABCDEF123456",
+      "PUB-20260815T000001Z-ABCDEF123457",
+    ],
+  });
+  assert.doesNotMatch(JSON.stringify(result), /bounded paragraph|checked detail|customers/i);
+  assert.throws(() => validatePublicationBodies([
+    { publication_id: "PUB-20260815T000002Z-ABCDEF123458", body_markdown: "# Unsupported" },
+  ]), /only H2 and H3/i);
+  assert.throws(() => validatePublicationBodies([
+    { publication_id: "bad", body_markdown: "## Safe\n\nText." },
+  ]), /invalid publication_id/i);
 });
 
 test("rejects raw execution surfaces, unsafe schemes, and unsupported Markdown", () => {
