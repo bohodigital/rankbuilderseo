@@ -8,13 +8,14 @@ export type LinkInline = { type: "link"; href: string; children: InlineNode[] };
 export type InlineNode = TextInline | CodeInline | CitationInline | StyledInline | LinkInline;
 
 export type HeadingBlock = { type: "heading"; id: string; text: string; children: InlineNode[] };
+export type SubheadingBlock = { type: "subheading"; id: string; text: string; children: InlineNode[] };
 export type ParagraphBlock = { type: "paragraph"; children: InlineNode[] };
 export type ListBlock = { type: "list"; ordered: boolean; items: InlineNode[][] };
 export type CodeBlock = { type: "code"; language?: string; value: string };
 export type QuoteBlock = { type: "blockquote"; callout?: "note" | "tip" | "warning"; children: InlineNode[] };
 export type TableBlock = { type: "table"; header: InlineNode[][]; rows: InlineNode[][][] };
 export type FigureBlock = { type: "figure"; alt: string; src: string; caption: string };
-export type MarkdownBlock = HeadingBlock | ParagraphBlock | ListBlock | CodeBlock | QuoteBlock | TableBlock | FigureBlock;
+export type MarkdownBlock = HeadingBlock | SubheadingBlock | ParagraphBlock | ListBlock | CodeBlock | QuoteBlock | TableBlock | FigureBlock;
 
 export type MarkdownSection = {
   id: string;
@@ -180,6 +181,7 @@ export function markdownPlainText(document: SafeMarkdownDocument): string {
   return document.blocks.map((block) => {
     switch (block.type) {
       case "heading":
+      case "subheading":
       case "paragraph":
       case "blockquote":
         return inlineText(block.children);
@@ -244,7 +246,9 @@ export function parseSafeMarkdown(body: string, label = "Markdown body"): SafeMa
     if (/^\s{2,}(?:-|\d+\.)\s/.test(raw)) fail(label, "nested lists are not supported");
     if (/^(?:---|___|\*\*\*)$/.test(line)) fail(label, "thematic breaks are not supported");
     if (/^- \[[ xX]\]\s/.test(line)) fail(label, "task-list syntax is not supported");
-    if (/^#{1,6}\s/.test(line) && !line.startsWith("## ")) fail(label, "only H2 headings are supported");
+    if (/^#{1,6}\s/.test(line) && !/^(?:##|###)\s/.test(line)) {
+      fail(label, "only H2 and H3 headings are supported");
+    }
 
     if (line.startsWith("## ")) {
       const match = line.match(/^##\s+(.+?)(?:\s+\{#([a-z0-9]+(?:-[a-z0-9]+)*)\})?$/);
@@ -259,6 +263,23 @@ export function parseSafeMarkdown(body: string, label = "Markdown body"): SafeMa
       if (headingIds.has(id)) fail(label, `duplicate heading anchor: ${id}`);
       headingIds.add(id);
       blocks.push({ type: "heading", id, text, children });
+      index += 1;
+      continue;
+    }
+
+    if (line.startsWith("### ")) {
+      const match = line.match(/^###\s+(.+?)(?:\s+\{#([a-z0-9]+(?:-[a-z0-9]+)*)\})?$/);
+      if (!match) fail(label, `malformed H3 heading: ${line}`);
+      const headingContext = { ...context, label: `${label} subheading` };
+      const children = parseInline(match[1], headingContext);
+      const text = inlineText(children).trim();
+      const normalizedHeading = text.toLocaleLowerCase("en-US");
+      if (headingTexts.has(normalizedHeading)) fail(label, `duplicate heading: ${text}`);
+      headingTexts.add(normalizedHeading);
+      const id = match[2] ?? headingSlug(text);
+      if (headingIds.has(id)) fail(label, `duplicate heading anchor: ${id}`);
+      headingIds.add(id);
+      blocks.push({ type: "subheading", id, text, children });
       index += 1;
       continue;
     }

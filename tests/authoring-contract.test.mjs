@@ -96,6 +96,10 @@ test("renders the contracted Markdown subset into a typed safe document", () => 
 
 A [safe link](https://example.com/source), [local link](/articles), **bold**, *italics*, \`inline code\`, \`<head>\`, and a citation.[@source-id]
 
+### Supported subheading {#supported-subheading}
+
+Nested explanatory copy remains inside the surrounding H2 section.
+
 1. First ordered step
 2. Second ordered step
 
@@ -120,11 +124,13 @@ const safe = true;
 Return to [the stable section](#stable-anchor).
 `, "supported fixture");
   assert.deepEqual([...new Set(document.blocks.map(({ type }) => type))], [
-    "heading", "paragraph", "list", "code", "blockquote", "table", "figure",
+    "heading", "paragraph", "subheading", "list", "code", "blockquote", "table", "figure",
   ]);
   assert.deepEqual(document.citationIds, ["source-id"]);
   assert.deepEqual(document.fragmentLinks, ["stable-anchor"]);
   assert.equal(document.sections[0].id, "stable-anchor");
+  assert.equal(document.sections[0].blocks[1].type, "subheading");
+  assert.equal(document.sections[0].blocks[1].id, "supported-subheading");
   assert.ok(document.wordCount > 20);
   validateCitationUsage(
     [{ id: "source-id", title: "Source", url: "https://example.com/source", publisher: "Fixture" }],
@@ -144,6 +150,8 @@ test("rejects raw execution surfaces, unsafe schemes, and unsupported Markdown",
     "## Safe\n\n[unsafe](javascript:alert(1))",
     "## Safe\n\n[unsupported](mailto:test@example.com)",
     "# H1 is unsupported",
+    "## Safe\n\n#### H4 is unsupported",
+    "### H3 cannot begin the document",
     "## Safe\n\n- [ ] task",
     "## Safe\n\n  - nested",
     "## Safe\n\n---",

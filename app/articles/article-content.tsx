@@ -25,6 +25,7 @@ function inlineNodes(nodes: readonly InlineNode[], publication: Publication, sco
 }
 
 function renderBlock(block: Exclude<MarkdownBlock, { type: "heading" }>, publication: Publication, key: string) {
+  if (block.type === "subheading") return <h3 id={block.id} key={key}>{inlineNodes(block.children, publication, key)}</h3>;
   if (block.type === "paragraph") return <p key={key}>{inlineNodes(block.children, publication, key)}</p>;
   if (block.type === "list") {
     const List = block.ordered ? "ol" : "ul";
