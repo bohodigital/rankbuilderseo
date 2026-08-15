@@ -9,6 +9,7 @@ function inlineNodes(nodes: readonly InlineNode[], publication: Publication, sco
   return stableEntries(nodes, scope, semanticSignature).map(({ key, value: node }) => {
     if (node.type === "text") return node.value;
     if (node.type === "code") return <code key={key}>{node.value}</code>;
+    if (node.type === "math") return <code className="math-expression" key={key}>{node.value}</code>;
     if (node.type === "strong") return <strong key={key}>{inlineNodes(node.children, publication, key)}</strong>;
     if (node.type === "emphasis") return <em key={key}>{inlineNodes(node.children, publication, key)}</em>;
     if (node.type === "link") {
@@ -40,6 +41,7 @@ function renderBlock(block: Exclude<MarkdownBlock, { type: "heading" }>, publica
     </li>)}</List>;
   }
   if (block.type === "code") return <pre key={key}><code className={block.language ? `language-${block.language}` : undefined}>{block.value}</code></pre>;
+  if (block.type === "math") return <p className="math-expression math-expression-block" key={key}><code>{block.value}</code></p>;
   if (block.type === "blockquote") return <blockquote className={block.callout ? `callout callout-${block.callout}` : undefined} key={key}>
     {block.callout && <strong className="callout-label">{block.callout}</strong>}
     <p>{inlineNodes(block.children, publication, key)}</p>

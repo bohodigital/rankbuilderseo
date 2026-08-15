@@ -159,6 +159,24 @@ test("renders bounded task lists without treating checkbox markers as article te
   assert.doesNotMatch(document.sections[0].bullets.join(" "), /\[[ xX]\]/);
 });
 
+test("renders bounded math text while rejecting executable or malformed commands", () => {
+  const document = parseSafeMarkdown(`## Budget
+
+- \\(C\\) is monthly cost.
+
+\\[
+N_{\\text{customers}} = \\frac{C}{G}
+\\]
+`, "math fixture");
+  const list = document.blocks.find((block) => block.type === "list");
+  assert.ok(list && list.type === "list");
+  assert.equal(list.items[0].children[0].type, "math");
+  assert.equal(document.blocks.find((block) => block.type === "math")?.value, "N_{\\text{customers}} = \\frac{C}{G}");
+  assert.throws(() => parseSafeMarkdown("## Unsafe\n\n\\(\\href{https://example.com}{run}\\)"), /unsupported math command/i);
+  assert.throws(() => parseSafeMarkdown("## Unsafe\n\n\\(\\frac{C}{G}\\)".replace("}", "")), /unbalanced braces/i);
+  assert.throws(() => parseSafeMarkdown("## Unsafe\n\n\\(C"), /unclosed inline math/i);
+});
+
 test("rejects raw execution surfaces, unsafe schemes, and unsupported Markdown", () => {
   const invalidBodies = [
     "## Safe\n\n<div>raw</div>",

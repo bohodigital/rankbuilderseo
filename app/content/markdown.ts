@@ -1,11 +1,12 @@
 export type TextInline = { type: "text"; value: string };
 export type CodeInline = { type: "code"; value: string };
+export type MathInline = { type: "math"; value: string };
 export type CitationInline = { type: "citation"; id: string };
 export type StyledInline =
   | { type: "strong"; children: InlineNode[] }
   | { type: "emphasis"; children: InlineNode[] };
 export type LinkInline = { type: "link"; href: string; children: InlineNode[] };
-export type InlineNode = TextInline | CodeInline | CitationInline | StyledInline | LinkInline;
+export type InlineNode = TextInline | CodeInline | MathInline | CitationInline | StyledInline | LinkInline;
 
 export type HeadingBlock = { type: "heading"; id: string; text: string; children: InlineNode[] };
 export type SubheadingBlock = { type: "subheading"; id: string; text: string; children: InlineNode[] };
@@ -17,10 +18,11 @@ export type ListBlock = {
   items: ListItem[];
 };
 export type CodeBlock = { type: "code"; language?: string; value: string };
+export type MathBlock = { type: "math"; value: string };
 export type QuoteBlock = { type: "blockquote"; callout?: "note" | "tip" | "warning"; children: InlineNode[] };
 export type TableBlock = { type: "table"; header: InlineNode[][]; rows: InlineNode[][][] };
 export type FigureBlock = { type: "figure"; alt: string; src: string; caption: string };
-export type MarkdownBlock = HeadingBlock | SubheadingBlock | ParagraphBlock | ListBlock | CodeBlock | QuoteBlock | TableBlock | FigureBlock;
+export type MarkdownBlock = HeadingBlock | SubheadingBlock | ParagraphBlock | ListBlock | CodeBlock | MathBlock | QuoteBlock | TableBlock | FigureBlock;
 
 export type MarkdownSection = {
   id: string;
@@ -83,10 +85,31 @@ export function isSafeMediaSource(raw: string): boolean {
 
 function inlineText(nodes: readonly InlineNode[]): string {
   return nodes.map((node) => {
-    if (node.type === "text" || node.type === "code") return node.value;
+    if (node.type === "text" || node.type === "code" || node.type === "math") return node.value;
     if (node.type === "citation") return "";
     return inlineText(node.children);
   }).join("");
+}
+
+const safeMathCommands = new Set(["frac", "text"]);
+
+function validateMathExpression(raw: string, label: string): string {
+  const value = nonEmpty(raw.trim(), label);
+  if (value.length > 500) fail(label, "is limited to 500 characters");
+  if (!/^[A-Za-z0-9\s+*/=().,:;_%{}\\-]+$/.test(value)) {
+    fail(label, "contains unsupported characters");
+  }
+  for (const match of value.matchAll(/\\([A-Za-z]+)/g)) {
+    if (!safeMathCommands.has(match[1])) fail(label, `unsupported math command: \\${match[1]}`);
+  }
+  let braceDepth = 0;
+  for (const character of value) {
+    if (character === "{") braceDepth += 1;
+    if (character === "}") braceDepth -= 1;
+    if (braceDepth < 0 || braceDepth > 4) fail(label, "has unbalanced or excessively nested braces");
+  }
+  if (braceDepth !== 0) fail(label, "has unbalanced braces");
+  return value;
 }
 
 function findClosing(source: string, token: string, from: number, label: string): number {
@@ -100,6 +123,17 @@ function parseInline(source: string, context: ParseContext, nested = false): Inl
   let index = 0;
 
   while (index < source.length) {
+    if (source.startsWith("\\(", index)) {
+      const end = source.indexOf("\\)", index + 2);
+      if (end < 0) fail(context.label, "unclosed inline math construct");
+      nodes.push({
+        type: "math",
+        value: validateMathExpression(source.slice(index + 2, end), `${context.label} inline math`),
+      });
+      index = end + 2;
+      continue;
+    }
+
     if (source[index] === "`" && !source.startsWith("```", index)) {
       const end = findClosing(source, "`", index + 1, context.label);
       nodes.push({ type: "code", value: nonEmpty(source.slice(index + 1, end), `${context.label} inline code`) });
@@ -193,6 +227,7 @@ export function markdownPlainText(document: SafeMarkdownDocument): string {
       case "list":
         return block.items.map((item) => inlineText(item.children)).join(" ");
       case "code":
+      case "math":
         return block.value;
       case "table":
         return [...block.header, ...block.rows.flat()].map(inlineText).join(" ");
@@ -205,6 +240,7 @@ export function markdownPlainText(document: SafeMarkdownDocument): string {
 function beginsBlock(line: string, nextLine = ""): boolean {
   return /^#{1,6}\s/.test(line)
     || /^```/.test(line)
+    || line === "\\["
     || /^>\s?/.test(line)
     || /^(?:-|\d+\.)\s/.test(line)
     || /^!\[/.test(line)
@@ -240,6 +276,22 @@ export function parseSafeMarkdown(body: string, label = "Markdown body"): SafeMa
       }
       if (index >= lines.length) fail(label, "unclosed fenced code block");
       blocks.push({ type: "code", ...(language ? { language } : {}), value: code.join("\n") });
+      index += 1;
+      continue;
+    }
+
+    if (line === "\\[") {
+      const expression: string[] = [];
+      index += 1;
+      while (index < lines.length && lines[index].trim() !== "\\]") {
+        expression.push(lines[index].trim());
+        index += 1;
+      }
+      if (index >= lines.length) fail(label, "unclosed display math construct");
+      blocks.push({
+        type: "math",
+        value: validateMathExpression(expression.join(" "), `${label} display math`),
+      });
       index += 1;
       continue;
     }
