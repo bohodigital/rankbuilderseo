@@ -443,7 +443,7 @@ export function publicationRelationshipDiagnostics(
     text: publication.document.sections.flatMap((section) => [section.heading, ...section.paragraphs, ...(section.bullets ?? [])]).join(" ").toLowerCase(),
     links: new Set(publication.document.blocks.flatMap((block) => {
       const inlineGroups = block.type === "heading" || block.type === "subheading" || block.type === "paragraph" || block.type === "blockquote" ? [block.children]
-        : block.type === "list" ? block.items
+        : block.type === "list" ? block.items.map((item) => item.children)
           : block.type === "table" ? [...block.header, ...block.rows.flat()]
             : [];
       return inlineGroups.flat().filter((node) => node.type === "link").map((node) => node.type === "link" ? node.href : "");

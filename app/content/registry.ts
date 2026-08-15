@@ -670,7 +670,7 @@ function linkTargets(nodes: readonly InlineNode[]): string[] {
 export function documentLinkTargets(document: SafeMarkdownDocument): string[] {
   return document.blocks.flatMap((block) => {
     if (block.type === "heading" || block.type === "paragraph" || block.type === "blockquote") return linkTargets(block.children);
-    if (block.type === "list") return block.items.flatMap(linkTargets);
+    if (block.type === "list") return block.items.flatMap((item) => linkTargets(item.children));
     if (block.type === "table") return [...block.header, ...block.rows.flat()].flatMap(linkTargets);
     return [];
   });

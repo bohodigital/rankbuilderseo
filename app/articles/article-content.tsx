@@ -30,7 +30,13 @@ function renderBlock(block: Exclude<MarkdownBlock, { type: "heading" }>, publica
   if (block.type === "list") {
     const List = block.ordered ? "ol" : "ul";
     return <List key={key}>{stableEntries(block.items, `${key}-item`, semanticSignature).map(({ key: itemKey, value: item }) => <li key={itemKey}>
-      {inlineNodes(item, publication, itemKey)}
+      {typeof item.taskState === "boolean" && <input
+        type="checkbox"
+        checked={item.taskState}
+        readOnly
+        aria-label={item.taskState ? "Completed item" : "Incomplete item"}
+      />}
+      {inlineNodes(item.children, publication, itemKey)}
     </li>)}</List>;
   }
   if (block.type === "code") return <pre key={key}><code className={block.language ? `language-${block.language}` : undefined}>{block.value}</code></pre>;

@@ -141,6 +141,24 @@ Return to [the stable section](#stable-anchor).
   validateDocumentMedia(document, media, "supported fixture", "draft");
 });
 
+test("renders bounded task lists without treating checkbox markers as article text", () => {
+  const document = parseSafeMarkdown(`## Checklist
+
+- [ ] Verify the source record
+- [x] Preserve the validated evidence
+- Keep an ordinary companion note
+`, "task-list fixture");
+  const list = document.blocks.find((block) => block.type === "list");
+  assert.ok(list && list.type === "list");
+  assert.deepEqual(list.items.map((item) => item.taskState ?? null), [false, true, null]);
+  assert.deepEqual(list.items.map((item) => item.children.map((node) => node.type === "text" ? node.value : "").join("")), [
+    "Verify the source record",
+    "Preserve the validated evidence",
+    "Keep an ordinary companion note",
+  ]);
+  assert.doesNotMatch(document.sections[0].bullets.join(" "), /\[[ xX]\]/);
+});
+
 test("rejects raw execution surfaces, unsafe schemes, and unsupported Markdown", () => {
   const invalidBodies = [
     "## Safe\n\n<div>raw</div>",
@@ -152,7 +170,8 @@ test("rejects raw execution surfaces, unsafe schemes, and unsupported Markdown",
     "# H1 is unsupported",
     "## Safe\n\n#### H4 is unsupported",
     "### H3 cannot begin the document",
-    "## Safe\n\n- [ ] task",
+    "## Safe\n\n- [y] malformed task",
+    "## Safe\n\n1. [ ] ordered task",
     "## Safe\n\n  - nested",
     "## Safe\n\n---",
     "## Safe\n\n| A | B |\n| -- | --- |\n| one | two |",

@@ -10,7 +10,12 @@ export type InlineNode = TextInline | CodeInline | CitationInline | StyledInline
 export type HeadingBlock = { type: "heading"; id: string; text: string; children: InlineNode[] };
 export type SubheadingBlock = { type: "subheading"; id: string; text: string; children: InlineNode[] };
 export type ParagraphBlock = { type: "paragraph"; children: InlineNode[] };
-export type ListBlock = { type: "list"; ordered: boolean; items: InlineNode[][] };
+export type ListItem = { children: InlineNode[]; taskState?: boolean };
+export type ListBlock = {
+  type: "list";
+  ordered: boolean;
+  items: ListItem[];
+};
 export type CodeBlock = { type: "code"; language?: string; value: string };
 export type QuoteBlock = { type: "blockquote"; callout?: "note" | "tip" | "warning"; children: InlineNode[] };
 export type TableBlock = { type: "table"; header: InlineNode[][]; rows: InlineNode[][][] };
@@ -186,7 +191,7 @@ export function markdownPlainText(document: SafeMarkdownDocument): string {
       case "blockquote":
         return inlineText(block.children);
       case "list":
-        return block.items.map(inlineText).join(" ");
+        return block.items.map((item) => inlineText(item.children)).join(" ");
       case "code":
         return block.value;
       case "table":
@@ -245,7 +250,6 @@ export function parseSafeMarkdown(body: string, label = "Markdown body"): SafeMa
     }
     if (/^\s{2,}(?:-|\d+\.)\s/.test(raw)) fail(label, "nested lists are not supported");
     if (/^(?:---|___|\*\*\*)$/.test(line)) fail(label, "thematic breaks are not supported");
-    if (/^- \[[ xX]\]\s/.test(line)) fail(label, "task-list syntax is not supported");
     if (/^#{1,6}\s/.test(line) && !/^(?:##|###)\s/.test(line)) {
       fail(label, "only H2 and H3 headings are supported");
     }
@@ -295,12 +299,16 @@ export function parseSafeMarkdown(body: string, label = "Markdown body"): SafeMa
 
     if (/^(?:-|\d+\.)\s/.test(line)) {
       const ordered = /^\d+\.\s/.test(line);
-      const items: InlineNode[][] = [];
+      const items: ListItem[] = [];
       while (index < lines.length) {
         const itemLine = lines[index].trim();
-        const match = ordered ? itemLine.match(/^\d+\.\s+(.+)$/) : itemLine.match(/^-\s+(.+)$/);
+        const taskMatch = ordered ? null : itemLine.match(/^-\s+\[([ xX])\]\s+(.+)$/);
+        const match = taskMatch ?? (ordered ? itemLine.match(/^\d+\.\s+(.+)$/) : itemLine.match(/^-\s+(.+)$/));
         if (!match) break;
-        items.push(parseInline(match[1], { ...context, label: `${label} list item ${items.length + 1}` }));
+        items.push({
+          children: parseInline(taskMatch ? taskMatch[2] : match[1], { ...context, label: `${label} list item ${items.length + 1}` }),
+          ...(taskMatch ? { taskState: taskMatch[1].toLowerCase() === "x" } : {}),
+        });
         index += 1;
       }
       blocks.push({ type: "list", ordered, items });
@@ -384,7 +392,7 @@ export function parseSafeMarkdown(body: string, label = "Markdown body"): SafeMa
     if (block.type === "paragraph") section.paragraphs.push(inlineText(block.children));
     if (block.type === "list" && !block.ordered) {
       section.bullets ??= [];
-      section.bullets.push(...block.items.map(inlineText));
+      section.bullets.push(...block.items.map((item) => inlineText(item.children)));
     }
   }
 
