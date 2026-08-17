@@ -61,7 +61,8 @@
       "nosnippet-max-snippet-ai-overviews",
       "google-preferred-image-og-image-schema",
       "faq-schema-2026-google-rich-results-removed",
-      "ai-mode-source-links-seo"
+      "ai-mode-source-links-seo",
+      "noindex-robots-txt-blocked-page-still-google"
     ],
     "relatedTools": [
       "/tools/indexability-inspector"
@@ -132,7 +133,8 @@
       "userinfo-url-canonical-security",
       "unicode-normalization-url-paths-nfc-nfd",
       "trailing-dot-hostname-canonical-url",
-      "google-canonical-re-evaluation-two-weeks"
+      "google-canonical-re-evaluation-two-weeks",
+      "syndicated-content-canonical-google-seo"
     ],
     "secondaryPublications": [
       "shopify-canonical-urls-products-collections-variants",
@@ -164,7 +166,8 @@
       "import-maps-seo-playbook",
       "display-contents-google-indexing",
       "back-button-hijacking-seo-google-spam-policy",
-      "google-lens-seo-2026"
+      "google-lens-seo-2026",
+      "lazy-loading-infinite-scroll-google-seo"
     ],
     "secondaryPublications": [
       "nextjs-page-visible-browser-missing-google",
