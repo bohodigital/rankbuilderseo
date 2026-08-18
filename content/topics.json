@@ -62,7 +62,10 @@
       "google-preferred-image-og-image-schema",
       "faq-schema-2026-google-rich-results-removed",
       "ai-mode-source-links-seo",
-      "noindex-robots-txt-blocked-page-still-google"
+      "noindex-robots-txt-blocked-page-still-google",
+      "image-sitemaps-cdn-discovery",
+      "search-console-canonical-performance-data",
+      "search-console-url-inspection-api"
     ],
     "relatedTools": [
       "/tools/indexability-inspector"
@@ -106,7 +109,9 @@
       "307-vs-308-redirects-method-preservation",
       "redirect-location-header-validation",
       "redirect-cache-control-migration",
-      "redirect-chain-audit-migrations"
+      "redirect-chain-audit-migrations",
+      "http-204-no-content-seo",
+      "http-451-seo-legal-removals"
     ],
     "relatedTools": [
       "/tools/redirect-chain-visualizer"
@@ -138,7 +143,8 @@
       "unicode-normalization-url-paths-nfc-nfd",
       "trailing-dot-hostname-canonical-url",
       "google-canonical-re-evaluation-two-weeks",
-      "syndicated-content-canonical-google-seo"
+      "syndicated-content-canonical-google-seo",
+      "pdf-canonical-http-headers"
     ],
     "secondaryPublications": [
       "shopify-canonical-urls-products-collections-variants",
@@ -171,7 +177,9 @@
       "display-contents-google-indexing",
       "back-button-hijacking-seo-google-spam-policy",
       "google-lens-seo-2026",
-      "lazy-loading-infinite-scroll-google-seo"
+      "lazy-loading-infinite-scroll-google-seo",
+      "shadow-dom-seo-web-components",
+      "spa-history-api-seo-routing"
     ],
     "secondaryPublications": [
       "nextjs-page-visible-browser-missing-google",
@@ -288,7 +296,9 @@
       "merchant-center-ai-performance-insights",
       "google-deep-search-seo",
       "llms-txt-google-rankings",
-      "search-console-data-anomalies-2026"
+      "search-console-data-anomalies-2026",
+      "core-web-vitals-field-vs-lab",
+      "seo-testing-causal-inference"
     ],
     "secondaryPublications": [
       "what-an-seo-report-should-answer",
