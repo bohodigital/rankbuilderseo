@@ -102,7 +102,9 @@
       "http3-google-ranking-claim-check",
       "http-423-locked-seo",
       "http-424-failed-dependency-playbook",
-      "http-511-network-authentication-required"
+      "http-511-network-authentication-required",
+      "307-vs-308-redirects-method-preservation",
+      "redirect-location-header-validation"
     ],
     "relatedTools": [
       "/tools/redirect-chain-visualizer"
