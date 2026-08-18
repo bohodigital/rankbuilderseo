@@ -104,7 +104,9 @@
       "http-424-failed-dependency-playbook",
       "http-511-network-authentication-required",
       "307-vs-308-redirects-method-preservation",
-      "redirect-location-header-validation"
+      "redirect-location-header-validation",
+      "redirect-cache-control-migration",
+      "redirect-chain-audit-migrations"
     ],
     "relatedTools": [
       "/tools/redirect-chain-visualizer"
