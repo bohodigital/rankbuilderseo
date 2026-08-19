@@ -149,7 +149,9 @@
       "google-canonical-re-evaluation-two-weeks",
       "syndicated-content-canonical-google-seo",
       "pdf-canonical-http-headers",
-      "pagination-self-canonical-seo"
+      "pagination-self-canonical-seo",
+      "hyphens-vs-underscores-urls-seo",
+      "url-length-seo"
     ],
     "secondaryPublications": [
       "shopify-canonical-urls-products-collections-variants",
@@ -252,7 +254,14 @@
       "keyword-density-seo-percentage",
       "meta-description-seo-ranking-factor",
       "subdomain-vs-subdirectory-seo",
-      "word-count-seo-ranking-factor"
+      "word-count-seo-ranking-factor",
+      "changing-title-tag-seo-rankings",
+      "domain-age-google-ranking-factor",
+      "exact-match-domain-seo",
+      "https-google-ranking-signal",
+      "outbound-links-seo-ranking",
+      "title-tag-length-seo",
+      "tld-seo-com-net-org"
     ],
     "secondaryPublications": [
       "excluded-by-noindex",
@@ -425,7 +434,8 @@
       "site-reputation-abuse-seo-2026",
       "scaled-content-abuse-2026",
       "seo-agency-account-ownership",
-      "verify-link-building-reports"
+      "verify-link-building-reports",
+      "seo-vs-sem-organic-paid-search"
     ],
     "secondaryPublications": [
       "search-console-is-not-analytics",
