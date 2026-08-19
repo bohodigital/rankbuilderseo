@@ -243,7 +243,16 @@
       "google-business-agent-seo",
       "localbusiness-schema-local-seo",
       "mobile-first-indexing-content-parity",
-      "nofollow-sponsored-ugc-rel-attributes"
+      "nofollow-sponsored-ugc-rel-attributes",
+      "alt-text-image-seo",
+      "anchor-text-seo-internal-links",
+      "domain-authority-google-ranking-factor",
+      "eeat-google-ranking-factor",
+      "h1-tags-seo-multiple-h1",
+      "keyword-density-seo-percentage",
+      "meta-description-seo-ranking-factor",
+      "subdomain-vs-subdirectory-seo",
+      "word-count-seo-ranking-factor"
     ],
     "secondaryPublications": [
       "excluded-by-noindex",
@@ -306,7 +315,8 @@
       "llms-txt-google-rankings",
       "search-console-data-anomalies-2026",
       "core-web-vitals-field-vs-lab",
-      "seo-testing-causal-inference"
+      "seo-testing-causal-inference",
+      "bounce-rate-google-ranking-factor"
     ],
     "secondaryPublications": [
       "what-an-seo-report-should-answer",
