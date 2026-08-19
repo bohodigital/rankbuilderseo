@@ -65,7 +65,9 @@
       "noindex-robots-txt-blocked-page-still-google",
       "image-sitemaps-cdn-discovery",
       "search-console-canonical-performance-data",
-      "search-console-url-inspection-api"
+      "search-console-url-inspection-api",
+      "robots-txt-wildcards-precedence",
+      "xml-sitemap-priority-changefreq-google"
     ],
     "relatedTools": [
       "/tools/indexability-inspector"
@@ -111,7 +113,9 @@
       "redirect-cache-control-migration",
       "redirect-chain-audit-migrations",
       "http-204-no-content-seo",
-      "http-451-seo-legal-removals"
+      "http-451-seo-legal-removals",
+      "404-vs-410-seo-deleted-pages",
+      "meta-refresh-redirects-seo"
     ],
     "relatedTools": [
       "/tools/redirect-chain-visualizer"
@@ -144,7 +148,8 @@
       "trailing-dot-hostname-canonical-url",
       "google-canonical-re-evaluation-two-weeks",
       "syndicated-content-canonical-google-seo",
-      "pdf-canonical-http-headers"
+      "pdf-canonical-http-headers",
+      "pagination-self-canonical-seo"
     ],
     "secondaryPublications": [
       "shopify-canonical-urls-products-collections-variants",
@@ -235,7 +240,10 @@
       "google-ai-mode-connected-apps-seo",
       "search-live-seo-2026",
       "ai-mode-booking-seo",
-      "google-business-agent-seo"
+      "google-business-agent-seo",
+      "localbusiness-schema-local-seo",
+      "mobile-first-indexing-content-parity",
+      "nofollow-sponsored-ugc-rel-attributes"
     ],
     "secondaryPublications": [
       "excluded-by-noindex",
@@ -405,7 +413,9 @@
       "google-business-agent-for-leads",
       "does-google-penalize-ai-content-2026",
       "site-reputation-abuse-seo-2026",
-      "scaled-content-abuse-2026"
+      "scaled-content-abuse-2026",
+      "seo-agency-account-ownership",
+      "verify-link-building-reports"
     ],
     "secondaryPublications": [
       "search-console-is-not-analytics",
